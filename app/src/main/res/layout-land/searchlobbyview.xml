@@ -9,6 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorOrange"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -24,6 +25,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:backgroundTint="@color/colorFB"
 
         android:src="@drawable/abc_vector_test"
         app:layout_constraintBottom_toBottomOf="parent"
