@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-
+    Intent intent;
 
 
     @Override
@@ -16,18 +16,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startview);
 
-        Button startButton = (Button) findViewById(R.id.startButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent multi = new Intent(MainActivity.this, MultiplayerMainActivity.class);
-                MainActivity.this.startActivity(multi);
-            }
-        });
+        Button searchLobbyButton = (Button) findViewById(R.id.search_button);
+        searchLobbyButton.setOnClickListener((View view)-> searchLobby());
 
     }
 
+    public void searchLobby() {
+        intent = new Intent(MainActivity.this, SearchLobbyActivity.class);
+        startActivity(intent);
+    }
 
 }
 

@@ -21,8 +21,8 @@ public class SearchLobbyActivity extends AppCompatActivity {
         floatingActionButton = findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener((View view)->goBack());
 
-        join = findViewById(R.id.joinButton);
-        join.setOnClickListener((View view)->joinUp());
+        //join = findViewById(R.id.);
+        //join.setOnClickListener((View view)->joinUp());
 
 
     }
