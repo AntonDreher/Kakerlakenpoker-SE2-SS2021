@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
+                Intent multi = new Intent(MainActivity.this, MultiplayerMainActivity.class);
+                MainActivity.this.startActivity(multi);
             }
         });
 
