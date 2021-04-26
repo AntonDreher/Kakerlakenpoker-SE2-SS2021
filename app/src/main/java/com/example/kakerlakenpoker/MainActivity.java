@@ -9,7 +9,6 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Intent multi = new Intent(this, MultiplayerMainActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,16 +17,15 @@ public class MainActivity extends AppCompatActivity {
 
         Button startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                getNextView(multi);
+
             }
         });
 
     }
 
-    public void getNextView (Intent intent){
-        startActivity(intent);
-    }
+
 }
 
