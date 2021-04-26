@@ -12,6 +12,10 @@ public class CardDeck {
       createDeck();
     }
 
+    public ArrayList<Card> getDeck() {
+        return deck;
+    }
+
     /**
      * Methode die das Deck mit 64 Karten erstellt
      */
