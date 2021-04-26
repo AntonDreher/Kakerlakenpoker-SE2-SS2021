@@ -3,4 +3,7 @@
     <string name="startbutton">Start</string>
     <string name="quitbutton">Quit</string>
     <string name="startbackground">StartBackground</string>
+    <string name="quit">Quit</string>
+    <string name="start">Start</string>
+    <string name="gamebackground">gameBackground</string>
 </resources>
