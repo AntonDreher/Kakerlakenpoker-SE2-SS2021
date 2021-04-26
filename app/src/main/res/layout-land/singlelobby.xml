@@ -27,9 +27,10 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/roundstylebutton"
-        android:backgroundTint="@color/cardview_light_background"
+        android:backgroundTint="@color/btn_color_white"
+        android:textColor="@color/colorPrimaryDark"
         android:text="Join"
-        android:textSize="20sp"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 

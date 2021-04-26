@@ -9,9 +9,10 @@
 
     <ImageView
         android:id="@+id/backgroundImage"
-        android:layout_width="732dp"
-        android:layout_height="412dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:contentDescription="@string/startbackground"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,22 +20,30 @@
         app:srcCompat="@drawable/kakerlaken" />
 
     <Button
-    android:id="@+id/startButton"
-    android:layout_width="128dp"
-    android:layout_height="62dp"
-    android:text="@string/startbutton"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.212"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.369" />
-
-    <Button
-        android:id="@+id/exitButton"
+        android:id="@+id/search_button"
         android:layout_width="128dp"
         android:layout_height="62dp"
+        android:background="@drawable/roundstylebutton"
+        android:backgroundTint="@color/btn_color_white"
+        android:textSize="19sp"
+        android:text="@string/startbutton"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.212"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.369" />
+
+    <Button
+        android:id="@+id/create_lobby_button"
+        android:layout_width="128dp"
+        android:layout_height="62dp"
+        android:background="@drawable/roundstylebutton"
+        android:backgroundTint="@color/btn_color_white"
+        android:textSize="19sp"
         android:text="@string/quitbutton"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.212"
