@@ -1,5 +1,9 @@
 package com.example.kakerlakenpoker.card;
 
+/**
+ * Card Klasse repräsentiert eine Karte im Spiel.
+ * Parameter ist ein ENUM der Klasse Type.
+ */
 public class Card {
     private Type type;
 
