@@ -43,4 +43,16 @@ public class HandDeck {
         }
         return null;
     }
+
+    /**
+     * Methode, die die Anzahl der HandKarten zurück gibt
+     * @return int, Anzahl der Handkarten
+     */
+    public int size(){
+        return deck.size();
+    }
+
+    public ArrayList<Card> getDeck() {
+        return deck;
+    }
 }
