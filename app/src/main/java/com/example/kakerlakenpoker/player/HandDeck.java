@@ -3,6 +3,7 @@ import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Repräsentiert die Handkarten eines Spielers
@@ -56,7 +57,7 @@ public class HandDeck {
      * Getter Methode
      * @return akutelle Handkarten
      */
-    public ArrayList<Card> getDeck() {
+    public List <Card> getDeck() {
         return deck;
     }
 }
