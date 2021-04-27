@@ -16,6 +16,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startview);
 
+        Button createLobbyButton = (Button) findViewById(R.id.create_lobby_button);
+        createLobbyButton.setOnClickListener((View view)-> createLobby());
+
+
         Button searchLobbyButton = (Button) findViewById(R.id.search_button);
         searchLobbyButton.setOnClickListener((View view)-> searchLobby());
 
@@ -23,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void searchLobby() {
         intent = new Intent(MainActivity.this, SearchLobbyActivity.class);
+        startActivity(intent);
+    }
+
+    public void createLobby() {
+        intent = new Intent(MainActivity.this, EnterLobbyNameActivity.class);
         startActivity(intent);
     }
 
