@@ -24,25 +24,23 @@ public class HandDeck {
      * @param type Handdeck wird nach ENUM durchsucht
      */
     public void removeCard(Type type){
-        for (Card c: deck) {
-            if (c.getType().equals(type)){
-                deck.remove(c);
-                break;
-            }
+        Card c = findCard(type);
+        if(c != null){
+            deck.remove(c);
         }
     }
 
     /**
      * Durchsucht das Deck nach einer Karte des gesuchten Types
      * @param type eines der 8 ENUMS
-     * @return true, wenn Type im HandDeck sonst false
+     * @return Karte, wenn gefunden. Ansonsten null
      */
-    public boolean findCard(Type type){
+    public Card findCard(Type type){
         for(Card c: deck){
             if(c.getType().equals(type)){
-                return true;
+                return c;
             }
         }
-        return false;
+        return null;
     }
 }
