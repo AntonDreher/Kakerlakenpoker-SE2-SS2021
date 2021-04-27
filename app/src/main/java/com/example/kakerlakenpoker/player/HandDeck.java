@@ -31,4 +31,18 @@ public class HandDeck {
             }
         }
     }
+
+    /**
+     * Durchsucht das Deck nach einer Karte des gesuchten Types
+     * @param type eines der 8 ENUMS
+     * @return true, wenn Type im HandDeck sonst false
+     */
+    public boolean findCard(Type type){
+        for(Card c: deck){
+            if(c.getType().equals(type)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
