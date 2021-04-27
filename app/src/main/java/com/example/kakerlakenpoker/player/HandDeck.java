@@ -52,6 +52,10 @@ public class HandDeck {
         return deck.size();
     }
 
+    /**
+     * Getter Methode
+     * @return akutelle Handkarten
+     */
     public ArrayList<Card> getDeck() {
         return deck;
     }
