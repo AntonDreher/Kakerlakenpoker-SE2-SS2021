@@ -1,5 +1,7 @@
 package com.example.kakerlakenpoker.player;
 import com.example.kakerlakenpoker.card.Card;
+import com.example.kakerlakenpoker.card.Type;
+
 import java.util.ArrayList;
 
 /**
@@ -15,5 +17,18 @@ public class HandDeck {
      */
     public void addCard(Card card){
         deck.add(card);
+    }
+
+    /**
+     * Entfernt eine Karte aus dem HandDeck
+     * @param type Handdeck wird nach ENUM durchsucht
+     */
+    public void removeCard(Type type){
+        for (Card c: deck) {
+            if (c.getType().equals(type)){
+                deck.remove(c);
+                break;
+            }
+        }
     }
 }
