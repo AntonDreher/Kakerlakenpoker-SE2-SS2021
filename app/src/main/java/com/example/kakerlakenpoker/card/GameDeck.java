@@ -5,10 +5,10 @@ import java.util.ArrayList;
 /**
  * Deck Klasse die ein Deck mit allen 64 Karten repräsentiert.
  */
-public class CardDeck {
+public class GameDeck {
     private final ArrayList<Card> deck = new ArrayList<>(64);
 
-    public CardDeck() {
+    public GameDeck() {
       createDeck();
     }
 
