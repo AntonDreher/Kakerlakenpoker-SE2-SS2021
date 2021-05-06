@@ -7,6 +7,7 @@ package com.example.kakerlakenpoker.player;
 public class Player {
     private String name;
     private HandDeck handDeck;
+    private CollectedDeck collectedDeck;
 
     /**
      * Konstruktor für Klasse Player
