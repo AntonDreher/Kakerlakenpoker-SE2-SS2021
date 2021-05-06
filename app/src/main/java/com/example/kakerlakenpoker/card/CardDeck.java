@@ -57,4 +57,8 @@ public abstract class CardDeck {
     public int size(){
         return deck.size();
     }
+
+    public void setDeck(ArrayList<Card> deck) {
+        this.deck = deck;
+    }
 }
