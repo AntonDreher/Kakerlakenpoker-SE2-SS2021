@@ -39,7 +39,7 @@ public class CardDeckUnitTest {
     @Test
     public void testSize(){
         this.handDeck.addCard(new Card(Type.FLIEGE));
-        this.handDeck.addCard(new Card(Type.KRÖTE));
+        this.handDeck.addCard(new Card(Type.KROETE));
         this.handDeck.addCard(new Card(Type.KAKERLAKE));
         Assertions.assertEquals(3,this.handDeck.size());
     }
@@ -55,13 +55,13 @@ public class CardDeckUnitTest {
     public void findCardFound(){
         Card search = new Card(Type.FLIEGE);
         this.handDeck.addCard(search);
-        this.handDeck.addCard(new Card(Type.KRÖTE));
+        this.handDeck.addCard(new Card(Type.KROETE));
         Assertions.assertEquals(search,this.handDeck.findCard(Type.FLIEGE));
     }
 
     @Test
     public void findCardNotFound(){
-        this.handDeck.addCard(new Card(Type.KRÖTE));
+        this.handDeck.addCard(new Card(Type.KROETE));
         Assertions.assertNull(this.handDeck.findCard(Type.KAKERLAKE));
     }
 }

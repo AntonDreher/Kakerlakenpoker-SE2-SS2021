@@ -1,6 +1,7 @@
 package com.example.kakerlakenpoker.card;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Abstrakte Klasse, die ein Karten Deck repräsentiert
@@ -46,7 +47,7 @@ public abstract class CardDeck {
      * Gibt das aktuelle Deck zurück
      * @return Deck
      */
-    public ArrayList<Card> getDeck() {
+    public List <Card> getDeck() {
         return deck;
     }
 

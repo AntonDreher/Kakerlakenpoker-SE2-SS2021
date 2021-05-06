@@ -12,7 +12,7 @@ public class CardClassUnitTest {
 
     @BeforeEach
     public void setUp(){
-        this.one = new Card(Type.KRÖTE);
+        this.one = new Card(Type.KROETE);
     }
     @AfterEach
     public void tearDown(){
@@ -21,7 +21,7 @@ public class CardClassUnitTest {
 
     @Test
     public void testGetType(){
-        Assertions.assertEquals(Type.KRÖTE,this.one.getType());
+        Assertions.assertEquals(Type.KROETE,this.one.getType());
     }
 
     @Test
