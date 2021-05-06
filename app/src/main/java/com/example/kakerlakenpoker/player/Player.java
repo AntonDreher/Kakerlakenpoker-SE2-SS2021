@@ -14,9 +14,10 @@ public class Player {
      * @param name repräsentiert den Spieler
      * @param handDeck repräsentieren seine Handkarten
      */
-    public Player(String name, HandDeck handDeck) {
+    public Player(String name, HandDeck handDeck, CollectedDeck collectedDeck) {
         this.name = name;
         this.handDeck = handDeck;
+        this.collectedDeck = collectedDeck;
     }
 
     /**
@@ -49,5 +50,21 @@ public class Player {
      */
     public void setHandDeck(HandDeck handDeck) {
         this.handDeck = handDeck;
+    }
+
+    /**
+     * Getter Methode für Gesammelte Karten
+     * @return Klasse mit den gesammelten Karten
+     */
+    public CollectedDeck getCollectedDeck() {
+        return collectedDeck;
+    }
+
+    /**
+     * Setter methode für Gesammelte Karten
+     * @param collectedDeck für Spieler
+     */
+    public void setCollectedDeck(CollectedDeck collectedDeck) {
+        this.collectedDeck = collectedDeck;
     }
 }
