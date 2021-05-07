@@ -7,7 +7,7 @@ public enum Type {
     RATTE,
     SCORPION,
     KAKERLAKE,
-    KRÖTE,
+    KROETE,
     SPINNE,
     STINKWANZE
 }
