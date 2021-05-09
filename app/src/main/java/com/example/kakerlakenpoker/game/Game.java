@@ -1,11 +1,8 @@
 package com.example.kakerlakenpoker.game;
 
-import com.example.kakerlakenpoker.card.GameDeck;
+import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.player.Player;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class Game {
     private ArrayList<Player> players;
@@ -16,11 +13,20 @@ public class Game {
 
     }
 
+    /**
+     * gibt Aktuell Spielenden Spieler zurück
+     * @return aktueller Spieler (String)
+     */
+    public String getCurrentPlayer(){
+        return null;
+    }
 
     /**
-     * Spieler will Karte ausspielen und wählt Spieler aus
+     * Spieler wählt einen anderen Spieler aus, dem er eine Karte anzudrehen versucht
+     * @param  otherPlayer  Name des gegnerischen Spielers
+     * @param card Karte, die der Spieler außspielen möchte
      */
-    public void playCard(){
+    public void playCard(String otherPlayer, Card card){
 
     }
 
@@ -46,5 +52,15 @@ public class Game {
 
     }
 
+    /**
+     * Getter + Setter
+     */
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
 }
