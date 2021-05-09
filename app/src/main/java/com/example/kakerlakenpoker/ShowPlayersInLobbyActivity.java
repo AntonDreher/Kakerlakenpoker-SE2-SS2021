@@ -1,15 +1,14 @@
 package com.example.kakerlakenpoker;
 
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MultiplayerMainActivity extends AppCompatActivity {
+import android.os.Bundle;
+
+public class ShowPlayersInLobbyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_show_players_in_lobby);
     }
-
 }
