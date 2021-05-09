@@ -26,8 +26,8 @@ public class Game {
      * @param  otherPlayer  Name des gegnerischen Spielers
      * @param card Karte, die der Spieler außspielen möchte
      */
-    public void playCard(String otherPlayer, Card card){
-
+    public void playCard(Player otherPlayer, Card card){
+        otherPlayer.getHandDeck().useCard(card);
     }
 
 
