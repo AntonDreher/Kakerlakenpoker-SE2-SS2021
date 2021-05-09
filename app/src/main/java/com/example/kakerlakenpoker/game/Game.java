@@ -8,26 +8,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class Game {
-    private ArrayList<Player> players = new ArrayList<>();
-    private GameDeck gameDeck; //Liste mit allen 64 Karten
+    private ArrayList<Player> players;
+
 
     public Game(ArrayList<Player> players) {
         this.players = players;
-        gameDeck = new GameDeck();
-        Collections.shuffle(gameDeck.getDeck());
+
     }
 
-    /**
-     * Methode die alle 64 Karten auf 4 Spieler aufteilt.
-     */
-    public void kartenverteilen(){
-        for (int i = 0; i < players.size(); i++) {
-            for (int j = 0; j < 16; j++) {
-                players.get(i).getHandDeck().addCard(gameDeck.getDeck().get(0));
-                gameDeck.getDeck().remove(0);
-            }
-        }
-    }
 
     /**
      * Spieler will Karte ausspielen und wählt Spieler aus
