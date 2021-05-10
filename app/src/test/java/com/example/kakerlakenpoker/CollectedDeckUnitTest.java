@@ -13,24 +13,27 @@ public class CollectedDeckUnitTest {
     CollectedDeck collectedDeck;
 
     @Before
-    public void setup(){
+    public void setup() {
         this.collectedDeck = new CollectedDeck();
 
     }
 
     @After
-    public void teardown(){
+    public void teardown() {
         collectedDeck = null;
     }
 
+
+    //lostGame methode tests
+
     @Test
-    public void testLostGameFalse(){
+    public void testLostGameFalse() {
         collectedDeck.addCard(new Card(Type.FLEDERMAUS));
         Assert.assertFalse(collectedDeck.lostGame());
     }
 
     @Test
-    public void testLostGameSimilarCards(){
+    public void testLostGameSimilarCards() {
         collectedDeck.addCard(new Card(Type.FLEDERMAUS));
         collectedDeck.addCard(new Card(Type.FLEDERMAUS));
         collectedDeck.addCard(new Card(Type.FLEDERMAUS));
@@ -39,7 +42,7 @@ public class CollectedDeckUnitTest {
     }
 
     @Test
-    public void testLostGameOneEach(){
+    public void testLostGameOneEach() {
         collectedDeck.addCard(new Card(Type.FLEDERMAUS));
         collectedDeck.addCard(new Card(Type.FLIEGE));
         collectedDeck.addCard(new Card(Type.RATTE));
