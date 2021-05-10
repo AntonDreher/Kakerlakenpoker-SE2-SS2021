@@ -1,12 +1,13 @@
 package com.example.kakerlakenpoker.player;
 
 import com.example.kakerlakenpoker.card.Card;
+import com.example.kakerlakenpoker.card.CardDeck;
 import com.example.kakerlakenpoker.card.GameDeck;
 
 /**
  * Klasse die die Gesammelten Karten repräsentiert
  */
-public class CollectedDeck extends GameDeck {
+public class CollectedDeck extends CardDeck {
 
     //Platz für Methoden
     public boolean lostGame() {
