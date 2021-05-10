@@ -26,7 +26,7 @@
             android:name=".SearchLobbyActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".EnterLobbyNameActivity"
+            android:name=".CreateLobbyActivity"
             android:screenOrientation="landscape" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
