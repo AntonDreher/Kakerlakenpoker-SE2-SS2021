@@ -1,4 +1,10 @@
 package com.example.kakerlakenpoker.network;
 
-public interface Callback {
+/**
+ * Used for callbacks.
+ */
+public interface Callback<T> {
+
+    void callback(T argument);
+
 }

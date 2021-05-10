@@ -1,8 +1,9 @@
 package com.example.kakerlakenpoker.network;
 
 import android.content.Context;
-import android.net.wifi.WifiManager;
-import android.text.format.Formatter;
+
+import com.esotericsoftware.minlog.Log;
+import com.example.kakerlakenpoker.network.kryo.NetworkServerKryo;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -11,6 +12,8 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 public class NetworkUtils {
+    private static NetworkServerKryo server;
+
     public static String getIpAddressFromDevice(Context context){
         try {
             for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
@@ -23,11 +26,9 @@ public class NetworkUtils {
                 }
             }
         } catch (SocketException ex) {
-            ex.printStackTrace();
+            Log.info(ex.getMessage());
         }
         return null;
     }
 
-    public static void startServer() {
-    }
 }
