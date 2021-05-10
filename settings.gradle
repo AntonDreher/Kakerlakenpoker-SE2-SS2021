@@ -1,5 +1,4 @@
 include ':server'
 include ':server'
-include ':server'
 include ':app'
 rootProject.name = "Kakerlakenpoker"
