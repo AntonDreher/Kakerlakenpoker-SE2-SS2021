@@ -14,8 +14,5 @@ public class Main {
             Log.trace("Starting the mainserver failed.", e);
             System.exit(1);
         }
-
-        while(true){
-        }
     }
 }
