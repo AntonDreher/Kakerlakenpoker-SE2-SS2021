@@ -75,4 +75,8 @@ public class GameClient {
     public NetworkClientKryo getClient(){
         return client;
     }
+
+    public ArrayList<Lobby> getOpenLobbies() {
+        return openLobbies;
+    }
 }

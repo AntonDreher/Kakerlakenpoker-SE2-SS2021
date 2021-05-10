@@ -24,7 +24,7 @@
         android:focusable="true" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerView"
+        android:id="@+id/lobbiesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

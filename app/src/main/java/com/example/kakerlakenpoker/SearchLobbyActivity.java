@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kakerlakenpoker.network.NetworkUtils;
@@ -30,12 +31,20 @@ public class SearchLobbyActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        initRecyclerView();
 
     }
 
     public void goBack(){
         intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public void initRecyclerView(){
+        recyclerView = findViewById(R.id.lobbiesRecyclerView);
+        LobbiesRecyclerViewAdapter adapter = new LobbiesRecyclerViewAdapter(GameClient.getInstance().getOpenLobbies());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
