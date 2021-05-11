@@ -5,6 +5,7 @@ import com.example.kakerlakenpoker.card.GameDeck;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.player.HandDeck;
 
+import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +17,7 @@ public class GameDeckUnitTest {
     GameDeck gameDeck;
 
 
-    @AfterEach
+    @After
     public void tearDown(){
         this.gameDeck = null;
     }

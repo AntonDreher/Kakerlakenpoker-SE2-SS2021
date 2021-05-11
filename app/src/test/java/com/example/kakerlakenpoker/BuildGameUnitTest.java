@@ -5,7 +5,9 @@ import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.game.BuildGame;
 import com.example.kakerlakenpoker.game.Game;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +19,7 @@ public class BuildGameUnitTest {
     String three;
     String four;
     BuildGame buildGame;
-    @BeforeEach
+    @Before
     public void setUp(){
         one = "one";
         two = "two";
@@ -26,7 +28,7 @@ public class BuildGameUnitTest {
         buildGame = new BuildGame();
     }
 
-    @AfterEach
+    @After
     public void tearDown() {
         one = null;
         two = null;
