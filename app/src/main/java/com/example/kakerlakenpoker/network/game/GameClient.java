@@ -61,8 +61,6 @@ public class GameClient {
             ipList.addAll(((ClientsInLobby) message).ipFromClients);
         } else if (message instanceof SendOpenLobbies){
             this.openLobbies = ((SendOpenLobbies) message).getLobbies();
-            Log.error("hallo");
-            Log.error("that the real size", String.valueOf(((SendOpenLobbies) message).getLobbies().size()));
         }
     }
 
