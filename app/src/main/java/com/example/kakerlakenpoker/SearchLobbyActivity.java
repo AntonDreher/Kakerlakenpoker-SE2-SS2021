@@ -41,11 +41,14 @@ public class SearchLobbyActivity extends AppCompatActivity {
         };
 
         thread.start();
+
         try {
             thread.join();
         } catch (InterruptedException e) {
-            throw new RuntimeException("Join Thread failed");
+            e.printStackTrace();
+            System.exit(1);
         }
+
 
         initRecyclerView();
 
