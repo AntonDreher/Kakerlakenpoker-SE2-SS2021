@@ -10,6 +10,8 @@ public class Lobby extends BaseMessage {
         this.HostIP = HostIP;
     }
 
+    public Lobby(){}
+
     public int getPlayerCount(){
         return playerCount;
     }

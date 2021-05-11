@@ -9,6 +9,7 @@ import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
 import com.example.kakerlakenpoker.network.dto.Lobby;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
+import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.network.game.GameServer;
 
@@ -35,6 +36,7 @@ public class RegisterHelper {
         kryo.register(GameClient.class);
         kryo.register(GameDeck.class);
         kryo.register(GameServer.class);
+        kryo.register(SendOpenLobbies.class);
 
     }
 }

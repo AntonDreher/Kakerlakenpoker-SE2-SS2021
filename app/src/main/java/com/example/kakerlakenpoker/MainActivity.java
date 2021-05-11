@@ -28,20 +28,22 @@ public class MainActivity extends AppCompatActivity {
         Button searchLobbyButton = (Button) findViewById(R.id.search_button);
         searchLobbyButton.setOnClickListener((View view)-> searchLobby());
 
-        new Thread(() -> {
-            GameClient client = GameClient.getInstance();
-            client.init(NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
-        }).start();
+
+
 
     }
 
     public void searchLobby() {
-        GameClient.getInstance().getClient().sendMessage(new GetOpenLobbies());
+        //GameClient.getInstance().getClient().sendMessage(new GetOpenLobbies());
         intent = new Intent(MainActivity.this, SearchLobbyActivity.class);
         startActivity(intent);
     }
 
     public void createLobby() {
+        new Thread(() -> {
+            GameClient client = GameClient.getInstance();
+            client.init(NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
+        }).start();
         intent = new Intent(MainActivity.this, CreateLobbyActivity.class);
         startActivity(intent);
     }

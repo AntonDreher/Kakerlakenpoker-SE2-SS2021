@@ -21,16 +21,18 @@ public class ServerListener extends Listener {
 
     @Override
     public void received(Connection connection, Object object) {
+        Log.error("MainServer Message", "Message received");
         if(object instanceof GetOpenLobbies){
             connection.sendTCP(new SendOpenLobbies(server.getOpenLobbies()));
         } else if (object instanceof OpenLobby){
             server.addLobby(((OpenLobby) object).getLobby());
+
         }
     }
 
     @Override
     public void disconnected(Connection connection) {
         Log.info("Client disconnected: "+ connection.getRemoteAddressTCP());
-        server.removeLobby(connection);
+        //server.removeLobby(connection);
     }
 }

@@ -8,6 +8,7 @@ public class OpenLobby extends BaseMessage {
     public OpenLobby(Lobby lobby){
         this.lobby = lobby;
     }
+    public OpenLobby(){}
 
     public Lobby getLobby(){
         return lobby;

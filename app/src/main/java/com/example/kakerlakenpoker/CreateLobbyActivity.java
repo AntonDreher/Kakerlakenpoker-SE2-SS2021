@@ -50,9 +50,11 @@ public class CreateLobbyActivity extends AppCompatActivity {
             Lobby lobby = new Lobby(inputLobbyName.getText().toString(),NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
 
             GameClient client = GameClient.getInstance();
-            client.reConnect("localhost");
             client.getClient().sendMessage(new OpenLobby(lobby));
+            client.reConnect("localhost");
+
         }).start();
+
 
 
 

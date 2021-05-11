@@ -6,6 +6,7 @@ import com.example.kakerlakenpoker.network.dto.Lobby;
 import java.util.ArrayList;
 
 public class SendOpenLobbies extends BaseMessage {
+    public SendOpenLobbies(){}
     private ArrayList<Lobby> lobbies;
 
     public SendOpenLobbies(ArrayList<Lobby> lobbies){
