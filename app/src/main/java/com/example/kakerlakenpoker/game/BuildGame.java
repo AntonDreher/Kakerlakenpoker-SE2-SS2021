@@ -7,6 +7,7 @@ import com.example.kakerlakenpoker.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Wenn sich Spieler in der Lobby befinden
@@ -54,12 +55,12 @@ public class BuildGame {
     /**
      * Setter + Getter Methoden
      */
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
+    public void setPlayers(List<Player> players) {
+        this.players = (ArrayList<Player>) players;
     }
 
     public GameDeck getGameDeck() {

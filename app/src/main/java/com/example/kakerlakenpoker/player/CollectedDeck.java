@@ -2,7 +2,6 @@ package com.example.kakerlakenpoker.player;
 
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.CardDeck;
-import com.example.kakerlakenpoker.card.GameDeck;
 
 /**
  * Klasse die die gesammelten Karten repräsentiert
@@ -14,7 +13,14 @@ public class CollectedDeck extends CardDeck {
      */
 
     public boolean lostGame() {
-        int fledermaus = 0, fliege = 0, ratte = 0, scorpion = 0, kakerlake = 0, kroete = 0, spinne = 0, stinkwanze = 0;
+        int fledermaus = 0;
+        int fliege = 0;
+        int ratte = 0;
+        int scorpion = 0;
+        int kakerlake = 0;
+        int kroete = 0;
+        int spinne = 0;
+        int stinkwanze = 0;
 
         for (Card c : super.getDeck()) {
             switch (c.getType().toString()) {
@@ -42,6 +48,7 @@ public class CollectedDeck extends CardDeck {
                 case "STINKWANZE":
                     stinkwanze++;
                     break;
+                default: break;
             }
         }
 

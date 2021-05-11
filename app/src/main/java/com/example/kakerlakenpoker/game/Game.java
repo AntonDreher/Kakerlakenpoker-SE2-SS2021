@@ -3,12 +3,13 @@ package com.example.kakerlakenpoker.game;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.player.Player;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
-    private ArrayList<Player> players;
+    private List<Player> players;
 
 
-    public Game(ArrayList<Player> players) {
+    public Game(List<Player> players) {
         this.players = players;
 
     }
@@ -18,6 +19,7 @@ public class Game {
      * @return aktueller Spieler (String)
      */
     public String getCurrentPlayer(){
+        //noch zu implementieren
         return null;
     }
 
@@ -35,32 +37,32 @@ public class Game {
      * Zeigt alle Karten der Spieler an (Collected Deck)
      */
     public void showCards(){
-
+    //noch zu implementieren
     }
 
     /**
      * Karte weitergeben oder behalten
      */
     public void challengeCard(){
-
+    //noch zu implementieren
     }
 
     /**
      * Prüft collected Deck ob Gewonnen oder Verloren
      */
     public void checkCollectedDeck(){
-
+    //noch zu implementieren
     }
 
     /**
      * Getter + Setter
      */
 
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(ArrayList<Player> players) {
+    public void setPlayers(List<Player> players) {
         this.players = players;
     }
 }

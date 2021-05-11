@@ -8,7 +8,14 @@ import com.example.kakerlakenpoker.card.CardDeck;
 
 public class HandDeck extends CardDeck {
 
-    int fledermaus = 0, fliege = 0, ratte = 0, scorpion = 0, kakerlake = 0, kroete = 0, spinne = 0, stinkwanze = 0;
+    int fledermaus = 0;
+    int fliege = 0;
+    int ratte = 0;
+    int scorpion = 0;
+    int kakerlake = 0;
+    int kroete = 0;
+    int spinne = 0;
+    int stinkwanze = 0;
 
     public void displayCard(){
         // Updatet die TextView in GameView
@@ -25,6 +32,7 @@ public class HandDeck extends CardDeck {
                 case "KROETE": kroete++; break;
                 case "SPINNE": spinne++; break;
                 case "STINKWANZE": stinkwanze++; break;
+                default:break;
             }
             // Set TextView mit den gezählten werten.
 

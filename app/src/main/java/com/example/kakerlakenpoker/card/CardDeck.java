@@ -8,7 +8,7 @@ import java.util.List;
  * Jedes Deck verfügt über eine ArrayList vom Typ Card
  */
 public abstract class CardDeck {
-    private  ArrayList<Card> deck = new ArrayList<>();
+    private  List<Card> deck = new ArrayList<>();
 
     /**
      * Fügt Karte der Liste hinzu
@@ -59,7 +59,7 @@ public abstract class CardDeck {
         return deck.size();
     }
 
-    public void setDeck(ArrayList<Card> deck) {
+    public void setDeck(List<Card> deck) {
         this.deck = deck;
     }
 }
