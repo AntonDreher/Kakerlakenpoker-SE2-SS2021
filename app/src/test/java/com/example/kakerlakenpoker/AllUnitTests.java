@@ -1,4 +1,4 @@
-package com.example.kakerlakenpoker.service;
+package com.example.kakerlakenpoker;
 
 import com.example.kakerlakenpoker.BuildGameUnitTest;
 import com.example.kakerlakenpoker.CardClassUnitTest;
