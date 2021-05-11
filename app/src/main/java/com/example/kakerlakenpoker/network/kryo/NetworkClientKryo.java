@@ -15,6 +15,7 @@ public class NetworkClientKryo implements NetworkClient, KryoNetComponent {
 
     public NetworkClientKryo() {
         client = new Client();
+        client.start();
     }
 
     public void registerClass(Class c) {
@@ -22,7 +23,6 @@ public class NetworkClientKryo implements NetworkClient, KryoNetComponent {
     }
 
     public void connect(String host) throws IOException {
-        client.start();
         client.connect(5000, host, 54555);
 
         client.addListener(new Listener() {
@@ -39,5 +39,9 @@ public class NetworkClientKryo implements NetworkClient, KryoNetComponent {
 
     public void sendMessage(BaseMessage message) {
         client.sendTCP(message);
+    }
+
+    public Client getClient() {
+        return client;
     }
 }

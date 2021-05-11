@@ -3,36 +3,54 @@ package com.example.kakerlakenpoker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kakerlakenpoker.network.NetworkUtils;
+import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class SearchLobbyActivity extends AppCompatActivity {
-    Intent intent;
-    FloatingActionButton floatingActionButton;
-    Button join;
-    EditText editTextSearchLobby;
+    private Intent intent;
+    private FloatingActionButton floatingActionButton;
+    private EditText editTextSearchLobby;
+    private RecyclerView recyclerView ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchlobbyview);
 
-        floatingActionButton = findViewById(R.id.floatingActionButtonEnterSearchLobby);
+        floatingActionButton = findViewById(R.id.floatingActionButtonSearchLobbyView);
         floatingActionButton.setOnClickListener((View view)->goBack());
 
-        join = findViewById(R.id.searchLobbyBtn);
-        join.setOnClickListener((View view)->joinUp());
+        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        //StrictMode.setThreadPolicy(policy);
 
-        editTextSearchLobby = findViewById(R.id.editTextSearchLobby);
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                GameClient.getInstance().getClient().sendMessage(new GetOpenLobbies());
+            }
+        };
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        thread.start();
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+
+        initRecyclerView();
+
     }
 
     public void goBack(){
@@ -40,13 +58,12 @@ public class SearchLobbyActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void joinUp(){
-        new Thread(() -> {
-            GameClient client = GameClient.getInstance();
-            client.init(editTextSearchLobby.getText().toString(), NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
-            Intent intent = new Intent(this, ShowPlayersInLobbyActivity.class);
-            startActivity(intent);
-        }).start();
+    public void initRecyclerView(){
+        recyclerView = findViewById(R.id.lobbiesRecyclerView);
+        Log.e("Thats the size", String.valueOf(GameClient.getInstance().getOpenLobbies().size()));
+        LobbiesRecyclerViewAdapter adapter = new LobbiesRecyclerViewAdapter(GameClient.getInstance().getOpenLobbies());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
