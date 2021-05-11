@@ -45,8 +45,7 @@ public class SearchLobbyActivity extends AppCompatActivity {
         try {
             thread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.exit(1);
+            Thread.currentThread().interrupt();
         }
 
 
