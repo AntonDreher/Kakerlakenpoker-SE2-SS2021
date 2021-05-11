@@ -6,10 +6,11 @@ import com.example.kakerlakenpoker.player.HandDeck;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.Test;
+
+
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+
 
 import java.util.ArrayList;
 
@@ -18,12 +19,12 @@ public class CardDeckUnitTest {
 
     @Before
     public void setUp(){
-        this.handDeck = new HandDeck();
+       handDeck = new HandDeck();
     }
 
     @After
     public void tearDown(){
-        this.handDeck = null;
+        handDeck = null;
     }
     @Test
     public void testSetDeckAndGetDeck(){

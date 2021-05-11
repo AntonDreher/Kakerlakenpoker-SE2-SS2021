@@ -4,9 +4,10 @@ import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.player.HandDeck;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
@@ -15,10 +16,14 @@ public class HandDeckUnitTest {
     HandDeck hand;
     ArrayList<Card> list = new ArrayList<>();
 
-    @BeforeEach
+    @Before
     public void setUp(){
         this.hand = new HandDeck();
 
+    }
+    @After
+    public void tearDown(){
+        this.hand = null;
     }
 
     @Test

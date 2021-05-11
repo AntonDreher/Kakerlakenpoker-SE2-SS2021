@@ -5,10 +5,9 @@ import com.example.kakerlakenpoker.card.Type;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+
 
 public class CardClassUnitTest {
     private Card one;
