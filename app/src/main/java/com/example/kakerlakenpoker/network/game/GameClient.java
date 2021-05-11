@@ -5,9 +5,11 @@ import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoined;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
 import com.example.kakerlakenpoker.network.dto.Lobby;
+import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
 import com.example.kakerlakenpoker.network.kryo.NetworkClientKryo;
 import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
+import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +35,8 @@ public class GameClient {
     public void init(String ip) {
         try {
             client = new NetworkClientKryo();
-            registerClasses();
+            RegisterHelper.registerClasses(client.getClient().getKryo());
+            //registerClasses();
             client.registerCallback(this::callback);
             client.connect(NetworkConstants.MAIN_SERVER_IP);
             client.sendMessage(new ClientJoined(ip));
@@ -49,6 +52,7 @@ public class GameClient {
         client.registerClass(ClientJoined.class);
         client.registerClass(ClientsInLobby.class);
         client.registerClass(ArrayList.class);
+        client.registerClass(OpenLobby.class);
     }
 
     private void callback(BaseMessage message){

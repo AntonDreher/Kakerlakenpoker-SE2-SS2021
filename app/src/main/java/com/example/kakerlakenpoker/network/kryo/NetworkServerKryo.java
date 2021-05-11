@@ -48,7 +48,11 @@ public class NetworkServerKryo implements NetworkServer, KryoNetComponent {
         this.registerClass(BaseMessage.class);
     }
 
-    public Connection[] getConnections(){
+    public Connection[] getConnections() {
         return server.getConnections();
+    }
+
+    public Server getServer() {
+        return server;
     }
 }

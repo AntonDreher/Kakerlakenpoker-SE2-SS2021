@@ -7,6 +7,7 @@ import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
+import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,9 +22,7 @@ public class MainServer {
 
         server.addListener(new ServerListener(this));
 
-        server.getKryo().register(GameClient.class);
-        server.getKryo().register(GetOpenLobbies.class);
-        server.getKryo().register(OpenLobby.class);
+        RegisterHelper.registerClasses(server.getKryo());
 
         server.start();
         server.bind(NetworkConstants.TCP_PORT);
@@ -31,7 +30,7 @@ public class MainServer {
 
     public void removeLobby(Connection connection){
         for(Lobby lobby: openLobbies){
-            if(lobby.getHostIP().equals(connection.getRemoteAddressTCP())) openLobbies.remove(lobby);
+            if(lobby.getHostIP().equals(connection.getRemoteAddressTCP().toString())) openLobbies.remove(lobby);
         }
     }
 

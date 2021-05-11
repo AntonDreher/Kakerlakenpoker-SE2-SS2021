@@ -40,4 +40,8 @@ public class NetworkClientKryo implements NetworkClient, KryoNetComponent {
     public void sendMessage(BaseMessage message) {
         client.sendTCP(message);
     }
+
+    public Client getClient() {
+        return client;
+    }
 }

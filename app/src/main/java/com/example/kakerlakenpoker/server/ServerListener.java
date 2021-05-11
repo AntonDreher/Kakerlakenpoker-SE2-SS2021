@@ -30,7 +30,7 @@ public class ServerListener extends Listener {
 
     @Override
     public void disconnected(Connection connection) {
-        Log.info("Client connected: "+ connection.getRemoteAddressTCP());
+        Log.info("Client disconnected: "+ connection.getRemoteAddressTCP());
         server.removeLobby(connection);
     }
 }

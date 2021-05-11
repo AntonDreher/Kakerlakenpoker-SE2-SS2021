@@ -9,6 +9,7 @@ import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoined;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
 import com.example.kakerlakenpoker.network.kryo.NetworkServerKryo;
+import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class GameServer {
         try {
             this.ip = ip;
             server.registerCallback(this::callback);
-            this.registerClasses();
+            //this.registerClasses();
+            RegisterHelper.registerClasses(server.getServer().getKryo());
             server.start();
             Log.info("Server started successful");
         }catch(IOException e){

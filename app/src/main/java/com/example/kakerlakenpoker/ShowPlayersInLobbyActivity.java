@@ -26,7 +26,7 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
         client = GameClient.getInstance();
         ArrayList<String> arrayList = client.getIpList();
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, arrayList);
-        currentPlayersInLobby.setAdapter(arrayAdapter);
+        //currentPlayersInLobby.setAdapter(arrayAdapter);
     }
 
 
