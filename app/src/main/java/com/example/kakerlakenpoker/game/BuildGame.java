@@ -19,16 +19,17 @@ public class BuildGame {
 
     /**
      * Wenn ein player dem Spiel hinzugefügt wurde
+     *
      * @param name Name, der in der Lobby eingetragen wurde
      */
-    public void addServerPlayer(String name){
-        players.add(new Player(name,new HandDeck(),new CollectedDeck()));
+    public void addServerPlayer(String name) {
+        players.add(new Player(name, new HandDeck(), new CollectedDeck()));
     }
 
     /**
      * Verteilt alle 64 Karten auf die Player
      */
-    public void distributeCards(){
+    public void distributeCards() {
         Collections.shuffle(gameDeck.getDeck());
         for (int i = 0; i < players.size(); i++) {
             for (int j = 0; j < 16; j++) {
@@ -40,13 +41,13 @@ public class BuildGame {
 
     /**
      * Erzeugt ein neues Spiel
+     *
      * @return neues spiel mit 4 Spielen in denen 16 Karten verteil wurden
      */
-    public Game buildGame(){
-        if(players.size()<4){
-            throw  new IllegalArgumentException ("Need more players");
-        }
-        else {
+    public Game buildGame() {
+        if (players.size() < 4) {
+            throw new IllegalArgumentException("Need more players");
+        } else {
             distributeCards();
             return new Game(players);
         }
@@ -61,13 +62,5 @@ public class BuildGame {
 
     public void setPlayers(List<Player> players) {
         this.players = (ArrayList<Player>) players;
-    }
-
-    public GameDeck getGameDeck() {
-        return gameDeck;
-    }
-
-    public void setGameDeck(GameDeck gameDeck) {
-        this.gameDeck = gameDeck;
     }
 }

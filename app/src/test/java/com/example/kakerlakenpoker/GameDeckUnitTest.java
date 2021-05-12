@@ -28,4 +28,5 @@ public class GameDeckUnitTest {
         IllegalArgumentException message= Assertions.assertThrows(IllegalArgumentException.class, () -> this.gameDeck.addCard(new Card(Type.KAKERLAKE)));
         Assertions.assertEquals("java.lang.IllegalArgumentException: Cannot add",message.toString());
     }
+
 }
