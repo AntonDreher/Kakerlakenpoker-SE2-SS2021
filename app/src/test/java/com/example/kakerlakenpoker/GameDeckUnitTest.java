@@ -3,20 +3,17 @@ package com.example.kakerlakenpoker;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.GameDeck;
 import com.example.kakerlakenpoker.card.Type;
-import com.example.kakerlakenpoker.player.HandDeck;
 
-import org.junit.jupiter.api.AfterEach;
+import org.junit.Test;
+import org.junit.After;
+
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.NoSuchElementException;
 
 public class GameDeckUnitTest {
     GameDeck gameDeck;
 
 
-    @AfterEach
+    @After
     public void tearDown(){
         this.gameDeck = null;
     }
@@ -31,4 +28,5 @@ public class GameDeckUnitTest {
         IllegalArgumentException message= Assertions.assertThrows(IllegalArgumentException.class, () -> this.gameDeck.addCard(new Card(Type.KAKERLAKE)));
         Assertions.assertEquals("java.lang.IllegalArgumentException: Cannot add",message.toString());
     }
+
 }

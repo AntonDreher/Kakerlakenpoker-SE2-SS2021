@@ -2,19 +2,21 @@ package com.example.kakerlakenpoker;
 
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+
 
 public class CardClassUnitTest {
     private Card one;
 
-    @BeforeEach
+    @Before
     public void setUp(){
         this.one = new Card(Type.KROETE);
     }
-    @AfterEach
+    @After
     public void tearDown(){
         this.one = null;
     }

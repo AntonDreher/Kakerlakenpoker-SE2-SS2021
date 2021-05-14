@@ -4,23 +4,23 @@ import com.example.kakerlakenpoker.player.CollectedDeck;
 import com.example.kakerlakenpoker.player.HandDeck;
 import com.example.kakerlakenpoker.player.Player;
 
-import org.junit.jupiter.api.AfterEach;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 public class PlayerClassUnitTest {
     HandDeck handDeck;
     CollectedDeck collectedDeck;
     Player player;
 
-    @BeforeEach
+    @Before
     public void setUp(){
        this.handDeck = new HandDeck();
         this.collectedDeck = new CollectedDeck();
         this.player = new Player("Testi",this.handDeck,this.collectedDeck);
     }
-    @AfterEach
+    @After
     public void tearDown(){
         this.handDeck = null;
         this.collectedDeck = null;
