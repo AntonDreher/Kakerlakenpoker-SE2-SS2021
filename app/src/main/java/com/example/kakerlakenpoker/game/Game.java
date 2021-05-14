@@ -18,7 +18,7 @@ public class Game {
      * gibt Aktuell Spielenden Spieler zurück
      * @return aktueller Spieler (String)
      */
-    public String getCurrentPlayer(){
+    public Player getCurrentPlayer(){
         //noch zu implementieren
         return null;
     }
