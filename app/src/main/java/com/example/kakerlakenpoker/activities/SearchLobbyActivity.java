@@ -45,8 +45,6 @@ public class SearchLobbyActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-
-
         initRecyclerView();
 
     }

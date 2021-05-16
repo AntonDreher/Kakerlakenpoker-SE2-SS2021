@@ -1,13 +1,10 @@
 package com.example.kakerlakenpoker.activities;
 
-import android.app.Activity;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,10 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.NetworkUtils;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
 import com.example.kakerlakenpoker.network.game.GameClient;
-
-import java.util.concurrent.ExecutionException;
 
 public class EnterUserNameActivity extends AppCompatActivity {
     ProgressDialog dialog;

@@ -1,9 +1,7 @@
 package com.example.kakerlakenpoker.activities;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.kakerlakenpoker.R;
 
 public class MultiplayerMainActivity extends AppCompatActivity {
