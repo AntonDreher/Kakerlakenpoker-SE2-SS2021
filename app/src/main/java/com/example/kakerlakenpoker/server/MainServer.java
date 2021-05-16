@@ -23,7 +23,6 @@ public class MainServer {
         server.addListener(new ServerListener(this));
 
         RegisterHelper.registerClasses(server.getKryo());
-
         server.start();
         server.bind(NetworkConstants.TCP_PORT);
     }
