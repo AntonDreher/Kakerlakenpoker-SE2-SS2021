@@ -58,7 +58,7 @@ public class SearchLobbyActivity extends AppCompatActivity {
 
     public void initRecyclerView(){
         recyclerView = findViewById(R.id.lobbiesRecyclerView);
-        Log.e("Thats the size", String.valueOf(GameClient.getInstance().getOpenLobbies().size()));
+        Log.e("LobbyCount: ", String.valueOf(GameClient.getInstance().getOpenLobbies().size()));
         LobbiesRecyclerViewAdapter adapter = new LobbiesRecyclerViewAdapter(GameClient.getInstance().getOpenLobbies());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

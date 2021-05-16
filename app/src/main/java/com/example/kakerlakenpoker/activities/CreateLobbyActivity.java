@@ -52,11 +52,9 @@ public class CreateLobbyActivity extends AppCompatActivity {
 
             GameClient client = GameClient.getInstance();
             client.getClient().sendMessage(new OpenLobby(lobby));
-            client.reConnect("localhost");
+            client.connect("localhost");
 
         }).start();
-
-
 
 
         intent = new Intent(this, ShowPlayersInLobbyActivity.class);

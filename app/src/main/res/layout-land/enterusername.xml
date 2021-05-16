@@ -48,7 +48,7 @@
         app:layout_constraintVertical_bias="0.096" />
 
     <Button
-        android:id="@+id/GoBtn"
+        android:id="@+id/goBtn"
         android:layout_width="93dp"
         android:layout_height="41dp"
         android:layout_marginTop="19sp"

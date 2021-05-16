@@ -36,23 +36,14 @@ public class GameClient {
         try {
             client = new NetworkClientKryo();
             RegisterHelper.registerClasses(client.getClient().getKryo());
-            //registerClasses();
             client.registerCallback(this::callback);
             client.connect(NetworkConstants.MAIN_SERVER_IP);
-            client.sendMessage(new ClientJoined(ip));
+            client.sendMessage(new ClientJoined(NetworkConstants.MAIN_SERVER_IP));
             Log.info(ip + " sent to " + NetworkConstants.MAIN_SERVER_IP);
         }catch(IOException e){
             Log.info(e.getMessage());
             Log.info("Could not connect to host " + NetworkConstants.MAIN_SERVER_IP);
         }
-    }
-
-    private void registerClasses(){
-        client.registerClass(BaseMessage.class);
-        client.registerClass(ClientJoined.class);
-        client.registerClass(ClientsInLobby.class);
-        client.registerClass(ArrayList.class);
-        client.registerClass(OpenLobby.class);
     }
 
     private void callback(BaseMessage message){
@@ -68,7 +59,7 @@ public class GameClient {
         return ipList;
     }
 
-    public void reConnect(String ip){
+    public void connect(String ip){
         try {
             client.connect(ip);
         } catch (IOException e) {

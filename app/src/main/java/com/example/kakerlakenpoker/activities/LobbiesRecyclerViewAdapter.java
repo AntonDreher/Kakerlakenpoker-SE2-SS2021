@@ -76,7 +76,7 @@ public class LobbiesRecyclerViewAdapter extends RecyclerView.Adapter<LobbiesRecy
     public void joinUp(ViewHolder viewHolder, int position) {
         new Thread(() -> {
             GameClient client = GameClient.getInstance();
-            client.reConnect(lobbies.get(position).getHostIP());
+            client.connect(lobbies.get(position).getHostIP());
             Intent intent = new Intent(viewHolder.context, ShowPlayersInLobbyActivity.class);
             viewHolder.context.startActivity(intent);
         }).start();

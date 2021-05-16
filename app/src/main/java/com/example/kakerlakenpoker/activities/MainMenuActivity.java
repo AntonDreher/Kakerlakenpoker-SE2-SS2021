@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.NetworkUtils;
+import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
 import com.example.kakerlakenpoker.network.game.GameClient;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -33,16 +34,12 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void searchLobby() {
-        //GameClient.getInstance().getClient().sendMessage(new GetOpenLobbies());
+        GameClient.getInstance().getClient().sendMessage(new GetOpenLobbies());
         intent = new Intent(MainMenuActivity.this, SearchLobbyActivity.class);
         startActivity(intent);
     }
 
     public void createLobby() {
-        new Thread(() -> {
-            GameClient client = GameClient.getInstance();
-            client.init(NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
-        }).start();
 
         intent = new Intent(MainMenuActivity.this, CreateLobbyActivity.class);
         startActivity(intent);
