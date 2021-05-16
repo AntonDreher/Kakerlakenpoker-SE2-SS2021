@@ -2,17 +2,14 @@ package com.example.kakerlakenpoker;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,7 +22,7 @@ public class SearchLobbyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.searchlobbyview);
+        setContentView(R.layout.searchlobby);
 
         floatingActionButton = findViewById(R.id.floatingActionButtonSearchLobbyView);
         floatingActionButton.setOnClickListener((View view)->goBack());
@@ -54,7 +51,7 @@ public class SearchLobbyActivity extends AppCompatActivity {
     }
 
     public void goBack(){
-        intent = new Intent(this, MainActivity.class);
+        intent = new Intent(this, MainMenuActivity.class);
         startActivity(intent);
     }
 

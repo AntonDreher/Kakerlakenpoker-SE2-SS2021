@@ -35,7 +35,7 @@ public class CreateLobbyActivity extends AppCompatActivity {
     }
 
     public void goBack(){
-        intent = new Intent(this, MainActivity.class);
+        intent = new Intent(this, MainMenuActivity.class);
         startActivity(intent);
     }
 
