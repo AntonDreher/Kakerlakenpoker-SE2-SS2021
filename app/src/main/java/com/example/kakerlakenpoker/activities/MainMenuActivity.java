@@ -43,6 +43,7 @@ public class MainMenuActivity extends AppCompatActivity {
             GameClient client = GameClient.getInstance();
             client.init(NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
         }).start();
+
         intent = new Intent(MainMenuActivity.this, CreateLobbyActivity.class);
         startActivity(intent);
     }
