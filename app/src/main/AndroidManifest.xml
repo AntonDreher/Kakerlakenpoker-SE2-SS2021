@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".ShowPlayersInLobbyActivity"></activity>
+        <activity android:name=".activities.ShowPlayersInLobbyActivity"></activity>
         <activity
-            android:name=".MainMenuActivity"
+            android:name=".activities.MainMenuActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,13 +20,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MultiplayerMainActivity"
+            android:name=".activities.MultiplayerMainActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".SearchLobbyActivity"
+            android:name=".activities.SearchLobbyActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".CreateLobbyActivity"
+            android:name=".activities.CreateLobbyActivity"
             android:screenOrientation="landscape" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

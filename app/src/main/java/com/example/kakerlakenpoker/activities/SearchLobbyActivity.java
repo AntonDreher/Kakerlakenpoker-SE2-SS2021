@@ -1,4 +1,4 @@
-package com.example.kakerlakenpoker;
+package com.example.kakerlakenpoker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

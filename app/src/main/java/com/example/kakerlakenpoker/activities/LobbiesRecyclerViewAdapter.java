@@ -1,4 +1,4 @@
-package com.example.kakerlakenpoker;
+package com.example.kakerlakenpoker.activities;
 
 
 import android.content.Context;
@@ -11,11 +11,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kakerlakenpoker.network.NetworkUtils;
+import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.dto.Lobby;
 import com.example.kakerlakenpoker.network.game.GameClient;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class LobbiesRecyclerViewAdapter extends RecyclerView.Adapter<LobbiesRecyclerViewAdapter.ViewHolder> {
