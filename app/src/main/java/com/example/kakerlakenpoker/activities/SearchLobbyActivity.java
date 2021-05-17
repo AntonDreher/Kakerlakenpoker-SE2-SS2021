@@ -28,9 +28,6 @@ public class SearchLobbyActivity extends AppCompatActivity {
         floatingActionButton = findViewById(R.id.floatingActionButtonSearchLobbyView);
         floatingActionButton.setOnClickListener((View view)->goBack());
 
-        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        //StrictMode.setThreadPolicy(policy);
-
         Thread thread = new Thread(){
             @Override
             public void run() {

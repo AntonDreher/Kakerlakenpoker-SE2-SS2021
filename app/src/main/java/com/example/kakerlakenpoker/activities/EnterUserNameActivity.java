@@ -28,8 +28,6 @@ public class EnterUserNameActivity extends AppCompatActivity {
         Button goButton = (Button) findViewById(R.id.goBtn);
         goButton.setOnClickListener((View view) -> connectToMainServer());
 
-
-
     }
 
     public void connectToMainServer() {

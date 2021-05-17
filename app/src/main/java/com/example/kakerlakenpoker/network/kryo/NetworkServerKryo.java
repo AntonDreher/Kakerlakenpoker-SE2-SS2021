@@ -6,6 +6,7 @@ import com.esotericsoftware.kryonet.Server;
 import com.example.kakerlakenpoker.network.Callback;
 import com.example.kakerlakenpoker.network.NetworkServer;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
+import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
 
 import java.io.IOException;
 
@@ -40,8 +41,9 @@ public class NetworkServerKryo implements NetworkServer, KryoNetComponent {
     }
 
     public void broadcastMessage(BaseMessage message) {
-        for (Connection connection : server.getConnections())
+        for (Connection connection : server.getConnections()) {
             connection.sendTCP(message);
+        }
     }
 
     private void registerClasses(){

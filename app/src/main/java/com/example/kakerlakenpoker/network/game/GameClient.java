@@ -50,6 +50,7 @@ public class GameClient {
         if(message instanceof  ClientsInLobby){
             ipList.clear();
             ipList.addAll(((ClientsInLobby) message).ipFromClients);
+            Log.info(ipList.toString());
         } else if (message instanceof SendOpenLobbies){
             this.openLobbies = ((SendOpenLobbies) message).getLobbies();
         }
