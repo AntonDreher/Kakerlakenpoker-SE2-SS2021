@@ -1,6 +1,7 @@
 package com.example.kakerlakenpoker.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public class ShowPlayersInLobbyActivity extends AppCompatActivity {
     RecyclerView currentPlayersInLobby;
     GameClient client;
-    GameServer server;
+    ArrayList<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_players_in_lobby);
         currentPlayersInLobby = (RecyclerView) findViewById(R.id.RecyclerViewCurrentPlayersInLobby);
         client = GameClient.getInstance();
+        currentPlayersInLobby.setLayoutManager(new LinearLayoutManager(this));
         PlayersInLobbyRecyclerViewAdapter adapter = new PlayersInLobbyRecyclerViewAdapter(client.getIpList());
         currentPlayersInLobby.setAdapter(adapter);
     }

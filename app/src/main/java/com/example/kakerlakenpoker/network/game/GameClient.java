@@ -1,6 +1,7 @@
 package com.example.kakerlakenpoker.network.game;
 
 import com.esotericsoftware.minlog.Log;
+import com.example.kakerlakenpoker.activities.PlayersInLobbyRecyclerViewAdapter;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoined;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
@@ -20,7 +21,7 @@ public class GameClient {
     private NetworkClientKryo client;
     private ArrayList<String> ipList = new ArrayList<>();
     private ArrayList<Lobby> openLobbies = new ArrayList<>();
-
+    private PlayersInLobbyRecyclerViewAdapter adapter;
     private GameClient(){
 
     }
@@ -40,6 +41,7 @@ public class GameClient {
             client.connect(NetworkConstants.MAIN_SERVER_IP);
             client.sendMessage(new ClientJoined(NetworkConstants.MAIN_SERVER_IP));
             Log.info(ip + " sent to " + NetworkConstants.MAIN_SERVER_IP);
+            adapter = new PlayersInLobbyRecyclerViewAdapter(getIpList());
         }catch(IOException e){
             Log.info(e.getMessage());
             Log.info("Could not connect to host " + NetworkConstants.MAIN_SERVER_IP);
@@ -75,4 +77,5 @@ public class GameClient {
     public ArrayList<Lobby> getOpenLobbies() {
         return openLobbies;
     }
+
 }

@@ -18,8 +18,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class SearchLobbyActivity extends AppCompatActivity {
     private Intent intent;
     private FloatingActionButton floatingActionButton;
-    private EditText editTextSearchLobby;
     private RecyclerView recyclerView ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

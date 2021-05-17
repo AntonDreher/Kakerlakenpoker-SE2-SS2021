@@ -1,5 +1,6 @@
 package com.example.kakerlakenpoker.activities;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +18,17 @@ public class PlayersInLobbyRecyclerViewAdapter extends RecyclerView.Adapter<Play
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView playerName;
+        private final Context context;
 
         public ViewHolder(View view){
             super(view);
             playerName = view.findViewById(R.id.playerID);
+            context = view.getContext();
         }
 
         public TextView getPlayerName(){ return playerName;}
+
+        public Context getContext(){ return context;}
     }
 
     public PlayersInLobbyRecyclerViewAdapter(ArrayList<String> playersInLobby){
@@ -39,7 +44,7 @@ public class PlayersInLobbyRecyclerViewAdapter extends RecyclerView.Adapter<Play
 
     @Override
     public void onBindViewHolder(PlayersInLobbyRecyclerViewAdapter.ViewHolder viewholder, final int position) {
-        viewholder.getPlayerName().setText(String.valueOf(playersInLobby.get(position)));
+        viewholder.getPlayerName().setText(playersInLobby.get(position));
     }
 
     @Override
