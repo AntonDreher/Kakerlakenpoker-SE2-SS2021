@@ -1,5 +1,8 @@
 package com.example.kakerlakenpoker.player;
 
+import com.example.kakerlakenpoker.playerstatus.Enums;
+import com.example.kakerlakenpoker.playerstatus.Status;
+
 /**
  * Repräsentiert einen Spieler.
  * Diese Klasse verwendet die Klasse HandDeck
@@ -8,16 +11,18 @@ public class Player {
     private String name;
     private HandDeck handDeck;
     private CollectedDeck collectedDeck;
+    private Status status;
 
     /**
      * Konstruktor für Klasse Player
      * @param name repräsentiert den Spieler
      * @param handDeck repräsentieren seine Handkarten
      */
-    public Player(String name, HandDeck handDeck, CollectedDeck collectedDeck) {
+    public Player(String name, HandDeck handDeck, CollectedDeck collectedDeck, Status status) {
         this.name = name;
         this.handDeck = handDeck;
         this.collectedDeck = collectedDeck;
+        status.setStart();
     }
 
     /**
@@ -66,5 +71,11 @@ public class Player {
      */
     public void setCollectedDeck(CollectedDeck collectedDeck) {
         this.collectedDeck = collectedDeck;
+    }
+
+    public Status getStatus() { return this.status; }
+
+    public void setStatus (Status status) {
+        this.status = status;
     }
 }
