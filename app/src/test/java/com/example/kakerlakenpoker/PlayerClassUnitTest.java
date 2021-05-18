@@ -3,6 +3,7 @@ package com.example.kakerlakenpoker;
 import com.example.kakerlakenpoker.player.CollectedDeck;
 import com.example.kakerlakenpoker.player.HandDeck;
 import com.example.kakerlakenpoker.player.Player;
+import com.example.kakerlakenpoker.playerstatus.Status;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,12 +14,13 @@ public class PlayerClassUnitTest {
     HandDeck handDeck;
     CollectedDeck collectedDeck;
     Player player;
+    Status status;
 
     @Before
     public void setUp(){
        this.handDeck = new HandDeck();
         this.collectedDeck = new CollectedDeck();
-        this.player = new Player("Testi",this.handDeck,this.collectedDeck);
+        this.player = new Player("Testi",this.handDeck,this.collectedDeck, this.status);
     }
     @After
     public void tearDown(){

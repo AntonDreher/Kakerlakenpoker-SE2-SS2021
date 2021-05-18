@@ -4,6 +4,7 @@ import com.example.kakerlakenpoker.card.GameDeck;
 import com.example.kakerlakenpoker.player.CollectedDeck;
 import com.example.kakerlakenpoker.player.HandDeck;
 import com.example.kakerlakenpoker.player.Player;
+import com.example.kakerlakenpoker.playerstatus.Status;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +24,7 @@ public class BuildGame {
      * @param name Name, der in der Lobby eingetragen wurde
      */
     public void addServerPlayer(String name) {
-        players.add(new Player(name, new HandDeck(), new CollectedDeck()));
+        players.add(new Player(name, new HandDeck(), new CollectedDeck(), new Status()));
     }
 
     /**

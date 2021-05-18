@@ -1,16 +1,24 @@
-package com.example.kakerlakenpoker.playerstatus;
+ package com.example.kakerlakenpoker.playerstatus;
 
-import com.example.kakerlakenpoker.player.Player;
 
-public class Status {
+ import com.example.kakerlakenpoker.game.Game;
+ import com.example.kakerlakenpoker.player.Player;
+
+ public class Status {
     Enums enums;
-    Player p1;
-    Player p2;
-    Player p3;
-    Player p4;
+    Game game;
+
 
     public Status(Enums enums) {
         this.enums = enums;
+    }
+
+    public Status() {
+        this.enums = enums.WARTET;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public Enums getWartet() {
@@ -41,7 +49,13 @@ public class Status {
         setWartet();
     }
 
-    public void diceRoll() {
+    final Player p1 = game.getPlayers().get(0);
+    final Player p2 = game.getPlayers().get(1);
+    final Player p3 = game.getPlayers().get(2);
+    final Player p4 = game.getPlayers().get(3);
+
+
+     public void diceRoll() {
         int startet = (int) (Math.random() * 100) % 3;
 
         switch (startet) {
@@ -80,6 +94,6 @@ public class Status {
         }
     }
 
-    
+
 
 }

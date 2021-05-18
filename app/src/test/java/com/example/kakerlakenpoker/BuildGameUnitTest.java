@@ -7,6 +7,7 @@ import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.player.CollectedDeck;
 import com.example.kakerlakenpoker.player.HandDeck;
 import com.example.kakerlakenpoker.player.Player;
+import com.example.kakerlakenpoker.playerstatus.Status;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -85,7 +86,7 @@ public class BuildGameUnitTest {
     }
     @Test
     public void testsetPlayer(){
-        list.add(new Player("testi",new HandDeck(),new CollectedDeck()));
+        list.add(new Player("testi",new HandDeck(),new CollectedDeck(), new Status()));
         buildGame.setPlayers(list);
         Assert.assertEquals(1,buildGame.getPlayers().size());
     }
