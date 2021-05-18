@@ -23,6 +23,22 @@
         app:maxImageSize="50dp"
         android:focusable="true" />
 
+    <Button
+        android:id="@+id/readyState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="234dp"
+        android:layout_marginLeft="234dp"
+        android:layout_marginTop="317dp"
+        android:layout_marginEnd="409dp"
+        android:layout_marginRight="409dp"
+        android:layout_marginBottom="46dp"
+        android:text="Ready"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ListView
         android:id="@+id/ListViewClientsInLobby"
         android:layout_width="match_parent"
@@ -33,6 +49,9 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0" >
+
+
+    </ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

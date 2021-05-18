@@ -5,9 +5,12 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.Callback;
+import com.example.kakerlakenpoker.network.dto.AllPlayersReady;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoined;
+import com.example.kakerlakenpoker.network.dto.ClientPlayersReady;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
+import com.example.kakerlakenpoker.network.dto.PlayersReady;
 import com.example.kakerlakenpoker.network.kryo.NetworkServerKryo;
 import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
 
@@ -20,6 +23,8 @@ public class GameServer {
     private NetworkServerKryo server;
     private String ip;
     private boolean waitingForClients = true;
+    private int playersReady = 0;
+    private final static int PLAYERS = 4;
 
     private GameServer(){
     }
@@ -60,6 +65,12 @@ public class GameServer {
                 Log.info(connection.getRemoteAddressTCP().toString());
             }
             server.broadcastMessage(new ClientsInLobby(ipList));
+        } else if (message instanceof PlayersReady) {
+            playersReady++;
+            server.broadcastMessage(new ClientPlayersReady(playersReady));
+            if(playersReady == PLAYERS){
+                server.broadcastMessage(new AllPlayersReady());
+            }
         }
     }
 

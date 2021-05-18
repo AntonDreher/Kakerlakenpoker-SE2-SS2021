@@ -3,10 +3,13 @@ package com.example.kakerlakenpoker.network.kryo;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.util.IntArray;
 import com.example.kakerlakenpoker.card.GameDeck;
+import com.example.kakerlakenpoker.network.dto.AllPlayersReady;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoined;
+import com.example.kakerlakenpoker.network.dto.ClientPlayersReady;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
 import com.example.kakerlakenpoker.network.dto.Lobby;
+import com.example.kakerlakenpoker.network.dto.PlayersReady;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
@@ -20,12 +23,6 @@ public class RegisterHelper {
     private RegisterHelper(){}
 
     public static void registerClasses(Kryo kryo){
-        kryo.register(Array.class);
-        kryo.register(IntArray.class);
-        kryo.register(ArrayList.class);
-        kryo.register(int[].class);
-        kryo.register(Object[].class);
-
         kryo.register(BaseMessage.class);
         kryo.register(ClientJoined.class);
         kryo.register(ClientsInLobby.class);
@@ -37,6 +34,15 @@ public class RegisterHelper {
         kryo.register(GameDeck.class);
         kryo.register(GameServer.class);
         kryo.register(SendOpenLobbies.class);
+        kryo.register(PlayersReady.class);
+        kryo.register(ClientPlayersReady.class);
+        kryo.register(AllPlayersReady.class);
+
+        kryo.register(Array.class);
+        kryo.register(IntArray.class);
+        kryo.register(ArrayList.class);
+        kryo.register(int[].class);
+        kryo.register(Object[].class);
 
     }
 }
