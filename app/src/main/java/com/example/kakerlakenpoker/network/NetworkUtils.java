@@ -14,7 +14,7 @@ import java.util.Enumeration;
 public class NetworkUtils {
     private static NetworkServerKryo server;
 
-    public static String getIpAddressFromDevice(Context context){
+    public static String getIpAddressFromDevice(){
         try {
             for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
                 NetworkInterface intf = en.nextElement();

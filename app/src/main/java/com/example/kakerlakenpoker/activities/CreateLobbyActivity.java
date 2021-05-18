@@ -51,17 +51,17 @@ public class CreateLobbyActivity extends AppCompatActivity {
         Thread startServer =
         new Thread(() -> {
             server = GameServer.getInstance();
-            server.init(NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
+            server.init(NetworkUtils.getIpAddressFromDevice());
         });
         startServer.start();
         startServer.join();
 
         Thread connectClient = new Thread(() -> {
-            Lobby lobby = new Lobby(inputLobbyName.getText().toString(),NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
+            Lobby lobby = new Lobby(inputLobbyName.getText().toString(),NetworkUtils.getIpAddressFromDevice());
             GameClient client = GameClient.getInstance();
             client.getClient().sendMessage(new OpenLobby(lobby));
             client.connect("localhost");
-            client.getClient().sendMessage(new ClientJoined(NetworkUtils.getIpAddressFromDevice(getApplicationContext())));
+            client.getClient().sendMessage(new ClientJoined(NetworkUtils.getIpAddressFromDevice()));
         });
 
         connectClient.start();
