@@ -1,5 +1,7 @@
 package com.example.kakerlakenpoker.game;
 
+import android.util.Log;
+
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.player.Player;
 import java.util.ArrayList;
@@ -7,8 +9,12 @@ import java.util.List;
 
 public class Game {
     private List<Player> players;
+    Card playcard;
 
+    public Game(){
 
+    }
+    //eventuell besser einfach einen setter dafür verwenden!
     public Game(List<Player> players) {
         this.players = players;
 
@@ -43,8 +49,11 @@ public class Game {
     /**
      * Karte weitergeben oder behalten
      */
-    public void challengeCard(){
-    //noch zu implementieren
+    public void challengeCard( Player otherplayer, String playcard, String guess){
+
+        // Checkt die Funktion!
+        Log.e("","" + playcard + " " + guess);
+
     }
 
     /**
@@ -65,4 +74,17 @@ public class Game {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
+
+    public List<Player> getOtherPlayers(){
+       // this.players.remove(); entferne meinen Name ausder Liste und gibt mir nur die Gegner!
+        return players;}
+
+     public Player getPlayerWithName(String name){
+         for(int i = 0; i<this.players.size(); i++){
+             if(players.get(i).getName().contains(name)){
+                 return players.get(i);
+             }
+         }
+        return null;
+     }
 }

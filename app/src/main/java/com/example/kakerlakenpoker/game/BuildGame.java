@@ -1,5 +1,7 @@
 package com.example.kakerlakenpoker.game;
 
+import android.widget.TextView;
+
 import com.example.kakerlakenpoker.card.GameDeck;
 import com.example.kakerlakenpoker.player.CollectedDeck;
 import com.example.kakerlakenpoker.player.HandDeck;
@@ -53,6 +55,10 @@ public class BuildGame {
             return new Game(players);
         }
     }
+    // Routine, die den Text von den View immer aktualisiert.
+    public void updateCurrentCount(Player player){
+        player.getHandDeck().displayCard();
+    }
 
     /**
      * Setter + Getter Methoden
@@ -64,4 +70,8 @@ public class BuildGame {
     public void setPlayers(List<Player> players) {
         this.players = (ArrayList<Player>) players;
     }
+
+
+
+
 }
