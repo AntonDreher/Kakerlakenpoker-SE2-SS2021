@@ -24,8 +24,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:maxImageSize="50dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerViewCurrentPlayersInLobby"
+    <ListView
+        android:id="@+id/ListViewCurrentPlayersInLobby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbars="horizontal" />

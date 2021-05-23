@@ -1,5 +1,6 @@
 package com.example.kakerlakenpoker.network.game;
 
+
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoined;
@@ -74,5 +75,6 @@ public class GameClient {
     public ArrayList<Lobby> getOpenLobbies() {
         return openLobbies;
     }
+
 
 }
