@@ -6,7 +6,6 @@ import com.esotericsoftware.kryonet.Server;
 import com.example.kakerlakenpoker.network.Callback;
 import com.example.kakerlakenpoker.network.NetworkServer;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
 
 import java.io.IOException;
 

@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class IpListAdapter extends ArrayAdapter<String> {
-    public IpListAdapter(Context context, ArrayList<String> ipList){
+    public IpListAdapter(Context context, List<String> ipList){
         super(context, 0, ipList);
     }
 

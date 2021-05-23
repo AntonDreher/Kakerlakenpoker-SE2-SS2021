@@ -3,7 +3,7 @@ package com.example.kakerlakenpoker.network.dto;
 import java.util.List;
 
 public class ClientsInLobby extends BaseMessage {
-    public List ipFromClients;
+    public List<String> ipFromClients;
 
     public ClientsInLobby(){
 

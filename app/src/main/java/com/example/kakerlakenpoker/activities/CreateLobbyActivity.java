@@ -51,7 +51,7 @@ public class CreateLobbyActivity extends AppCompatActivity {
         Thread startServer =
         new Thread(() -> {
             server = GameServer.getInstance();
-            server.init(NetworkUtils.getIpAddressFromDevice());
+            server.init();
         });
         startServer.start();
         startServer.join();

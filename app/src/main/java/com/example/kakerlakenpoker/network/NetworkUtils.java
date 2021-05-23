@@ -1,7 +1,5 @@
 package com.example.kakerlakenpoker.network;
 
-import android.content.Context;
-
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.network.kryo.NetworkServerKryo;
 

@@ -27,7 +27,7 @@ public class GameServer {
         return instance;
     }
 
-    public void init(String ip){
+    public void init(){
         server = new NetworkServerKryo();
         try {
             RegisterHelper.registerClasses(server.getServer().getKryo());
