@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class DragandDropUnitTests {
 
 
+    //Test folgen, nachdem die visuelle Betrachtung der View passt und die Funktionalität bestätigt wurde.
     HandDeck hand;
     ArrayList<Card> list = new ArrayList<>();
 

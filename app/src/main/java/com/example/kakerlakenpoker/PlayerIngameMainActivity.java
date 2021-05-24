@@ -32,11 +32,16 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     LinearLayout dragView1;
     LinearLayout dropViewPlayer1;
     LinearLayout popUp;
+    LinearLayout messageview;
 
     Button sendChallange;
     Button goBack;
     EditText writeCardText;
     Spinner choosePlayer;
+
+    //TextViews für die ausgabe der vorläufigen zahlen oder Nachrichten
+    TextView messageText;
+    TextView krötenView;
 
     String playedcard;
     String guessText;
@@ -47,6 +52,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     List a = new ArrayList<>();
 
     Game game;
+    Player me;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -54,11 +60,14 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_ingameview);
 
-
         gameplay = new Game();
+        messageText = (TextView) findViewById(R.id.messageText);
+        krötenView = (TextView) findViewById(R.id.krotenView);
 
         //init des popUp Fensters
+        messageview = (LinearLayout) findViewById(R.id.notificationView);
         popUp = (LinearLayout)  findViewById(R.id.popupview);
+        messageview.setVisibility(View.INVISIBLE);
         popUp.setVisibility(View.INVISIBLE);
 
         //init der Buttons und Edit Text
@@ -143,18 +152,21 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         linlayout.setVisibility(View.INVISIBLE);
     }
 
+    public void setTextforResult(String result){
+        messageText.setText(result);
+        messageview.setVisibility(View.VISIBLE);
+    }
+
     //hollt sich alle Namen der anderen Spieler und fügt die Namen in den Spinner!
     public void setUpSpinner(){
-
         namesOfPlayer.add("hans");
         namesOfPlayer.add("peter");
         namesOfPlayer.add("susi");
         gameplay.setPlayers(a);
-
         /*for (Player n : gameplay.getOtherPlayers()) {
+            if(null
             namesOfPlayer.add(n.getName());
         }*/
-
         ArrayAdapter chooser = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, namesOfPlayer);
         choosePlayer.setAdapter(chooser);
     }
@@ -163,7 +175,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
         checkEditTextInput();
         if(check){
-        gameplay.challengeCard(gameplay.getPlayerWithName(choosePlayer.getSelectedItem().toString()), playedcard, guessText);
+        gameplay.challengeCard(gameplay.getPlayerbyName(choosePlayer.getSelectedItem().toString()), playedcard, guessText);
         this.popUp.setVisibility(View.INVISIBLE);
         }
     }
@@ -208,6 +220,11 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
                 break;
             default: writeCardText.setError("Falscher Type von Karte! Bitte gib eine richtige ein!"); break;
         }
+
+    }
+
+    //möchte man den Stand verändern (Display), ruft man diese Klasse auf.
+    public void updateTheCollectedCards(){
 
     }
 

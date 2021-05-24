@@ -2,6 +2,7 @@ package com.example.kakerlakenpoker.game;
 
 import android.util.Log;
 
+import com.example.kakerlakenpoker.PlayerIngameMainActivity;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.player.Player;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 public class Game {
     private List<Player> players;
     Card playcard;
+    PlayerIngameMainActivity playerwindow;
 
     public Game(){
 
@@ -55,12 +57,20 @@ public class Game {
         Log.e("","" + playcard + " " + guess);
 
     }
+    //Schickt den Spielern eine Nachrichtig, ob sie gewonnen haben oder nicht.
+    public void sendPlayerResult (String message){
+        playerwindow.setTextforResult(message);
+    }
 
     /**
      * Prüft collected Deck ob Gewonnen oder Verloren
      */
     public void checkCollectedDeck(){
-    //noch zu implementieren
+        while(true){
+            for(int i = 0; i< players.size(); i++){
+                players.get(i).getCollectedDeck().lostGame();
+            }
+    }
     }
 
     /**
@@ -79,7 +89,7 @@ public class Game {
        // this.players.remove(); entferne meinen Name ausder Liste und gibt mir nur die Gegner!
         return players;}
 
-     public Player getPlayerWithName(String name){
+     public Player getPlayerbyName(String name){
          for(int i = 0; i<this.players.size(); i++){
              if(players.get(i).getName().contains(name)){
                  return players.get(i);
@@ -87,4 +97,6 @@ public class Game {
          }
         return null;
      }
+
+
 }
