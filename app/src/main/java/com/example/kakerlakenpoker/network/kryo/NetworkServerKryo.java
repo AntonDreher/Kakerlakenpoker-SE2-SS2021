@@ -40,8 +40,9 @@ public class NetworkServerKryo implements NetworkServer, KryoNetComponent {
     }
 
     public void broadcastMessage(BaseMessage message) {
-        for (Connection connection : server.getConnections())
+        for (Connection connection : server.getConnections()) {
             connection.sendTCP(message);
+        }
     }
 
     private void registerClasses(){

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,8 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class SearchLobbyActivity extends AppCompatActivity {
     private Intent intent;
     private FloatingActionButton floatingActionButton;
-    private EditText editTextSearchLobby;
     private RecyclerView recyclerView ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +26,6 @@ public class SearchLobbyActivity extends AppCompatActivity {
 
         floatingActionButton = findViewById(R.id.floatingActionButtonSearchLobbyView);
         floatingActionButton.setOnClickListener((View view)->goBack());
-
-        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        //StrictMode.setThreadPolicy(policy);
 
         Thread thread = new Thread(){
             @Override

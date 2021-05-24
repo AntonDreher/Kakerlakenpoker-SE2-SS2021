@@ -20,11 +20,6 @@ public class RegisterHelper {
     private RegisterHelper(){}
 
     public static void registerClasses(Kryo kryo){
-        kryo.register(Array.class);
-        kryo.register(IntArray.class);
-        kryo.register(ArrayList.class);
-        kryo.register(int[].class);
-        kryo.register(Object[].class);
 
         kryo.register(BaseMessage.class);
         kryo.register(ClientJoined.class);
@@ -37,6 +32,13 @@ public class RegisterHelper {
         kryo.register(GameDeck.class);
         kryo.register(GameServer.class);
         kryo.register(SendOpenLobbies.class);
+
+        kryo.register(Array.class);
+        kryo.register(IntArray.class);
+        kryo.register(ArrayList.class);
+        kryo.register(String.class);
+        kryo.register(int[].class);
+        kryo.register(Object[].class);
 
     }
 }

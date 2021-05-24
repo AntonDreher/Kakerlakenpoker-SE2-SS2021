@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,31 +8,26 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
-        android:layout_width="100dp"
-        android:layout_height="77dp"
+        android:layout_width="147dp"
+        android:layout_height="295dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="22dp"
         android:clickable="true"
-        android:backgroundTint="@color/colorFB"
 
+        android:focusable="true"
         android:src="@drawable/abc_vector_test"
+        app:backgroundTint="@color/colorFB"
+        app:fabCustomSize="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:fabCustomSize="75dp"
-        app:maxImageSize="50dp"
-        android:focusable="true" />
+        app:maxImageSize="50dp" />
 
     <ListView
-        android:id="@+id/ListViewClientsInLobby"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorOrange"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:id="@+id/ListViewCurrentPlayersInLobby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

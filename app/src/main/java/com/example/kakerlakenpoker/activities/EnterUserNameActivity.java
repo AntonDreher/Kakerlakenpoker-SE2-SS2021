@@ -28,8 +28,6 @@ public class EnterUserNameActivity extends AppCompatActivity {
         Button goButton = (Button) findViewById(R.id.goBtn);
         goButton.setOnClickListener((View view) -> connectToMainServer());
 
-
-
     }
 
     public void connectToMainServer() {
@@ -48,7 +46,7 @@ public class EnterUserNameActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            GameClient.getInstance().init(NetworkUtils.getIpAddressFromDevice(EnterUserNameActivity.this));
+            GameClient.getInstance().init(NetworkUtils.getIpAddressFromDevice());
             return "Client initialized";
         }
 

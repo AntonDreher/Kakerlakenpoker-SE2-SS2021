@@ -1,11 +1,11 @@
 package com.example.kakerlakenpoker.network.game;
 
+
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoined;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
 import com.example.kakerlakenpoker.network.dto.Lobby;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
 import com.example.kakerlakenpoker.network.kryo.NetworkClientKryo;
 import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
@@ -50,6 +50,7 @@ public class GameClient {
         if(message instanceof  ClientsInLobby){
             ipList.clear();
             ipList.addAll(((ClientsInLobby) message).ipFromClients);
+            Log.info(ipList.toString());
         } else if (message instanceof SendOpenLobbies){
             this.openLobbies = ((SendOpenLobbies) message).getLobbies();
         }
@@ -74,4 +75,6 @@ public class GameClient {
     public ArrayList<Lobby> getOpenLobbies() {
         return openLobbies;
     }
+
+
 }

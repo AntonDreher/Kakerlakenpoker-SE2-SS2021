@@ -1,22 +1,21 @@
 package com.example.kakerlakenpoker.network.dto;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class ClientsInLobby extends BaseMessage{
-    public ArrayList<String> ipFromClients = null;
+public class ClientsInLobby extends BaseMessage {
+    public List<String> ipFromClients;
 
     public ClientsInLobby(){
 
     }
 
-    public ClientsInLobby(ArrayList<String> ipFromClients){
+    public ClientsInLobby(List<String> ipFromClients){
         this.ipFromClients = ipFromClients;
     }
 
-    @Override
-    public String toString() {
-        return "ClientsInLobby{" +
-                "ipFromClients=" + ipFromClients +
-                '}';
+    public List<String> getIpFromClients() {
+        return ipFromClients;
     }
+
+
 }

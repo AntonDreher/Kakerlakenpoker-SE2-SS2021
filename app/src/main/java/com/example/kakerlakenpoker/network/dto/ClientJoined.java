@@ -1,6 +1,5 @@
 package com.example.kakerlakenpoker.network.dto;
 
-import java.io.Serializable;
 
 public class ClientJoined extends BaseMessage{
     public String ipAddress = null;
