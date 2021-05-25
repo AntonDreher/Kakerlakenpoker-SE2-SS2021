@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void searchLobby() {
         //GameClient.getInstance().getClient().sendMessage(new GetOpenLobbies());
-        intent = new Intent(MainActivity.this, PlayerIngameMainActivity.class);
+        intent = new Intent(MainActivity.this, SearchLobbyActivity.class);
         startActivity(intent);
     }
 

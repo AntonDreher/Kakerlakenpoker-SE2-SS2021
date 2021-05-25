@@ -15,6 +15,7 @@ public class Player {
     public Player(){
 
     }
+
     public Player(String name, HandDeck handDeck, CollectedDeck collectedDeck) {
         this.name = name;
         this.handDeck = handDeck;
