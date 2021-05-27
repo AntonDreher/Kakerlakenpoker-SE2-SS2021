@@ -11,9 +11,11 @@ public class Player {
 
     /**
      * Konstruktor für Klasse Player
-     * @param name repräsentiert den Spieler
-     * @param handDeck repräsentieren seine Handkarten
      */
+    public Player(){
+
+    }
+
     public Player(String name, HandDeck handDeck, CollectedDeck collectedDeck) {
         this.name = name;
         this.handDeck = handDeck;
@@ -67,4 +69,5 @@ public class Player {
     public void setCollectedDeck(CollectedDeck collectedDeck) {
         this.collectedDeck = collectedDeck;
     }
+
 }

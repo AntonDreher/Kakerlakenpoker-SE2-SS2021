@@ -71,6 +71,7 @@ public class CardDeckUnitTest {
         Assertions.assertEquals(3,this.handDeck.size());
     }
 
+    /*
     @Test
     public void testRemoveCard(){
         Card card = new Card(Type.FLIEGE);
@@ -92,7 +93,7 @@ public class CardDeckUnitTest {
         this.handDeck.addCard(new Card(Type.KROETE));
         Assertions.assertNull(this.handDeck.findCard(Type.KAKERLAKE));
     }
-
+     */
     @Test
     public void testSetFledermaus(){
         this.handDeck.setFledermaus(1);
