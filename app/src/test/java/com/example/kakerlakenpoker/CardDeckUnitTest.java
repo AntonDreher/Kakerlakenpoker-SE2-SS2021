@@ -73,8 +73,9 @@ public class CardDeckUnitTest {
 
     @Test
     public void testRemoveCard(){
+        Card card = new Card(Type.FLIEGE);
         this.handDeck.addCard(new Card(Type.FLIEGE));
-        this.handDeck.removeCard(Type.FLIEGE);
+        this.handDeck.removeCard(card);
         Assertions.assertEquals(0,this.handDeck.size());
     }
 
