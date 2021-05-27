@@ -1,0 +1,557 @@
+Index: app/src/main/java/com/example/kakerlakenpoker/network/dto/ClientJoined.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakerlakenpoker.network.dto;\r\n\r\nimport java.io.Serializable;\r\n\r\npublic class ClientJoined extends BaseMessage{\r\n    public String ipAddress = null;\r\n\r\n    public ClientJoined() {\r\n\r\n    }\r\n\r\n    public ClientJoined(String ipAddress){\r\n        this.ipAddress = ipAddress;\r\n    }\r\n\r\n    public String getIpAddress(){\r\n        return ipAddress;\r\n    }\r\n\r\n    @Override\r\n    public String toString(){\r\n        return ipAddress;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/network/dto/ClientJoined.java	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/java/com/example/kakerlakenpoker/network/dto/ClientJoined.java	(date 1621255327638)
+@@ -1,6 +1,5 @@
+ package com.example.kakerlakenpoker.network.dto;
+ 
+-import java.io.Serializable;
+ 
+ public class ClientJoined extends BaseMessage{
+     public String ipAddress = null;
+Index: app/src/main/java/com/example/kakerlakenpoker/CreateLobbyActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakerlakenpoker;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.example.kakerlakenpoker.network.NetworkUtils;\r\nimport com.example.kakerlakenpoker.network.dto.Lobby;\r\nimport com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;\r\nimport com.example.kakerlakenpoker.network.game.GameClient;\r\nimport com.example.kakerlakenpoker.network.game.GameServer;\r\nimport com.google.android.material.floatingactionbutton.FloatingActionButton;\r\n\r\npublic class CreateLobbyActivity extends AppCompatActivity {\r\n    FloatingActionButton floatingActionButton;\r\n    TextView inputLobbyName;\r\n    Button startBtn;\r\n    Intent intent;\r\n    GameServer server;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.mp_lobbyname);\r\n        inputLobbyName = findViewById(R.id.editTextTextPersonName2);\r\n        floatingActionButton = findViewById(R.id.floatingActionButtonEnterName);\r\n        floatingActionButton.setOnClickListener((View view)->goBack());\r\n        startBtn = findViewById(R.id.startLobbyBtn);\r\n        startBtn.setOnClickListener((View view)->startLobby());\r\n\r\n    }\r\n\r\n    public void goBack(){\r\n        intent = new Intent(this, MainActivity.class);\r\n        startActivity(intent);\r\n    }\r\n\r\n    public void startLobby() {\r\n\r\n        new Thread(() -> {\r\n            server = GameServer.getInstance();\r\n            server.init(NetworkUtils.getIpAddressFromDevice(getApplicationContext()));\r\n        }).start();\r\n\r\n        new Thread(() -> {\r\n            Lobby lobby = new Lobby(inputLobbyName.getText().toString(),NetworkUtils.getIpAddressFromDevice(getApplicationContext()));\r\n\r\n            GameClient client = GameClient.getInstance();\r\n            client.getClient().sendMessage(new OpenLobby(lobby));\r\n            client.reConnect(\"localhost\");\r\n\r\n        }).start();\r\n\r\n\r\n\r\n\r\n        intent = new Intent(this, ShowPlayersInLobbyActivity.class);\r\n        startActivity(intent);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/CreateLobbyActivity.java	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/java/com/example/kakerlakenpoker/CreateLobbyActivity.java	(date 1621255327655)
+@@ -8,7 +8,9 @@
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ 
++import com.esotericsoftware.minlog.Log;
+ import com.example.kakerlakenpoker.network.NetworkUtils;
++import com.example.kakerlakenpoker.network.dto.ClientJoined;
+ import com.example.kakerlakenpoker.network.dto.Lobby;
+ import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
+ import com.example.kakerlakenpoker.network.game.GameClient;
+@@ -30,7 +32,13 @@
+         floatingActionButton = findViewById(R.id.floatingActionButtonEnterName);
+         floatingActionButton.setOnClickListener((View view)->goBack());
+         startBtn = findViewById(R.id.startLobbyBtn);
+-        startBtn.setOnClickListener((View view)->startLobby());
++        startBtn.setOnClickListener((View view)-> {
++            try {
++                startLobby();
++            } catch (InterruptedException e) {
++                e.printStackTrace();
++            }
++        });
+ 
+     }
+ 
+@@ -39,21 +47,24 @@
+         startActivity(intent);
+     }
+ 
+-    public void startLobby() {
++    public void startLobby() throws InterruptedException {
+ 
+-        new Thread(() -> {
++        Thread serverStart = new Thread(() -> {
+             server = GameServer.getInstance();
+             server.init(NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
+-        }).start();
++        });
++        serverStart.start();
++        serverStart.join();
+ 
+-        new Thread(() -> {
++        Thread joinClient = new Thread(() -> {
+             Lobby lobby = new Lobby(inputLobbyName.getText().toString(),NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
+-
+             GameClient client = GameClient.getInstance();
+-            client.getClient().sendMessage(new OpenLobby(lobby));
++            //TODO     client.getClient().sendMessage(new OpenLobby(lobby));
+             client.reConnect("localhost");
+-
+-        }).start();
++            client.getClient().sendMessage(new ClientJoined(lobby.getHostIP()));
++        });
++        joinClient.start();
++        joinClient.join();
+ 
+ 
+ 
+Index: app/src/main/java/com/example/kakerlakenpoker/network/game/GameServer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakerlakenpoker.network.game;\r\n\r\n\r\nimport com.esotericsoftware.kryonet.Connection;\r\nimport com.esotericsoftware.minlog.Log;\r\nimport com.example.kakerlakenpoker.R;\r\nimport com.example.kakerlakenpoker.network.Callback;\r\nimport com.example.kakerlakenpoker.network.dto.BaseMessage;\r\nimport com.example.kakerlakenpoker.network.dto.ClientJoined;\r\nimport com.example.kakerlakenpoker.network.dto.ClientsInLobby;\r\nimport com.example.kakerlakenpoker.network.kryo.NetworkServerKryo;\r\nimport com.example.kakerlakenpoker.network.kryo.RegisterHelper;\r\n\r\nimport java.io.IOException;\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\n\r\npublic class GameServer {\r\n    private static GameServer instance;\r\n    private NetworkServerKryo server;\r\n    private String ip;\r\n    private boolean waitingForClients = true;\r\n\r\n    private GameServer(){\r\n    }\r\n\r\n    public static GameServer getInstance(){\r\n        if(instance == null){\r\n            instance = new GameServer();\r\n        }\r\n        return instance;\r\n    }\r\n\r\n    public void init(String ip){\r\n        server = new NetworkServerKryo();\r\n        try {\r\n            this.ip = ip;\r\n            server.registerCallback(this::callback);\r\n            //this.registerClasses();\r\n            RegisterHelper.registerClasses(server.getServer().getKryo());\r\n            server.start();\r\n            Log.info(\"Server started successful\");\r\n        }catch(IOException e){\r\n            Log.info(\"Server couldn't start\");\r\n        }\r\n    }\r\n\r\n    private void registerClasses(){\r\n        server.registerClass(BaseMessage.class);\r\n        server.registerClass(ClientJoined.class);\r\n        server.registerClass(ClientsInLobby.class);\r\n        server.registerClass(ArrayList.class);\r\n    }\r\n\r\n    private void callback(BaseMessage message){\r\n        if (message instanceof ClientJoined){\r\n            ArrayList<String> ipList = new ArrayList<>();\r\n            for(Connection connection : server.getConnections()){\r\n                ipList.add(connection.getRemoteAddressTCP().toString());\r\n                Log.info(connection.getRemoteAddressTCP().toString());\r\n            }\r\n            server.broadcastMessage(new ClientsInLobby(ipList));\r\n        }\r\n    }\r\n\r\n    public boolean isWaitingForClients(){\r\n        return waitingForClients;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/network/game/GameServer.java	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/java/com/example/kakerlakenpoker/network/game/GameServer.java	(date 1621255327663)
+@@ -3,8 +3,6 @@
+ 
+ import com.esotericsoftware.kryonet.Connection;
+ import com.esotericsoftware.minlog.Log;
+-import com.example.kakerlakenpoker.R;
+-import com.example.kakerlakenpoker.network.Callback;
+ import com.example.kakerlakenpoker.network.dto.BaseMessage;
+ import com.example.kakerlakenpoker.network.dto.ClientJoined;
+ import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
+@@ -13,7 +11,6 @@
+ 
+ import java.io.IOException;
+ import java.util.ArrayList;
+-import java.util.Arrays;
+ 
+ public class GameServer {
+     private static GameServer instance;
+@@ -54,6 +51,7 @@
+ 
+     private void callback(BaseMessage message){
+         if (message instanceof ClientJoined){
++            Log.info("Client joined received on Server");
+             ArrayList<String> ipList = new ArrayList<>();
+             for(Connection connection : server.getConnections()){
+                 ipList.add(connection.getRemoteAddressTCP().toString());
+Index: app/src/main/java/com/example/kakerlakenpoker/network/game/GameClient.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakerlakenpoker.network.game;\r\n\r\nimport com.esotericsoftware.minlog.Log;\r\nimport com.example.kakerlakenpoker.network.dto.BaseMessage;\r\nimport com.example.kakerlakenpoker.network.dto.ClientJoined;\r\nimport com.example.kakerlakenpoker.network.dto.ClientsInLobby;\r\nimport com.example.kakerlakenpoker.network.dto.Lobby;\r\nimport com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;\r\nimport com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;\r\nimport com.example.kakerlakenpoker.network.kryo.NetworkClientKryo;\r\nimport com.example.kakerlakenpoker.network.kryo.NetworkConstants;\r\nimport com.example.kakerlakenpoker.network.kryo.RegisterHelper;\r\n\r\nimport java.io.IOException;\r\nimport java.util.ArrayList;\r\n\r\n\r\npublic class GameClient {\r\n    private static GameClient instance;\r\n    private NetworkClientKryo client;\r\n    private ArrayList<String> ipList = new ArrayList<>();\r\n    private ArrayList<Lobby> openLobbies = new ArrayList<>();\r\n\r\n    private GameClient(){\r\n\r\n    }\r\n\r\n    public static GameClient getInstance(){\r\n        if (instance == null){\r\n            instance = new GameClient();\r\n        }\r\n        return instance;\r\n    }\r\n\r\n    public void init(String ip) {\r\n        try {\r\n            client = new NetworkClientKryo();\r\n            RegisterHelper.registerClasses(client.getClient().getKryo());\r\n            //registerClasses();\r\n            client.registerCallback(this::callback);\r\n            client.connect(NetworkConstants.MAIN_SERVER_IP);\r\n            client.sendMessage(new ClientJoined(ip));\r\n            Log.info(ip + \" sent to \" + NetworkConstants.MAIN_SERVER_IP);\r\n        }catch(IOException e){\r\n            Log.info(e.getMessage());\r\n            Log.info(\"Could not connect to host \" + NetworkConstants.MAIN_SERVER_IP);\r\n        }\r\n    }\r\n\r\n    private void registerClasses(){\r\n        client.registerClass(BaseMessage.class);\r\n        client.registerClass(ClientJoined.class);\r\n        client.registerClass(ClientsInLobby.class);\r\n        client.registerClass(ArrayList.class);\r\n        client.registerClass(OpenLobby.class);\r\n    }\r\n\r\n    private void callback(BaseMessage message){\r\n        if(message instanceof  ClientsInLobby){\r\n            ipList.clear();\r\n            ipList.addAll(((ClientsInLobby) message).ipFromClients);\r\n        } else if (message instanceof SendOpenLobbies){\r\n            this.openLobbies = ((SendOpenLobbies) message).getLobbies();\r\n        }\r\n    }\r\n\r\n    public ArrayList<String> getIpList(){\r\n        return ipList;\r\n    }\r\n\r\n    public void reConnect(String ip){\r\n        try {\r\n            client.connect(ip);\r\n        } catch (IOException e) {\r\n            Log.info(e.getMessage());\r\n        }\r\n    }\r\n\r\n    public NetworkClientKryo getClient(){\r\n        return client;\r\n    }\r\n\r\n    public ArrayList<Lobby> getOpenLobbies() {\r\n        return openLobbies;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/network/game/GameClient.java	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/java/com/example/kakerlakenpoker/network/game/GameClient.java	(date 1621255353431)
+@@ -36,7 +36,6 @@
+         try {
+             client = new NetworkClientKryo();
+             RegisterHelper.registerClasses(client.getClient().getKryo());
+-            //registerClasses();
+             client.registerCallback(this::callback);
+             client.connect(NetworkConstants.MAIN_SERVER_IP);
+             client.sendMessage(new ClientJoined(ip));
+@@ -47,13 +46,6 @@
+         }
+     }
+ 
+-    private void registerClasses(){
+-        client.registerClass(BaseMessage.class);
+-        client.registerClass(ClientJoined.class);
+-        client.registerClass(ClientsInLobby.class);
+-        client.registerClass(ArrayList.class);
+-        client.registerClass(OpenLobby.class);
+-    }
+ 
+     private void callback(BaseMessage message){
+         if(message instanceof  ClientsInLobby){
+Index: app/src/main/java/com/example/kakerlakenpoker/network/kryo/RegisterHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakerlakenpoker.network.kryo;\r\n\r\nimport com.esotericsoftware.kryo.Kryo;\r\nimport com.esotericsoftware.kryo.util.IntArray;\r\nimport com.example.kakerlakenpoker.card.GameDeck;\r\nimport com.example.kakerlakenpoker.network.dto.BaseMessage;\r\nimport com.example.kakerlakenpoker.network.dto.ClientJoined;\r\nimport com.example.kakerlakenpoker.network.dto.ClientsInLobby;\r\nimport com.example.kakerlakenpoker.network.dto.Lobby;\r\nimport com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;\r\nimport com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;\r\nimport com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;\r\nimport com.example.kakerlakenpoker.network.game.GameClient;\r\nimport com.example.kakerlakenpoker.network.game.GameServer;\r\n\r\nimport java.lang.reflect.Array;\r\nimport java.util.ArrayList;\r\n\r\npublic class RegisterHelper {\r\n    private RegisterHelper(){}\r\n\r\n    public static void registerClasses(Kryo kryo){\r\n        kryo.register(Array.class);\r\n        kryo.register(IntArray.class);\r\n        kryo.register(ArrayList.class);\r\n        kryo.register(int[].class);\r\n        kryo.register(Object[].class);\r\n\r\n        kryo.register(BaseMessage.class);\r\n        kryo.register(ClientJoined.class);\r\n        kryo.register(ClientsInLobby.class);\r\n        kryo.register(OpenLobby.class);\r\n        kryo.register(Lobby.class);\r\n        kryo.register(GetOpenLobbies.class);\r\n        kryo.register(OpenLobby.class);\r\n        kryo.register(GameClient.class);\r\n        kryo.register(GameDeck.class);\r\n        kryo.register(GameServer.class);\r\n        kryo.register(SendOpenLobbies.class);\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/network/kryo/RegisterHelper.java	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/java/com/example/kakerlakenpoker/network/kryo/RegisterHelper.java	(date 1621255359047)
+@@ -23,8 +23,9 @@
+         kryo.register(Array.class);
+         kryo.register(IntArray.class);
+         kryo.register(ArrayList.class);
+-        kryo.register(int[].class);
+-        kryo.register(Object[].class);
++        kryo.register(String.class);
++      //  kryo.register(int[].class);
++      //  kryo.register(Object[].class);
+ 
+         kryo.register(BaseMessage.class);
+         kryo.register(ClientJoined.class);
+Index: app/src/main/java/com/example/kakerlakenpoker/network/dto/ClientsInLobby.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakerlakenpoker.network.dto;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class ClientsInLobby extends BaseMessage{\r\n    public ArrayList<String> ipFromClients = null;\r\n\r\n    public ClientsInLobby(){\r\n\r\n    }\r\n\r\n    public ClientsInLobby(ArrayList<String> ipFromClients){\r\n        this.ipFromClients = ipFromClients;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"ClientsInLobby{\" +\r\n                \"ipFromClients=\" + ipFromClients +\r\n                '}';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/network/dto/ClientsInLobby.java	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/java/com/example/kakerlakenpoker/network/dto/ClientsInLobby.java	(date 1621255353472)
+@@ -2,8 +2,8 @@
+ 
+ import java.util.ArrayList;
+ 
+-public class ClientsInLobby extends BaseMessage{
+-    public ArrayList<String> ipFromClients = null;
++public class ClientsInLobby extends BaseMessage {
++    public ArrayList<String> ipFromClients = new ArrayList<>();
+ 
+     public ClientsInLobby(){
+ 
+@@ -13,10 +13,12 @@
+         this.ipFromClients = ipFromClients;
+     }
+ 
++    public ArrayList<String> getIpFromClients() {
++        return ipFromClients;
++    }
++
+     @Override
+     public String toString() {
+-        return "ClientsInLobby{" +
+-                "ipFromClients=" + ipFromClients +
+-                '}';
++        return ipFromClients.toString();
+     }
+ }
+Index: app/src/main/java/com/example/kakerlakenpoker/network/kryo/NetworkServerKryo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakerlakenpoker.network.kryo;\r\n\r\nimport com.esotericsoftware.kryonet.Connection;\r\nimport com.esotericsoftware.kryonet.Listener;\r\nimport com.esotericsoftware.kryonet.Server;\r\nimport com.example.kakerlakenpoker.network.Callback;\r\nimport com.example.kakerlakenpoker.network.NetworkServer;\r\nimport com.example.kakerlakenpoker.network.dto.BaseMessage;\r\n\r\nimport java.io.IOException;\r\n\r\npublic class NetworkServerKryo implements NetworkServer, KryoNetComponent {\r\n    private Server server;\r\n    private Callback<BaseMessage> messageCallback;\r\n\r\n    public NetworkServerKryo() {\r\n        server = new Server();\r\n        this.registerClasses();\r\n    }\r\n\r\n    public void registerClass(Class c) {\r\n        server.getKryo().register(c);\r\n    }\r\n\r\n    public void start() throws IOException {\r\n        server.start();\r\n        server.bind(54555);\r\n\r\n        server.addListener(new Listener() {\r\n            public void received(Connection connection, Object object) {\r\n                if (messageCallback != null && object instanceof BaseMessage)\r\n                    messageCallback.callback((BaseMessage) object);\r\n            }\r\n        });\r\n    }\r\n\r\n\r\n    public void registerCallback(Callback<BaseMessage> callback) {\r\n        this.messageCallback = callback;\r\n    }\r\n\r\n    public void broadcastMessage(BaseMessage message) {\r\n        for (Connection connection : server.getConnections())\r\n            connection.sendTCP(message);\r\n    }\r\n\r\n    private void registerClasses(){\r\n        this.registerClass(BaseMessage.class);\r\n    }\r\n\r\n    public Connection[] getConnections() {\r\n        return server.getConnections();\r\n    }\r\n\r\n    public Server getServer() {\r\n        return server;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/network/kryo/NetworkServerKryo.java	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/java/com/example/kakerlakenpoker/network/kryo/NetworkServerKryo.java	(date 1621255353479)
+@@ -6,6 +6,7 @@
+ import com.example.kakerlakenpoker.network.Callback;
+ import com.example.kakerlakenpoker.network.NetworkServer;
+ import com.example.kakerlakenpoker.network.dto.BaseMessage;
++import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
+ 
+ import java.io.IOException;
+ 
+@@ -40,8 +41,9 @@
+     }
+ 
+     public void broadcastMessage(BaseMessage message) {
+-        for (Connection connection : server.getConnections())
++        for (Connection connection : server.getConnections()) {
+             connection.sendTCP(message);
++        }
+     }
+ 
+     private void registerClasses(){
+Index: app/src/main/res/layout/singleplayerinlist.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/singleplayerinlist.xml	(date 1621255353497)
++++ app/src/main/res/layout/singleplayerinlist.xml	(date 1621255353497)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent">
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/kakerlakenpoker/LobbiesRecyclerViewAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakerlakenpoker;\r\n\r\n\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.example.kakerlakenpoker.network.NetworkUtils;\r\nimport com.example.kakerlakenpoker.network.dto.Lobby;\r\nimport com.example.kakerlakenpoker.network.game.GameClient;\r\n\r\nimport java.lang.reflect.Array;\r\nimport java.util.ArrayList;\r\n\r\npublic class LobbiesRecyclerViewAdapter extends RecyclerView.Adapter<LobbiesRecyclerViewAdapter.ViewHolder> {\r\n    private ArrayList<Lobby> lobbies;\r\n\r\n    public static class ViewHolder extends RecyclerView.ViewHolder {\r\n        private final TextView lobbyID;\r\n        private final TextView playerCount;\r\n        private final Button joinUp;\r\n        private final Context context;\r\n\r\n\r\n        public ViewHolder(View view) {\r\n            super(view);\r\n\r\n            lobbyID = view.findViewById(R.id.lobbyID);\r\n            playerCount = view.findViewById(R.id.playerCount);\r\n            joinUp = view.findViewById(R.id.joinButton);\r\n            context = view.getContext();\r\n        }\r\n\r\n        public TextView getLobbyID() {\r\n            return lobbyID;\r\n        }\r\n\r\n        public TextView getPlayerCount() {\r\n            return playerCount;\r\n        }\r\n\r\n        public Button getJoinUp() {\r\n            return joinUp;\r\n        }\r\n\r\n        public Context getContext(){\r\n            return context;\r\n        }\r\n    }\r\n\r\n    public LobbiesRecyclerViewAdapter(ArrayList<Lobby> lobbies) {\r\n        this.lobbies = lobbies;\r\n    }\r\n\r\n    @Override\r\n    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {\r\n        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.singlelobby, viewGroup, false);\r\n        return new ViewHolder(view);\r\n    }\r\n\r\n    @Override\r\n    public void onBindViewHolder(ViewHolder viewholder, final int position) {\r\n        viewholder.getPlayerCount().setText(String.valueOf(lobbies.get(position).getPlayerCount()));\r\n        viewholder.getLobbyID().setText(lobbies.get(position).getName());\r\n        viewholder.getJoinUp().setOnClickListener((View view) -> {\r\n            joinUp(viewholder, position);\r\n\r\n        });\r\n    }\r\n\r\n    public void joinUp(ViewHolder viewHolder, int position) {\r\n        new Thread(() -> {\r\n            GameClient client = GameClient.getInstance();\r\n            client.reConnect(lobbies.get(position).getHostIP());\r\n            Intent intent = new Intent(viewHolder.context, ShowPlayersInLobbyActivity.class);\r\n            viewHolder.context.startActivity(intent);\r\n        }).start();\r\n    }\r\n    @Override\r\n    public int getItemCount() {\r\n        return lobbies.size();\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/LobbiesRecyclerViewAdapter.java	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/java/com/example/kakerlakenpoker/LobbiesRecyclerViewAdapter.java	(date 1621255353522)
+@@ -11,6 +11,7 @@
+ 
+ import androidx.recyclerview.widget.RecyclerView;
+ 
++import com.esotericsoftware.minlog.Log;
+ import com.example.kakerlakenpoker.network.NetworkUtils;
+ import com.example.kakerlakenpoker.network.dto.Lobby;
+ import com.example.kakerlakenpoker.network.game.GameClient;
+Index: app/src/main/java/com/example/kakerlakenpoker/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakerlakenpoker;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\n\r\nimport com.example.kakerlakenpoker.network.NetworkUtils;\r\nimport com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;\r\nimport com.example.kakerlakenpoker.network.game.GameClient;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n    Intent intent;\r\n\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.startview);\r\n\r\n        Button createLobbyButton = (Button) findViewById(R.id.create_lobby_button);\r\n        createLobbyButton.setOnClickListener((View view)-> createLobby());\r\n\r\n\r\n        Button searchLobbyButton = (Button) findViewById(R.id.search_button);\r\n        searchLobbyButton.setOnClickListener((View view)-> searchLobby());\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n    public void searchLobby() {\r\n        //GameClient.getInstance().getClient().sendMessage(new GetOpenLobbies());\r\n        intent = new Intent(MainActivity.this, SearchLobbyActivity.class);\r\n        startActivity(intent);\r\n    }\r\n\r\n    public void createLobby() {\r\n        new Thread(() -> {\r\n            GameClient client = GameClient.getInstance();\r\n            client.init(NetworkUtils.getIpAddressFromDevice(getApplicationContext()));\r\n        }).start();\r\n        intent = new Intent(MainActivity.this, CreateLobbyActivity.class);\r\n        startActivity(intent);\r\n    }\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/MainActivity.java	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/java/com/example/kakerlakenpoker/MainActivity.java	(date 1621255353538)
+@@ -4,12 +4,11 @@
+ 
+ import android.content.Intent;
+ import android.os.Bundle;
+-import android.util.Log;
+ import android.view.View;
+ import android.widget.Button;
+ 
++import com.esotericsoftware.minlog.Log;
+ import com.example.kakerlakenpoker.network.NetworkUtils;
+-import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
+ import com.example.kakerlakenpoker.network.game.GameClient;
+ 
+ public class MainActivity extends AppCompatActivity {
+@@ -22,28 +21,35 @@
+         setContentView(R.layout.startview);
+ 
+         Button createLobbyButton = (Button) findViewById(R.id.create_lobby_button);
+-        createLobbyButton.setOnClickListener((View view)-> createLobby());
+-
++        createLobbyButton.setOnClickListener((View view) -> {
++            try {
++                createLobby();
++            } catch (InterruptedException e) {
++                e.printStackTrace();
++            }
++        });
+ 
+         Button searchLobbyButton = (Button) findViewById(R.id.search_button);
+         searchLobbyButton.setOnClickListener((View view)-> searchLobby());
+-
+-
+-
+-
+     }
+ 
+     public void searchLobby() {
+-        //GameClient.getInstance().getClient().sendMessage(new GetOpenLobbies());
+-        intent = new Intent(MainActivity.this, SearchLobbyActivity.class);
+-        startActivity(intent);
+-    }
+-
+-    public void createLobby() {
+         new Thread(() -> {
+             GameClient client = GameClient.getInstance();
+             client.init(NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
+         }).start();
++        intent = new Intent(MainActivity.this, SearchLobbyActivity.class);
++        startActivity(intent);
++    }
++
++    public void createLobby() throws InterruptedException {
++        Thread createClient = new Thread(() -> {
++            GameClient client = GameClient.getInstance();
++            client.init(NetworkUtils.getIpAddressFromDevice(getApplicationContext()));
++        });
++        createClient.start();
++        createClient.join();
++
+         intent = new Intent(MainActivity.this, CreateLobbyActivity.class);
+         startActivity(intent);
+     }
+Index: app/src/main/java/com/example/kakerlakenpoker/SearchLobbyActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakerlakenpoker;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.os.StrictMode;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.example.kakerlakenpoker.network.NetworkUtils;\r\nimport com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;\r\nimport com.example.kakerlakenpoker.network.game.GameClient;\r\nimport com.google.android.material.floatingactionbutton.FloatingActionButton;\r\n\r\npublic class SearchLobbyActivity extends AppCompatActivity {\r\n    private Intent intent;\r\n    private FloatingActionButton floatingActionButton;\r\n    private EditText editTextSearchLobby;\r\n    private RecyclerView recyclerView ;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.searchlobbyview);\r\n\r\n        floatingActionButton = findViewById(R.id.floatingActionButtonSearchLobbyView);\r\n        floatingActionButton.setOnClickListener((View view)->goBack());\r\n\r\n        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();\r\n        //StrictMode.setThreadPolicy(policy);\r\n\r\n        Thread thread = new Thread(){\r\n            @Override\r\n            public void run() {\r\n                GameClient.getInstance().getClient().sendMessage(new GetOpenLobbies());\r\n            }\r\n        };\r\n\r\n        thread.start();\r\n\r\n        try {\r\n            thread.join();\r\n        } catch (InterruptedException e) {\r\n            Thread.currentThread().interrupt();\r\n        }\r\n\r\n\r\n        initRecyclerView();\r\n\r\n    }\r\n\r\n    public void goBack(){\r\n        intent = new Intent(this, MainActivity.class);\r\n        startActivity(intent);\r\n    }\r\n\r\n    public void initRecyclerView(){\r\n        recyclerView = findViewById(R.id.lobbiesRecyclerView);\r\n        Log.e(\"Thats the size\", String.valueOf(GameClient.getInstance().getOpenLobbies().size()));\r\n        LobbiesRecyclerViewAdapter adapter = new LobbiesRecyclerViewAdapter(GameClient.getInstance().getOpenLobbies());\r\n        recyclerView.setAdapter(adapter);\r\n        recyclerView.setLayoutManager(new LinearLayoutManager(this));\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/SearchLobbyActivity.java	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/java/com/example/kakerlakenpoker/SearchLobbyActivity.java	(date 1621255354012)
+@@ -30,9 +30,6 @@
+         floatingActionButton = findViewById(R.id.floatingActionButtonSearchLobbyView);
+         floatingActionButton.setOnClickListener((View view)->goBack());
+ 
+-        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+-        //StrictMode.setThreadPolicy(policy);
+-
+         Thread thread = new Thread(){
+             @Override
+             public void run() {
+@@ -47,10 +44,7 @@
+         } catch (InterruptedException e) {
+             Thread.currentThread().interrupt();
+         }
+-
+-
+         initRecyclerView();
+-
+     }
+ 
+     public void goBack(){
+@@ -60,7 +54,7 @@
+ 
+     public void initRecyclerView(){
+         recyclerView = findViewById(R.id.lobbiesRecyclerView);
+-        Log.e("Thats the size", String.valueOf(GameClient.getInstance().getOpenLobbies().size()));
++        Log.e("That's the size", String.valueOf(GameClient.getInstance().getOpenLobbies().size()));
+         LobbiesRecyclerViewAdapter adapter = new LobbiesRecyclerViewAdapter(GameClient.getInstance().getOpenLobbies());
+         recyclerView.setAdapter(adapter);
+         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+Index: app/src/main/java/com/example/kakerlakenpoker/ShowPlayersInLobbyActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakerlakenpoker;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.os.Bundle;\r\nimport android.widget.ArrayAdapter;\r\nimport android.widget.ListView;\r\n\r\nimport com.example.kakerlakenpoker.network.NetworkUtils;\r\nimport com.example.kakerlakenpoker.network.game.GameClient;\r\nimport com.example.kakerlakenpoker.network.game.GameServer;\r\n\r\nimport java.lang.reflect.Array;\r\nimport java.util.ArrayList;\r\n\r\npublic class ShowPlayersInLobbyActivity extends AppCompatActivity {\r\n    ListView currentPlayersInLobby;\r\n    GameClient client;\r\n    GameServer server;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_show_players_in_lobby);\r\n        currentPlayersInLobby = (ListView) findViewById(R.id.ListViewClientsInLobby);\r\n        client = GameClient.getInstance();\r\n        ArrayList<String> arrayList = client.getIpList();\r\n        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, arrayList);\r\n        //currentPlayersInLobby.setAdapter(arrayAdapter);\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/ShowPlayersInLobbyActivity.java	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/java/com/example/kakerlakenpoker/ShowPlayersInLobbyActivity.java	(date 1621255359002)
+@@ -1,32 +1,29 @@
+ package com.example.kakerlakenpoker;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
++import androidx.recyclerview.widget.LinearLayoutManager;
++import androidx.recyclerview.widget.RecyclerView;
+ 
+ import android.os.Bundle;
+-import android.widget.ArrayAdapter;
+-import android.widget.ListView;
+ 
+-import com.example.kakerlakenpoker.network.NetworkUtils;
++import com.esotericsoftware.minlog.Log;
+ import com.example.kakerlakenpoker.network.game.GameClient;
+-import com.example.kakerlakenpoker.network.game.GameServer;
+ 
+-import java.lang.reflect.Array;
+-import java.util.ArrayList;
+ 
+ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
+-    ListView currentPlayersInLobby;
++    RecyclerView currentPlayersInLobby;
+     GameClient client;
+-    GameServer server;
+ 
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_show_players_in_lobby);
+-        currentPlayersInLobby = (ListView) findViewById(R.id.ListViewClientsInLobby);
++        currentPlayersInLobby = (RecyclerView) findViewById(R.id.RecyclerViewCurrentPlayersInLobby);
+         client = GameClient.getInstance();
+-        ArrayList<String> arrayList = client.getIpList();
+-        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, arrayList);
+-        //currentPlayersInLobby.setAdapter(arrayAdapter);
++        PlayersInLobbyRecyclerViewAdapter adapter = new PlayersInLobbyRecyclerViewAdapter(GameClient.getInstance().getIpList());
++        Log.info(GameClient.getInstance().getIpList().toString());
++        currentPlayersInLobby.setAdapter(adapter);
++        currentPlayersInLobby.setLayoutManager(new LinearLayoutManager(this));
+     }
+ 
+ 
+Index: app/src/main/res/layout-land/activity_show_players_in_lobby.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ShowPlayersInLobbyActivity\">\r\n\r\n    <com.google.android.material.floatingactionbutton.FloatingActionButton\r\n        android:id=\"@+id/floatingActionButton\"\r\n        android:layout_width=\"100dp\"\r\n        android:layout_height=\"77dp\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginLeft=\"16dp\"\r\n        android:layout_marginBottom=\"16dp\"\r\n        android:clickable=\"true\"\r\n        android:backgroundTint=\"@color/colorFB\"\r\n\r\n        android:src=\"@drawable/abc_vector_test\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:fabCustomSize=\"75dp\"\r\n        app:maxImageSize=\"50dp\"\r\n        android:focusable=\"true\" />\r\n\r\n    <ListView\r\n        android:id=\"@+id/ListViewClientsInLobby\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:background=\"@color/colorOrange\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"1.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.0\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout-land/activity_show_players_in_lobby.xml	(revision 7a1e703f22cf83524726de02fb735373a0476c19)
++++ app/src/main/res/layout-land/activity_show_players_in_lobby.xml	(date 1621255359022)
+@@ -14,7 +14,7 @@
+         android:layout_marginLeft="16dp"
+         android:layout_marginBottom="16dp"
+         android:clickable="true"
+-        android:backgroundTint="@color/colorFB"
++        app:backgroundTint="@color/colorFB"
+ 
+         android:src="@drawable/abc_vector_test"
+         app:layout_constraintBottom_toBottomOf="parent"
+@@ -23,16 +23,15 @@
+         app:maxImageSize="50dp"
+         android:focusable="true" />
+ 
+-    <ListView
+-        android:id="@+id/ListViewClientsInLobby"
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        android:background="@color/colorOrange"
++    <androidx.recyclerview.widget.RecyclerView
++        android:id="@+id/RecyclerViewCurrentPlayersInLobby"
++        android:layout_width="722dp"
++        android:layout_height="413dp"
++        app:backgroundTint="@color/colorOrange"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="1.0"
++        app:layout_constraintHorizontal_bias="0.444"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent"
+-        app:layout_constraintVertical_bias="0.0" />
++        app:layout_constraintTop_toTopOf="parent" />
+ 
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout-land/singleplayerinlist.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout-land/singleplayerinlist.xml	(date 1621255353507)
++++ app/src/main/res/layout-land/singleplayerinlist.xml	(date 1621255353507)
+@@ -0,0 +1,22 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent">
++    <RelativeLayout
++        xmlns:android="http://schemas.android.com/apk/res/android"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:focusable="true"
++        android:clickable="true"
++        android:background="?android:attr/selectableItemBackground"
++        android:orientation="vertical">
++
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="50dp"
++            android:id="@+id/playerID"
++            android:textSize="32sp"
++            android:textStyle="bold"/>
++
++    </RelativeLayout>
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/kakerlakenpoker/PlayersInLobbyRecyclerViewAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/kakerlakenpoker/PlayersInLobbyRecyclerViewAdapter.java	(date 1621255359030)
++++ app/src/main/java/com/example/kakerlakenpoker/PlayersInLobbyRecyclerViewAdapter.java	(date 1621255359030)
+@@ -0,0 +1,49 @@
++package com.example.kakerlakenpoker;
++
++import android.text.Layout;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.TextView;
++
++import java.util.ArrayList;
++
++import androidx.recyclerview.widget.RecyclerView;
++
++
++public class PlayersInLobbyRecyclerViewAdapter extends RecyclerView.Adapter<PlayersInLobbyRecyclerViewAdapter.ViewHolder>{
++    private ArrayList<String> playersInLobby;
++
++    public static class ViewHolder extends RecyclerView.ViewHolder{
++        private final TextView playerName;
++
++        public ViewHolder(View view){
++            super(view);
++            playerName = view.findViewById(R.id.playerID);
++        }
++
++        public TextView getPlayerName(){ return playerName;}
++    }
++
++    public PlayersInLobbyRecyclerViewAdapter(ArrayList<String> playersInLobby){
++        this.playersInLobby = playersInLobby;
++    }
++
++
++    @Override
++    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
++        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singleplayerinlist, parent, false);
++        return new ViewHolder(view);
++    }
++
++    @Override
++    public void onBindViewHolder(PlayersInLobbyRecyclerViewAdapter.ViewHolder viewholder, final int position) {
++        viewholder.getPlayerName().setText(String.valueOf(playersInLobby.get(position)));
++    }
++
++    @Override
++    public int getItemCount() {
++        return playersInLobby.size();
++    }
++
++}

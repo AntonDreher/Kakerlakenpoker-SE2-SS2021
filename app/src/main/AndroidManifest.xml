@@ -12,11 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-
-
-        <activity android:name=".ShowPlayersInLobbyActivity"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.EnterUserNameActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,16 +22,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MultiplayerMainActivity"
+            android:name=".activities.MultiplayerMainActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activities.ShowPlayersInLobbyActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activities.SearchLobbyActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".PlayerIngameMainActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".SearchLobbyActivity"
+            android:name=".activities.MainMenuActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".CreateLobbyActivity"
+            android:name=".activities.CreateLobbyActivity"
             android:screenOrientation="landscape" />
     </application>
 

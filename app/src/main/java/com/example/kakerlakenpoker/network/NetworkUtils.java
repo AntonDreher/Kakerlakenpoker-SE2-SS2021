@@ -1,7 +1,5 @@
 package com.example.kakerlakenpoker.network;
 
-import android.content.Context;
-
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.network.kryo.NetworkServerKryo;
 
@@ -14,7 +12,7 @@ import java.util.Enumeration;
 public class NetworkUtils {
     private static NetworkServerKryo server;
 
-    public static String getIpAddressFromDevice(Context context){
+    public static String getIpAddressFromDevice(){
         try {
             for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
                 NetworkInterface intf = en.nextElement();
