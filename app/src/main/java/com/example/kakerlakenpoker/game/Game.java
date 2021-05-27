@@ -1,5 +1,8 @@
 package com.example.kakerlakenpoker.game;
 
+import android.util.Log;
+
+import com.example.kakerlakenpoker.PlayerIngameMainActivity;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.player.Player;
 import java.util.ArrayList;
@@ -7,8 +10,13 @@ import java.util.List;
 
 public class Game {
     private List<Player> players;
+    Card playcard;
+    PlayerIngameMainActivity playerwindow;
 
+    public Game(){
 
+    }
+    //eventuell besser einfach einen setter dafür verwenden!
     public Game(List<Player> players) {
         this.players = players;
 
@@ -18,7 +26,7 @@ public class Game {
      * gibt Aktuell Spielenden Spieler zurück
      * @return aktueller Spieler (String)
      */
-    public String getCurrentPlayer(){
+    public Player getCurrentPlayer(){
         //noch zu implementieren
         return null;
     }
@@ -43,15 +51,26 @@ public class Game {
     /**
      * Karte weitergeben oder behalten
      */
-    public void challengeCard(){
-    //noch zu implementieren
+    public void challengeCard( Player otherplayer, String playcard, String guess){
+
+        // Checkt die Funktion!
+        Log.e("","" + playcard + " " + guess);
+
+    }
+    //Schickt den Spielern eine Nachrichtig, ob sie gewonnen haben oder nicht.
+    public void sendPlayerResult (String message){
+        playerwindow.setTextforResult(message);
     }
 
     /**
      * Prüft collected Deck ob Gewonnen oder Verloren
      */
     public void checkCollectedDeck(){
-    //noch zu implementieren
+        while(true){
+            for(int i = 0; i< players.size(); i++){
+                players.get(i).getCollectedDeck().lostGame();
+            }
+    }
     }
 
     /**
@@ -65,4 +84,19 @@ public class Game {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
+
+    public List<Player> getOtherPlayers(){
+       // this.players.remove(); entferne meinen Name ausder Liste und gibt mir nur die Gegner!
+        return players;}
+
+     public Player getPlayerbyName(String name){
+         for(int i = 0; i<this.players.size(); i++){
+             if(players.get(i).getName().contains(name)){
+                 return players.get(i);
+             }
+         }
+        return null;
+     }
+
+
 }

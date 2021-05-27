@@ -96,7 +96,7 @@ public abstract class CardDeck {
      * Entfernt eine Karte aus dem Deck, hier wird nach ENUM gesucht
      * @param type einer der 8 Typen aus der ENUM Klasse
      */
-    public void removeCard(Type type){
+    public void removeCard(String type){
         Card c = findCard(type);
         if(c != null){
             deck.remove(c);
@@ -108,7 +108,7 @@ public abstract class CardDeck {
      * @param type einer der 8 Typen aus der ENUM Klasse
      * @return wenn Typ gefunden eine Karte sons NULL
      */
-    public Card findCard(Type type){
+    public Card findCard(String type){
         for(Card c: deck){
             if(c.getType().equals(type)){
                 return c;
