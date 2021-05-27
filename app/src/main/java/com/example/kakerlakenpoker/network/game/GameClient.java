@@ -1,7 +1,10 @@
 package com.example.kakerlakenpoker.network.game;
 
+import android.widget.TextView;
+
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
+import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.dto.AllPlayersReady;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoined;
