@@ -1,6 +1,12 @@
 package com.example.kakerlakenpoker.player;
+import androidx.annotation.NonNull;
+
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.CardDeck;
+import com.example.kakerlakenpoker.card.Type;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Repräsentiert die Handkarten eines Spielers
@@ -20,4 +26,5 @@ public class HandDeck extends CardDeck {
         //Hier muss dann die ausgespielte Karte weitergegebn werden (Server-Client)
     }
 
-}
+    }
+

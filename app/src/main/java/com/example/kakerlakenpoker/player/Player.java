@@ -72,4 +72,11 @@ public class Player {
         this.collectedDeck = collectedDeck;
     }
 
+    public PlayerState getState() {
+        return state;
+    }
+
+    public void setState(PlayerState state) {
+        this.state = state;
+    }
 }

@@ -6,6 +6,8 @@ import com.example.kakerlakenpoker.PlayerIngameMainActivity;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.player.Player;
+import com.example.kakerlakenpoker.player.PlayerState;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,25 +30,26 @@ public class Game {
         this.players = players;
         Random random = new Random();
         int randomNumber = random.nextInt(players.size());
-        currentPlayer = players.get(randomNumber);
+        currentPlayer = players.get(0);
         state = GameState.AWAITING_TURN;
     }
 
     public void makeTurn(Player player, Turn turn){
         if(state==GameState.AWAITING_TURN && player==currentPlayer){
             this.turn = turn;
-            System.out.println("This is the type of the card: "+turn.getSelectedCard().getType());
             state = GameState.AWAITING_DECISION;
         }
     }
 
     public void makeDecision(Player player, Decision decision){
         if(state==GameState.AWAITING_DECISION&& player == turn.getSelectedEnemy()){
+            currentPlayer.setState(PlayerState.PLAYED);
             if(turn.getSelectedCard().getType()==turn.getSelectedType() && decision == Decision.TRUTH ||
                     turn.getSelectedCard().getType()!=turn.getSelectedType() && decision == Decision.LIE){
                 currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
                 currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
             } else{
+                currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
                 currentPlayer = turn.getSelectedEnemy();
                 currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
             }
