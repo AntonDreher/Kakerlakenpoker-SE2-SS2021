@@ -71,6 +71,7 @@ public class Test {
                 System.out.println("You choose: " + currCard.getType().toString());
                 while (local == round) {
                     System.out.println("Current Player: " + game.getCurrentPlayer().getName());
+                    System.out.println();
                     System.out.println("Possible Enemys: " );
                     possible = game.getAvailablePlayer();
                     for (Player p: possible) {
@@ -78,6 +79,7 @@ public class Test {
                         System.out.println("Player: " + p.getName());
                         }
                     }
+                    System.out.println();
                     System.out.println("Choose an Enemy: ");
                     enemy = scanner.nextLine();
                     System.out.println("You choose: " + enemy);
@@ -85,14 +87,14 @@ public class Test {
                     say = scanner.nextLine();
                     game.makeTurn(game.getCurrentPlayer(), new Turn(currCard, Type.valueOf(say), game.getPlayerbyName(enemy)));
                     System.out.println(enemy + ": "  + game.getCurrentPlayer().getName() + " played " + say + "!");
-                    System.out.println("Enter decission or reject!");
+                    System.out.println("Enter decision or reject!");
                     decission = scanner.nextLine();
 
-                    if (decission.equals("decission")) {
+                    if (decission.equals("decision")) {
                         System.out.println("Enter TRUTH or LIE");
                         decission = scanner.nextLine();
                         game.makeDecision(game.getPlayerbyName(enemy), Decision.valueOf(decission));
-                        System.out.println();
+                        System.out.println("---------CHALLENGE---------");
                         System.out.println(game.getCurrentPlayer().getName() + " played " + card + " and said " + say);
                         System.out.println(enemy + " said " + decission);
                         System.out.println("New curr Player: = " + game.getCurrentPlayer().getName());
