@@ -38,24 +38,29 @@ public class Game {
         if(state==GameState.AWAITING_TURN && player==currentPlayer){
             this.turn = turn;
             state = GameState.AWAITING_DECISION;
+            //currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
+            currentPlayer.setState(PlayerState.PLAYED);
         }
     }
 
     public void makeDecision(Player player, Decision decision){
         if(state==GameState.AWAITING_DECISION&& player == turn.getSelectedEnemy()){
-            currentPlayer.setState(PlayerState.PLAYED);
             if(turn.getSelectedCard().getType()==turn.getSelectedType() && decision == Decision.TRUTH ||
                     turn.getSelectedCard().getType()!=turn.getSelectedType() && decision == Decision.LIE){
                 currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
-                currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
+
             } else{
-                currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
                 currentPlayer = turn.getSelectedEnemy();
                 currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
             }
             state = GameState.AWAITING_TURN;
         }
 
+    }
+
+    public void reject(Player player){
+        currentPlayer = player;
+        state = GameState.AWAITING_TURN;
     }
 
     public Type getSelectedType(){
@@ -69,6 +74,40 @@ public class Game {
     public Player getCurrentPlayer(){
         return currentPlayer;
 
+    }
+
+    public boolean checkRoundOver(){
+        int count = 0;
+        for (Player p: players) {
+            if (p.getState().equals(PlayerState.PLAYED)){
+                count++;
+            }
+        }
+        if(count == 3){
+            currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
+            return true;
+        }
+        return false;
+    }
+
+    public List<Player> getAvailablePlayer(){
+        List<Player> available = new ArrayList<>();
+       for(Player p: players){
+           if(p.getState().equals(PlayerState.READY)){
+               available.add(p);
+           }
+       }
+       return available;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public void resetPlayerStatus(){
+        for(Player p:players){
+            p.setState(PlayerState.READY);
+        }
     }
 
     /**
