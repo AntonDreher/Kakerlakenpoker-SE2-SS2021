@@ -43,9 +43,13 @@ public class Test {
         Game game = buildGame.buildGame();
         game.setCurrentPlayer(game.getPlayerbyName("player1"));
         System.out.println("Game build success!");
-        while (true) {
+
             while (next) {
                 next = false;
+                if(game.getCurrentPlayer().getCollectedDeck().lostGame()){
+                    System.out.println("Player " + game.getCurrentPlayer().getName() +" lost the game!");
+                    System.out.println(game.getCurrentPlayer().getCollectedDeck().showAllCards().toString());
+                }
                 System.out.println("####ROUND " + round + "#####");
                 game.resetPlayerStatus();
                 int local = round;
@@ -92,10 +96,11 @@ public class Test {
 
                     if (decission.equals("decision")) {
                         System.out.println("Enter TRUTH or LIE");
+                        String printer = game.getCurrentPlayer().getName();
                         decission = scanner.nextLine();
                         game.makeDecision(game.getPlayerbyName(enemy), Decision.valueOf(decission));
                         System.out.println("---------CHALLENGE---------");
-                        System.out.println(game.getCurrentPlayer().getName() + " played " + card + " and said " + say);
+                        System.out.println(printer + " played " + card + " and said " + say);
                         System.out.println(enemy + " said " + decission);
                         System.out.println("New curr Player: = " + game.getCurrentPlayer().getName());
                         next = true;
@@ -114,7 +119,6 @@ public class Test {
                 System.out.println();
 
             }
-        }
     }
 }
 

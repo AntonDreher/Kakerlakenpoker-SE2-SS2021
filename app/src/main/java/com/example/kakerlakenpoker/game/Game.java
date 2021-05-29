@@ -145,10 +145,8 @@ public class Game {
      * Prüft collected Deck ob Gewonnen oder Verloren
      */
     public void checkCollectedDeck(){
-        while(true){
             for(int i = 0; i< players.size(); i++){
                 players.get(i).getCollectedDeck().lostGame();
-            }
     }
     }
 

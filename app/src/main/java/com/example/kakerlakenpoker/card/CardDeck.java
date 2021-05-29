@@ -136,7 +136,14 @@ public abstract class CardDeck {
     }
 
     public void countAllCards(){
-
+        this.fledermaus = 0;
+        this.fliege = 0;
+        this.kakerlake = 0;
+        this.kroete = 0;
+        this.ratte = 0;
+        this.scorpion = 0;
+        this.spinne = 0;
+        this.stinkwanze = 0;
         for (Card c : getDeck()) {
             switch (c.getType().toString()) {
                 case "FLEDERMAUS":
