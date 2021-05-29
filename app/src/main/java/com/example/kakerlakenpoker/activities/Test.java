@@ -49,6 +49,7 @@ public class Test {
                 if(game.getCurrentPlayer().getCollectedDeck().lostGame()){
                     System.out.println("Player " + game.getCurrentPlayer().getName() +" lost the game!");
                     System.out.println(game.getCurrentPlayer().getCollectedDeck().showAllCards().toString());
+                    break;
                 }
                 System.out.println("####ROUND " + round + "#####");
                 game.resetPlayerStatus();
