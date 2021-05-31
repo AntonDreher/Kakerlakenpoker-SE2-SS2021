@@ -5,6 +5,8 @@ import android.widget.ListView;
 
 import com.example.kakerlakenpoker.IpListAdapter;
 import com.example.kakerlakenpoker.R;
+import com.example.kakerlakenpoker.network.NetworkUtils;
+import com.example.kakerlakenpoker.network.dto.ClientJoined;
 import com.example.kakerlakenpoker.network.game.GameClient;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,11 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
         IpListAdapter listAdapter = new IpListAdapter(this, client.getIpList());
         currentPlayersInLobby = findViewById(R.id.ListViewCurrentPlayersInLobby);
         currentPlayersInLobby.setAdapter(listAdapter);
+        client.setListAdapter(listAdapter);
+        Thread clientJoined = new Thread(() -> {
+            client.getClient().sendMessage(new ClientJoined(NetworkUtils.getIpAddressFromDevice()));
+        });
+        clientJoined.start();
     }
 
 

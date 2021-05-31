@@ -2,6 +2,8 @@ package com.example.kakerlakenpoker.network.game;
 
 
 import com.esotericsoftware.minlog.Log;
+import com.example.kakerlakenpoker.IpListAdapter;
+import com.example.kakerlakenpoker.activities.ShowPlayersInLobbyActivity;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoined;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
@@ -20,6 +22,7 @@ public class GameClient {
     private NetworkClientKryo client;
     private ArrayList<String> ipList = new ArrayList<>();
     private ArrayList<Lobby> openLobbies = new ArrayList<>();
+    private IpListAdapter listAdapter;
 
     private GameClient(){
 
@@ -50,6 +53,14 @@ public class GameClient {
         if(message instanceof  ClientsInLobby){
             ipList.clear();
             ipList.addAll(((ClientsInLobby) message).ipFromClients);
+
+            ((ShowPlayersInLobbyActivity) listAdapter.getContext()).runOnUiThread(
+                    () -> {
+                        listAdapter.addAll(ipList);
+                        listAdapter.notifyDataSetChanged();
+                    }
+            );
+        //    listAdapter.notifyDataSetChanged();
             Log.info(ipList.toString());
         } else if (message instanceof SendOpenLobbies){
             this.openLobbies = ((SendOpenLobbies) message).getLobbies();
@@ -76,5 +87,7 @@ public class GameClient {
         return openLobbies;
     }
 
-
+    public void setListAdapter(IpListAdapter listAdapter) {
+        this.listAdapter = listAdapter;
+    }
 }

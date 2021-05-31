@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.NetworkUtils;
-import com.example.kakerlakenpoker.network.dto.ClientJoined;
 import com.example.kakerlakenpoker.network.dto.Lobby;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
 import com.example.kakerlakenpoker.network.game.GameClient;
@@ -61,7 +60,6 @@ public class CreateLobbyActivity extends AppCompatActivity {
             GameClient client = GameClient.getInstance();
             client.getClient().sendMessage(new OpenLobby(lobby));
             client.connect("localhost");
-            client.getClient().sendMessage(new ClientJoined(NetworkUtils.getIpAddressFromDevice()));
         });
 
         connectClient.start();
