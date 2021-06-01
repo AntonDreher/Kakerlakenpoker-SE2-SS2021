@@ -21,7 +21,7 @@ public class GameClient {
     private NetworkClientKryo client;
     private ArrayList<String> ipList = new ArrayList<>();
     private ArrayList<Lobby> openLobbies = new ArrayList<>();
-    private Game game;
+
 
     private GameClient(){
         client.getClient().addListener(new ClientListener(this));
@@ -83,7 +83,4 @@ public class GameClient {
         this.openLobbies = openLobbies;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
 }

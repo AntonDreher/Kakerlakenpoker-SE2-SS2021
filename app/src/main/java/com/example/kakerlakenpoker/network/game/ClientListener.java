@@ -3,6 +3,7 @@ package com.example.kakerlakenpoker.network.game;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
 import com.example.kakerlakenpoker.network.dto.GameUpdate;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
@@ -13,9 +14,11 @@ import com.example.kakerlakenpoker.server.MainServer;
 
 public class ClientListener extends Listener {
     private final GameClient server;
+    private Game game;
 
     public ClientListener(GameClient server) {
         this.server = server;
+        this.game = null;
     }
 
     @Override
@@ -32,7 +35,7 @@ public class ClientListener extends Listener {
         } else if (object instanceof SendOpenLobbies) {
             server.setOpenLobbies(((SendOpenLobbies) object).getLobbies());
         } else if (object instanceof GameUpdate){
-
+            game.updateGame((GameUpdate)object);
         }
     }
 
