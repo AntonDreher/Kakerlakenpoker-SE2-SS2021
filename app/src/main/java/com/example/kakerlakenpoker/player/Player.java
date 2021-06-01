@@ -5,6 +5,7 @@ package com.example.kakerlakenpoker.player;
  * Diese Klasse verwendet die Klasse HandDeck
  */
 public class Player {
+    private PlayerState state;
     private String name;
     private HandDeck handDeck;
     private CollectedDeck collectedDeck;
@@ -17,6 +18,7 @@ public class Player {
     }
 
     public Player(String name, HandDeck handDeck, CollectedDeck collectedDeck) {
+        this.state = PlayerState.READY;
         this.name = name;
         this.handDeck = handDeck;
         this.collectedDeck = collectedDeck;
@@ -70,4 +72,11 @@ public class Player {
         this.collectedDeck = collectedDeck;
     }
 
+    public PlayerState getState() {
+        return state;
+    }
+
+    public void setState(PlayerState state) {
+        this.state = state;
+    }
 }
