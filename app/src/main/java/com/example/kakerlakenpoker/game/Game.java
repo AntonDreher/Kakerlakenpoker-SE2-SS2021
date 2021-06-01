@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.kakerlakenpoker.PlayerIngameMainActivity;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
+import com.example.kakerlakenpoker.network.dto.GameUpdate;
 import com.example.kakerlakenpoker.player.Player;
 import com.example.kakerlakenpoker.player.PlayerState;
 
@@ -17,105 +18,115 @@ public class Game {
     private Player currentPlayer;
     private GameState state;
     private Turn turn;
+    private StateListener stateListener;
 
     Card playcard;
     PlayerIngameMainActivity playerwindow;
 
-    public Game(){
+    public Game() {
 
 
     }
+
     //eventuell besser einfach einen setter dafür verwenden!
     public Game(List<Player> players) {
         this.players = players;
         Random random = new Random();
         int randomNumber = random.nextInt(players.size());
         currentPlayer = players.get(0);
-        state = GameState.AWAITING_TURN;
+        changeState(GameState.AWAITING_TURN);
     }
 
-    public void makeTurn(Player player, Turn turn){
-        if(state==GameState.AWAITING_TURN && player==currentPlayer){
+    public void changeState(GameState state){
+        GameUpdate gameUpdate = new GameUpdate(players, currentPlayer,state,turn);
+        this.state = state;
+        stateListener.notifyPlayers(gameUpdate);
+    }
+
+    public void makeTurn(Player player, Turn turn) {
+        if (state == GameState.AWAITING_TURN && player == currentPlayer) {
             this.turn = turn;
-            state = GameState.AWAITING_DECISION;
+            changeState(GameState.AWAITING_DECISION);
             //currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
             currentPlayer.setState(PlayerState.PLAYED);
         }
     }
 
-    public void makeDecision(Player player, Decision decision){
-        if(state==GameState.AWAITING_DECISION&& player == turn.getSelectedEnemy()){
-            if(turn.getSelectedCard().getType()==turn.getSelectedType() && decision == Decision.TRUTH ||
-                    turn.getSelectedCard().getType()!=turn.getSelectedType() && decision == Decision.LIE){
+    public void makeDecision(Player player, Decision decision) {
+        if (state == GameState.AWAITING_DECISION && player == turn.getSelectedEnemy()) {
+            if (turn.getSelectedCard().getType() == turn.getSelectedType() && decision == Decision.TRUTH ||
+                    turn.getSelectedCard().getType() != turn.getSelectedType() && decision == Decision.LIE) {
                 currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
 
-            } else{
+            } else {
                 currentPlayer = turn.getSelectedEnemy();
                 currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
             }
-            state = GameState.AWAITING_TURN;
+            changeState(GameState.AWAITING_TURN);
         }
 
     }
 
-    public void reject(Player player){
+    public void reject(Player player) {
         currentPlayer = player;
         state = GameState.AWAITING_TURN;
     }
 
-    public Type getSelectedType(){
+    public Type getSelectedType() {
         return turn.getSelectedType();
     }
 
     /**
      * gibt Aktuell Spielenden Spieler zurück
+     *
      * @return aktueller Spieler (String)
      */
-    public Player getCurrentPlayer(){
+    public Player getCurrentPlayer() {
         return currentPlayer;
 
     }
 
-    public boolean checkRoundOver(){
+    public boolean checkRoundOver() {
         int count = 0;
-        for (Player p: players) {
-            if (p.getState().equals(PlayerState.PLAYED)){
+        for (Player p : players) {
+            if (p.getState().equals(PlayerState.PLAYED)) {
                 count++;
             }
         }
-        if(count == 3){
+        if (count == 3) {
             currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
             return true;
         }
         return false;
     }
 
-    public List<Player> getAvailablePlayer(){
+    public List<Player> getAvailablePlayer() {
         List<Player> available = new ArrayList<>();
-       for(Player p: players){
-           if(p.getState().equals(PlayerState.READY)){
-               available.add(p);
-           }
-       }
-       return available;
+        for (Player p : players) {
+            if (p.getState().equals(PlayerState.READY)) {
+                available.add(p);
+            }
+        }
+        return available;
     }
 
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
-    public void resetPlayerStatus(){
-        for(Player p:players){
+    public void resetPlayerStatus() {
+        for (Player p : players) {
             p.setState(PlayerState.READY);
         }
     }
 
     /**
      * Spieler wählt einen anderen Spieler aus, dem er eine Karte anzudrehen versucht
-     * @param  otherPlayer  Name des gegnerischen Spielers
-     * @param card Karte, die der Spieler außspielen möchte
+     *
+     * @param otherPlayer Name des gegnerischen Spielers
+     * @param card        Karte, die der Spieler außspielen möchte
      */
-    public void playCard(Player otherPlayer, Card card){
+    public void playCard(Player otherPlayer, Card card) {
         otherPlayer.getHandDeck().useCard(card);
     }
 
@@ -123,31 +134,32 @@ public class Game {
     /**
      * Zeigt alle Karten der Spieler an (Collected Deck)
      */
-    public void showCards(){
-    //noch zu implementieren
+    public void showCards() {
+        //noch zu implementieren
     }
 
     /**
      * Karte weitergeben oder behalten
      */
-    public void challengeCard( Player otherplayer, String playcard, String guess){
+    public void challengeCard(Player otherplayer, String playcard, String guess) {
 
         // Checkt die Funktion!
-        Log.e("","" + playcard + " " + guess);
+        Log.e("", "" + playcard + " " + guess);
 
     }
+
     //Schickt den Spielern eine Nachrichtig, ob sie gewonnen haben oder nicht.
-    public void sendPlayerResult (String message){
+    public void sendPlayerResult(String message) {
         playerwindow.setTextforResult(message);
     }
 
     /**
      * Prüft collected Deck ob Gewonnen oder Verloren
      */
-    public void checkCollectedDeck(){
-            for(int i = 0; i< players.size(); i++){
-                players.get(i).getCollectedDeck().lostGame();
-    }
+    public void checkCollectedDeck() {
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).getCollectedDeck().lostGame();
+        }
     }
 
     /**
@@ -162,18 +174,28 @@ public class Game {
         this.players = players;
     }
 
-    public List<Player> getOtherPlayers(){
-       // this.players.remove(); entferne meinen Name ausder Liste und gibt mir nur die Gegner!
-        return players;}
+    public List<Player> getOtherPlayers() {
+        // this.players.remove(); entferne meinen Name ausder Liste und gibt mir nur die Gegner!
+        return players;
+    }
 
-     public Player getPlayerbyName(String name){
-         for(int i = 0; i<this.players.size(); i++){
-             if(players.get(i).getName().contains(name)){
-                 return players.get(i);
-             }
-         }
+    public Player getPlayerbyName(String name) {
+        for (int i = 0; i < this.players.size(); i++) {
+            if (players.get(i).getName().contains(name)) {
+                return players.get(i);
+            }
+        }
         return null;
-     }
+    }
 
+    public void setStateListener(StateListener stateListener) {
+        this.stateListener = stateListener;
+    }
 
+    public void updateGame(GameUpdate gameUpdate){
+        this.players = gameUpdate.getPlayers();
+        this.currentPlayer = gameUpdate.getCurrentPlayer();
+        this.turn = gameUpdate.getTurn();
+        this.changeState(gameUpdate.getState());
+    }
 }

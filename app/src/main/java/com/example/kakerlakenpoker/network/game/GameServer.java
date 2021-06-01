@@ -51,6 +51,10 @@ public class GameServer {
         }
     }
 
+    public void broadcastMessage(BaseMessage message) {
+        server.broadcastMessage(message);
+    }
+
     public boolean isWaitingForClients(){
         return waitingForClients;
     }
