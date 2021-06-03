@@ -44,7 +44,7 @@ public class TestClientServerConnection extends AppCompatActivity {
     }
 
 
-    public void makeClient(){
+    public void makeClient() {
         Thread thread = new Thread(){
             @Override
             public void run() {
@@ -57,7 +57,7 @@ public class TestClientServerConnection extends AppCompatActivity {
         try {
             thread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
         text.setText(String.valueOf(GameClient.getInstance().getClient().getClient().getID()));
     }
@@ -80,6 +80,7 @@ public class TestClientServerConnection extends AppCompatActivity {
             if(!player.getName().equals(String.valueOf(GameClient.getInstance().getClient().getClient().getID())))enemy= player;
         }
 
+        assert me != null;
         Card selectedCard = me.getHandDeck().getDeck().get(0);
 
 
