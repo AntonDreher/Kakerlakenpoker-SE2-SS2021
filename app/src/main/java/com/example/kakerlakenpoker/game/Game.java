@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.kakerlakenpoker.PlayerIngameMainActivity;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
+import com.example.kakerlakenpoker.game.listener.GameListener;
 import com.example.kakerlakenpoker.network.dto.GameUpdate;
 import com.example.kakerlakenpoker.player.Player;
 import com.example.kakerlakenpoker.player.PlayerState;
@@ -16,15 +17,14 @@ import java.util.Random;
 public class Game {
     private List<Player> players;
     private Player currentPlayer;
-    private GameState state;
+    private GameState currentState;
     private Turn turn;
-    private StateListener stateListener;
+    private GameListener listener;
 
     Card playcard;
     PlayerIngameMainActivity playerwindow;
 
     public Game() {
-
 
     }
 
@@ -33,18 +33,18 @@ public class Game {
         this.players = players;
         Random random = new Random();
         int randomNumber = random.nextInt(players.size());
-        currentPlayer = players.get(0);
+        currentPlayer = players.get(randomNumber);
         changeState(GameState.AWAITING_TURN);
     }
 
-    public void changeState(GameState state){
-        GameUpdate gameUpdate = new GameUpdate(players, currentPlayer,state,turn);
-        this.state = state;
-        stateListener.notifyPlayers(gameUpdate);
+    public void changeState(GameState state) {
+        GameUpdate gameUpdate = new GameUpdate(players, currentPlayer, state, turn);
+        if(listener!=null)listener.notify(gameUpdate, this.currentState);
+        this.currentState = state;
     }
 
     public void makeTurn(Player player, Turn turn) {
-        if (state == GameState.AWAITING_TURN && player == currentPlayer) {
+        if (currentState == GameState.AWAITING_TURN && player == currentPlayer) {
             this.turn = turn;
             changeState(GameState.AWAITING_DECISION);
             //currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
@@ -53,7 +53,7 @@ public class Game {
     }
 
     public void makeDecision(Player player, Decision decision) {
-        if (state == GameState.AWAITING_DECISION && player == turn.getSelectedEnemy()) {
+        if (currentState == GameState.AWAITING_DECISION && player == turn.getSelectedEnemy()) {
             if (turn.getSelectedCard().getType() == turn.getSelectedType() && decision == Decision.TRUTH ||
                     turn.getSelectedCard().getType() != turn.getSelectedType() && decision == Decision.LIE) {
                 currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
@@ -69,7 +69,7 @@ public class Game {
 
     public void reject(Player player) {
         currentPlayer = player;
-        state = GameState.AWAITING_TURN;
+        currentState = GameState.AWAITING_TURN;
     }
 
     public Type getSelectedType() {
@@ -188,14 +188,15 @@ public class Game {
         return null;
     }
 
-    public void setStateListener(StateListener stateListener) {
-        this.stateListener = stateListener;
+    public void setGameListener(GameListener listener) {
+        this.listener = listener;
+        changeState(currentState);
     }
 
-    public void updateGame(GameUpdate gameUpdate){
+    public void updateGame(GameUpdate gameUpdate) {
         this.players = gameUpdate.getPlayers();
         this.currentPlayer = gameUpdate.getCurrentPlayer();
         this.turn = gameUpdate.getTurn();
-        this.changeState(gameUpdate.getState());
+        this.currentState =gameUpdate.getState();
     }
 }
