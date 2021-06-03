@@ -6,6 +6,7 @@ import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.game.BuildGame;
 import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.game.GameState;
+import com.example.kakerlakenpoker.game.listener.GameListenerClientSide;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
 import com.example.kakerlakenpoker.network.dto.GameUpdate;
 import com.example.kakerlakenpoker.network.dto.InitGame;
@@ -17,11 +18,10 @@ import com.example.kakerlakenpoker.server.MainServer;
 
 public class ClientListener extends Listener {
     private final GameClient gameClient;
-    private Game game;
 
     public ClientListener(GameClient gameClient) {
         this.gameClient = gameClient;
-        this.game = null;
+
     }
 
     @Override
@@ -42,10 +42,12 @@ public class ClientListener extends Listener {
         } else if(object instanceof InitGame){
             BuildGame buildGame = new BuildGame();
             buildGame.setPlayers(((InitGame) object).getGameUpdate().getPlayers());
-            game = buildGame.buildGame();
-            game.updateGame(((InitGame) object).getGameUpdate());
+            gameClient.setGame(buildGame.buildGame());
+            gameClient.getGame().setGameListener(new GameListenerClientSide(gameClient));
+            gameClient.getGame().updateGame(((InitGame) object).getGameUpdate());
         }else if (object instanceof GameUpdate){
-            game.updateGame((GameUpdate)object);
+            gameClient.getGame().updateGame((GameUpdate)object);
+
         }
     }
 

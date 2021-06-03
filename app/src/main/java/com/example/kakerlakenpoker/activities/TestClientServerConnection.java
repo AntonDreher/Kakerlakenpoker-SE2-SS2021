@@ -8,9 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.R;
+import com.example.kakerlakenpoker.card.Card;
+import com.example.kakerlakenpoker.card.Type;
+import com.example.kakerlakenpoker.game.Turn;
 import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.network.game.GameServer;
+import com.example.kakerlakenpoker.player.Player;
 import com.example.kakerlakenpoker.server.Main;
 
 public class TestClientServerConnection extends AppCompatActivity {
@@ -25,7 +29,7 @@ public class TestClientServerConnection extends AppCompatActivity {
         makeClient = findViewById(R.id.btnmakeClient);
 
         makeClient.setOnClickListener(v->makeClient());
-
+        makeServer.setOnClickListener(v->makeTurn());
     }
 
 
@@ -34,11 +38,32 @@ public class TestClientServerConnection extends AppCompatActivity {
             @Override
             public void run() {
                 GameClient.getInstance().init("");
-                GameClient.getInstance().connect(NetworkUtils.getIpAddressFromDevice());
+
             }
         };
 
         thread.start();
+    }
+
+    public void makeTurn(){
+        Turn turn;
+        Player me = GameClient.getInstance().getPlayer();
+
+        Type selectedType = Type.KAKERLAKE;
+        Player enemy=null;
+
+        for(Player player: GameClient.getInstance().getGame().getPlayers()){
+            if(player.getName().equals(me.getName())){
+                me = player;
+            }
+            if(!player.getName().equals(me.getName()))enemy= player;
+        }
+
+        Card selectedCard = me.getHandDeck().getDeck().get(0);
+
+        turn = new Turn(selectedCard, selectedType,enemy);
+        GameClient.getInstance().getGame().makeTurn(me,turn);
+
     }
 
     public static void main(String[] args) {

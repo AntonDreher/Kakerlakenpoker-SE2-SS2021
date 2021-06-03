@@ -25,6 +25,7 @@ public class GameClient {
     private ArrayList<String> ipList = new ArrayList<>();
     private ArrayList<Lobby> openLobbies = new ArrayList<>();
     private Player player;
+    private Game game;
 
 
     private GameClient(){
@@ -46,6 +47,7 @@ public class GameClient {
             client.getClient().addListener(new ClientListener(this));
             client.connect(NetworkConstants.MAIN_SERVER_IP);
             client.sendMessage(new ClientJoined(NetworkConstants.MAIN_SERVER_IP));
+            client.sendMessage(new PlayerReady(player));
             Log.info(ip + " sent to " + NetworkConstants.MAIN_SERVER_IP);
         }catch(IOException e){
             Log.info(e.getMessage());
@@ -70,9 +72,7 @@ public class GameClient {
 
     public void connect(String ip){
         try {
-            //client.connect(ip);
-            client.connect(NetworkConstants.MAIN_SERVER_IP);
-            client.sendMessage(new PlayerReady(player));
+            client.connect(ip);
         } catch (IOException e) {
             Log.info(e.getMessage());
         }
@@ -90,4 +90,15 @@ public class GameClient {
         this.openLobbies = openLobbies;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game){
+        this.game = game;
+    }
+
+    public Player getPlayer(){
+        return player;
+    }
 }

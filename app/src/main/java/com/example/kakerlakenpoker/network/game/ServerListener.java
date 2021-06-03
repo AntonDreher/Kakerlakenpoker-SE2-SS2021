@@ -15,7 +15,6 @@ import java.util.HashMap;
 
 public class ServerListener extends Listener {
     private GameServer gameServer;
-    private Game game;
     private HashMap<Connection, Player> players = new HashMap<>();
 
     public ServerListener(GameServer gameServer){
@@ -24,16 +23,16 @@ public class ServerListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if(object instanceof MakeTurn){
-            game.makeTurn(null, ((MakeTurn) object).getTurn());
+            gameServer.getGame().makeTurn(players.get(connection), ((MakeTurn) object).getTurn());
         } else if(object instanceof PlayerReady){
             players.put(connection, ((PlayerReady) object).getPlayer());
             if(players.size()==4){
                 ArrayList<Player> playersList = new ArrayList<>(players.values());
                 BuildGame buildGame = new BuildGame();
                 buildGame.setPlayers(playersList);
-                game = buildGame.buildGame();
-                game.setGameListener(new GameListenerServerSide(gameServer));
-                game.startGame();
+                gameServer.setGame(buildGame.buildGame());
+                gameServer.getGame().setGameListener(new GameListenerServerSide(gameServer));
+                gameServer.getGame().startGame();
             }
         }
     }

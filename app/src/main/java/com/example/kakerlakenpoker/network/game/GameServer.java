@@ -3,6 +3,7 @@ package com.example.kakerlakenpoker.network.game;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.minlog.Log;
+import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoined;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
@@ -16,6 +17,7 @@ public class GameServer {
     private static GameServer instance;
     private NetworkServerKryo server;
     private boolean waitingForClients = true;
+    private Game game;
 
     private GameServer(){
     }
@@ -59,5 +61,13 @@ public class GameServer {
 
     public boolean isWaitingForClients(){
         return waitingForClients;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

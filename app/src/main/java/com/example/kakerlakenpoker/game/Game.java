@@ -42,16 +42,17 @@ public class Game {
         GameUpdate gameUpdate = new GameUpdate(players, currentPlayer, state, turn, decision);
         if(listener!=null)listener.notify(gameUpdate, this.currentState);
         this.currentState = state;
-        Log.info("GameState changed to " + state.name());
+        Log.info("GameState changed to " + state.name() + " and current players name is: " + currentPlayer.getName());
     }
 
     public void makeTurn(Player player, Turn turn) {
-        if (currentState == GameState.AWAITING_TURN && player == currentPlayer) {
+
+        if (currentState == GameState.AWAITING_TURN && player.getName().equals(currentPlayer.getName())) {
             this.turn = turn;
             changeState(GameState.AWAITING_DECISION);
             //currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
             currentPlayer.setState(PlayerState.PLAYED);
-        }
+        } else  Log.info("not permitted to make a turn player: "+currentPlayer.getName());
     }
 
     public void makeDecision(Player player, Decision decision) {
