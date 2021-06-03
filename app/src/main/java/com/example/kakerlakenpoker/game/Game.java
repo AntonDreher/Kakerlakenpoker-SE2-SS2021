@@ -1,7 +1,7 @@
 package com.example.kakerlakenpoker.game;
 
-import android.util.Log;
 
+import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.PlayerIngameMainActivity;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
@@ -35,13 +35,14 @@ public class Game {
         Random random = new Random();
         int randomNumber = random.nextInt(players.size());
         currentPlayer = players.get(randomNumber);
-        changeState(GameState.AWAITING_TURN);
+        changeState(GameState.AWAITING_GO);
     }
 
     public void changeState(GameState state) {
         GameUpdate gameUpdate = new GameUpdate(players, currentPlayer, state, turn, decision);
         if(listener!=null)listener.notify(gameUpdate, this.currentState);
         this.currentState = state;
+        Log.info("GameState changed to " + state.name());
     }
 
     public void makeTurn(Player player, Turn turn) {
@@ -64,6 +65,10 @@ public class Game {
             changeState(GameState.AWAITING_TURN);
         }
 
+    }
+
+    public void startGame(){
+        changeState(GameState.AWAITING_TURN);
     }
 
     public void reject(Player player) {
@@ -143,7 +148,7 @@ public class Game {
     public void challengeCard(Player otherplayer, String playcard, String guess) {
 
         // Checkt die Funktion!
-        Log.e("", "" + playcard + " " + guess);
+        Log.info("", "" + playcard + " " + guess);
 
     }
 

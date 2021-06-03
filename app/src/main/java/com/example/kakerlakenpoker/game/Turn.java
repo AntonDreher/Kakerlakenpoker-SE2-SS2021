@@ -16,6 +16,8 @@ public class Turn {
 
     }
 
+    public Turn(){}
+
     public Card getSelectedCard() {
         return selectedCard;
     }

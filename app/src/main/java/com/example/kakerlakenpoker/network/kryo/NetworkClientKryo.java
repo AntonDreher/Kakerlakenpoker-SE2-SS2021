@@ -23,14 +23,14 @@ public class NetworkClientKryo implements NetworkClient, KryoNetComponent {
     }
 
     public void connect(String host) throws IOException {
-        client.connect(5000, host, 54555);
+        client.connect(5000, host, NetworkConstants.TCP_PORT);
 
-        client.addListener(new Listener() {
+        /*client.addListener(new Listener() {
             public void received(Connection connection, Object object) {
                 if (callback != null && object instanceof BaseMessage)
                     callback.callback((BaseMessage) object);
             }
-        });
+        });*/
     }
 
     public void registerCallback(Callback<BaseMessage> callback) {
