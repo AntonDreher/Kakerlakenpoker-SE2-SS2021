@@ -43,6 +43,8 @@ public class Game {
         if(listener!=null)listener.notify(gameUpdate, this.currentState);
         this.currentState = state;
         Log.info("GameState changed to " + state.name() + " and current players name is: " + currentPlayer.getName());
+        if(turn != null) Log.info("Current turn contains: Card: "+turn.getSelectedCard().getType()+", Type: "+ turn.getSelectedType()+", enemy: "+turn.getSelectedEnemy().getName());
+
     }
 
     public void makeTurn(Player player, Turn turn) {
@@ -56,15 +58,17 @@ public class Game {
     }
 
     public void makeDecision(Player player, Decision decision) {
-        if (currentState == GameState.AWAITING_DECISION && player == turn.getSelectedEnemy()) {
+        if (currentState == GameState.AWAITING_DECISION && player.getName().equals(turn.getSelectedEnemy().getName())) {
             this.decision=decision;
-            if ((turn.getSelectedCard().getType() != turn.getSelectedType() || decision != Decision.TRUTH) &&
-                    (turn.getSelectedCard().getType() == turn.getSelectedType() || decision != Decision.LIE)) {
+            if ((turn.getSelectedCard().getType() != turn.getSelectedType() && decision == Decision.TRUTH) ||
+                    (turn.getSelectedCard().getType() == turn.getSelectedType() && decision == Decision.LIE)) {
                 currentPlayer = turn.getSelectedEnemy();
             }
             currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
-            changeState(GameState.AWAITING_TURN);
-        }
+            if(currentPlayer.getCollectedDeck().hasLost())changeState(GameState.GAME_OVER);
+            else changeState(GameState.AWAITING_TURN);
+        } else  Log.info("not permitted to make a decision player: "+player.getName());
+        Log.info("the decision is: "+ decision.name());
 
     }
 
@@ -89,6 +93,14 @@ public class Game {
     public Player getCurrentPlayer() {
         return currentPlayer;
 
+    }
+
+    public void gameOver(Player player){
+        Log.info("gameover");
+        if(player !=null && player.getName().equals(currentPlayer.getName())){
+            Log.info("gameover");
+            changeState(GameState.GAME_OVER);
+        }
     }
 
     public boolean checkRoundOver() {
@@ -163,7 +175,7 @@ public class Game {
      */
     public void checkCollectedDeck() {
         for (int i = 0; i < players.size(); i++) {
-            players.get(i).getCollectedDeck().lostGame();
+            players.get(i).getCollectedDeck().hasLost();
         }
     }
 

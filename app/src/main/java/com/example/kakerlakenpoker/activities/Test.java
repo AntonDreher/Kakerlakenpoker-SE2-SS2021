@@ -1,7 +1,5 @@
 package com.example.kakerlakenpoker.activities;
 
-import android.net.IpSecManager;
-
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.game.BuildGame;
@@ -12,7 +10,6 @@ import com.example.kakerlakenpoker.player.CollectedDeck;
 import com.example.kakerlakenpoker.player.HandDeck;
 import com.example.kakerlakenpoker.player.Player;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -46,7 +43,7 @@ public class Test {
 
             while (next) {
                 next = false;
-                if(game.getCurrentPlayer().getCollectedDeck().lostGame()){
+                if(game.getCurrentPlayer().getCollectedDeck().hasLost()){
                     System.out.println("Player " + game.getCurrentPlayer().getName() +" lost the game!");
                     System.out.println(game.getCurrentPlayer().getCollectedDeck().showAllCards().toString());
                     break;

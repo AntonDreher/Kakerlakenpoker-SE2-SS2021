@@ -24,8 +24,8 @@ public class GameClient {
     private NetworkClientKryo client;
     private ArrayList<String> ipList = new ArrayList<>();
     private ArrayList<Lobby> openLobbies = new ArrayList<>();
-    private Player player;
     private Game game;
+    private String userName;
 
 
     private GameClient(){
@@ -42,12 +42,11 @@ public class GameClient {
         try {
             client = new NetworkClientKryo();
             RegisterHelper.registerClasses(client.getClient().getKryo());
-            player = new Player(NetworkUtils.getIpAddressFromDevice(),null,null);
             //client.registerCallback(this::callback);
             client.getClient().addListener(new ClientListener(this));
             client.connect(NetworkConstants.MAIN_SERVER_IP);
             client.sendMessage(new ClientJoined(NetworkConstants.MAIN_SERVER_IP));
-            client.sendMessage(new PlayerReady(player));
+            client.sendMessage(new PlayerReady());
             Log.info(ip + " sent to " + NetworkConstants.MAIN_SERVER_IP);
         }catch(IOException e){
             Log.info(e.getMessage());
@@ -98,7 +97,4 @@ public class GameClient {
         this.game = game;
     }
 
-    public Player getPlayer(){
-        return player;
-    }
 }

@@ -42,6 +42,7 @@ public class BuildGame {
                 gameDeck.getDeck().remove(0);
             }
             players.get(i).setHandDeck(deck);
+            players.get(i).setCollectedDeck(new CollectedDeck());
         }
     }
 

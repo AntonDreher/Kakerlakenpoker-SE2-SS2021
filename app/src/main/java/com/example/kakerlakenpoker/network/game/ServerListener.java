@@ -6,6 +6,8 @@ import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.game.BuildGame;
 import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.game.listener.GameListenerServerSide;
+import com.example.kakerlakenpoker.network.dto.GameOver;
+import com.example.kakerlakenpoker.network.dto.MakeDecision;
 import com.example.kakerlakenpoker.network.dto.MakeTurn;
 import com.example.kakerlakenpoker.network.dto.PlayerReady;
 import com.example.kakerlakenpoker.player.Player;
@@ -22,10 +24,16 @@ public class ServerListener extends Listener {
     }
     @Override
     public void received(Connection connection, Object object) {
+        if(!(object instanceof com.esotericsoftware.kryonet.FrameworkMessage))
+        Log.info("Received Object: " + object.getClass());
         if(object instanceof MakeTurn){
             gameServer.getGame().makeTurn(players.get(connection), ((MakeTurn) object).getTurn());
-        } else if(object instanceof PlayerReady){
-            players.put(connection, ((PlayerReady) object).getPlayer());
+        } else if(object instanceof MakeDecision){
+            gameServer.getGame().makeDecision(players.get(connection),((MakeDecision) object).getDecision());
+        } else if(object instanceof GameOver){
+            gameServer.getGame().gameOver(players.get(connection));
+        }else if(object instanceof PlayerReady){
+            players.put(connection, new Player(String.valueOf(connection.getID()),null, null));
             if(players.size()==4){
                 ArrayList<Player> playersList = new ArrayList<>(players.values());
                 BuildGame buildGame = new BuildGame();
@@ -38,14 +46,11 @@ public class ServerListener extends Listener {
     }
     @Override
     public void connected(Connection connection) {
-        Log.info("Client connected: Hashmap size: "+players.size());
         Log.info("Client connected: " + connection.getRemoteAddressTCP());
     }
 
     @Override
     public void disconnected(Connection connection) {
-        players.remove(connection);
         Log.info("Client disconnected: " + connection.getRemoteAddressTCP());
-
     }
 }

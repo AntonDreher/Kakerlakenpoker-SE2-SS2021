@@ -8,6 +8,7 @@ import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.game.GameState;
 import com.example.kakerlakenpoker.game.listener.GameListenerClientSide;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
+import com.example.kakerlakenpoker.network.dto.GameOver;
 import com.example.kakerlakenpoker.network.dto.GameUpdate;
 import com.example.kakerlakenpoker.network.dto.InitGame;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
@@ -47,6 +48,8 @@ public class ClientListener extends Listener {
             gameClient.getGame().updateGame(((InitGame) object).getGameUpdate());
         }else if (object instanceof GameUpdate){
             gameClient.getGame().updateGame((GameUpdate)object);
+
+        } else if(object instanceof GameOver){
 
         }
     }

@@ -29,7 +29,7 @@ public class CollectedDeckUnitTest {
     @Test
     public void testLostGameFalse() {
         collectedDeck.addCard(new Card(Type.FLEDERMAUS));
-        Assert.assertFalse(collectedDeck.lostGame());
+        Assert.assertFalse(collectedDeck.hasLost());
     }
 
     @Test
@@ -38,7 +38,7 @@ public class CollectedDeckUnitTest {
         collectedDeck.addCard(new Card(Type.FLEDERMAUS));
         collectedDeck.addCard(new Card(Type.FLEDERMAUS));
         collectedDeck.addCard(new Card(Type.FLEDERMAUS));
-        Assert.assertTrue(collectedDeck.lostGame());
+        Assert.assertTrue(collectedDeck.hasLost());
     }
 
     @Test
@@ -51,6 +51,6 @@ public class CollectedDeckUnitTest {
         collectedDeck.addCard(new Card(Type.KROETE));
         collectedDeck.addCard(new Card(Type.SPINNE));
         collectedDeck.addCard(new Card(Type.STINKWANZE));
-        Assert.assertTrue(collectedDeck.lostGame());
+        Assert.assertTrue(collectedDeck.hasLost());
     }
 }
