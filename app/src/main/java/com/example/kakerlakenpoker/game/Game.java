@@ -19,6 +19,7 @@ public class Game {
     private Player currentPlayer;
     private GameState currentState;
     private Turn turn;
+    private Decision decision;
     private GameListener listener;
 
     Card playcard;
@@ -38,7 +39,7 @@ public class Game {
     }
 
     public void changeState(GameState state) {
-        GameUpdate gameUpdate = new GameUpdate(players, currentPlayer, state, turn);
+        GameUpdate gameUpdate = new GameUpdate(players, currentPlayer, state, turn, decision);
         if(listener!=null)listener.notify(gameUpdate, this.currentState);
         this.currentState = state;
     }
@@ -54,14 +55,12 @@ public class Game {
 
     public void makeDecision(Player player, Decision decision) {
         if (currentState == GameState.AWAITING_DECISION && player == turn.getSelectedEnemy()) {
-            if (turn.getSelectedCard().getType() == turn.getSelectedType() && decision == Decision.TRUTH ||
-                    turn.getSelectedCard().getType() != turn.getSelectedType() && decision == Decision.LIE) {
-                currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
-
-            } else {
+            this.decision=decision;
+            if ((turn.getSelectedCard().getType() != turn.getSelectedType() || decision != Decision.TRUTH) &&
+                    (turn.getSelectedCard().getType() == turn.getSelectedType() || decision != Decision.LIE)) {
                 currentPlayer = turn.getSelectedEnemy();
-                currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
             }
+            currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
             changeState(GameState.AWAITING_TURN);
         }
 

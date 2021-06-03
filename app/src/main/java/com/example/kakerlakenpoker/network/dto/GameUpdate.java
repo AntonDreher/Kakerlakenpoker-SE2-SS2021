@@ -1,5 +1,6 @@
 package com.example.kakerlakenpoker.network.dto;
 
+import com.example.kakerlakenpoker.game.Decision;
 import com.example.kakerlakenpoker.game.GameState;
 import com.example.kakerlakenpoker.game.Turn;
 import com.example.kakerlakenpoker.player.Player;
@@ -11,12 +12,14 @@ public class GameUpdate extends BaseMessage {
     private Player currentPlayer;
     private GameState state;
     private Turn turn;
+    private Decision decision;
 
-    public GameUpdate(List<Player> players, Player currentPlayer, GameState state, Turn turn){
+    public GameUpdate(List<Player> players, Player currentPlayer, GameState state, Turn turn,Decision decision){
         this.players = players;
         this.currentPlayer = currentPlayer;
         this.state=state;
         this.turn= turn;
+        this.decision = decision;
     }
 
     public List<Player> getPlayers() {
@@ -33,6 +36,10 @@ public class GameUpdate extends BaseMessage {
 
     public Turn getTurn() {
         return turn;
+    }
+
+    public Decision getDecision(){
+        return decision;
     }
 }
 
