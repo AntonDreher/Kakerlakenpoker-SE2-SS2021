@@ -3,7 +3,6 @@ package com.example.kakerlakenpoker;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -17,13 +16,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.game.Game;
+import com.example.kakerlakenpoker.game.Turn;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.player.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayerIngameMainActivity extends AppCompatActivity {
@@ -190,10 +192,20 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     }
 
     public void sendChallengeInputs(){
-
         checkEditTextInput();
         if(check){
-        gameplay.challengeCard(gameplay.getPlayerbyName(choosePlayer.getSelectedItem().toString()), playedcard, guessText);
+            Turn turn;
+            Player me= GameClient.getInstance().getGame().getCurrentPlayer();
+            Type selectedType = Type.valueOf(guessText);
+            Player enemy = null;
+            for(Player player: GameClient.getInstance().getGame().getPlayers()){
+                if(player.getName().equals(choosePlayer.getSelectedItem().toString()))
+                    enemy = player;
+            }
+            Card selectedCard = me.getHandDeck().findCard(playedcard);
+            turn = new Turn(selectedCard, selectedType,enemy);
+            GameClient.getInstance().getGame().makeTurn(me,turn);
+
         this.popUp.setVisibility(View.INVISIBLE);
         }
     }
