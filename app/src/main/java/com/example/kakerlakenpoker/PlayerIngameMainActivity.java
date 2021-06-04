@@ -144,8 +144,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
 
                 case DragEvent.ACTION_DROP:{
-                    //game.getCurrentPlayer().getHandDeck().removeCard(dragEvent.toString());
-                    popUp.setVisibility(View.VISIBLE);
+                    dropCorrect(dragEvent);
                     return (true);}
 
                 default:{
@@ -169,6 +168,14 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         }
     }
 
+    public void dropCorrect(DragEvent de){
+
+        if(de.getResult() == true){
+            popUp.setVisibility(View.VISIBLE);
+        }
+        else{ popUp.setVisibility(View.INVISIBLE);}
+    }
+
     public void setInvisible(LinearLayout linlayout){
         linlayout.setVisibility(View.INVISIBLE);
     }
@@ -183,10 +190,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         for (Player player : GameClient.getInstance().getGame().getPlayers()){
             namesOfPlayer.add(player.getName());
         }
-        /*for (Player n : gameplay.getOtherPlayers()) {
-            if(null
-            namesOfPlayer.add(n.getName());
-        }*/
         ArrayAdapter chooser = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, namesOfPlayer);
         choosePlayer.setAdapter(chooser);
     }
