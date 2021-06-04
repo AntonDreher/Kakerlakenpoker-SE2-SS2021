@@ -6,6 +6,7 @@ package com.example.kakerlakenpoker.player;
  */
 public class Player {
     private PlayerState state;
+    private String ID;
     private String name;
     private HandDeck handDeck;
     private CollectedDeck collectedDeck;
@@ -17,9 +18,9 @@ public class Player {
 
     }
 
-    public Player(String name, HandDeck handDeck, CollectedDeck collectedDeck) {
+    public Player(String ID, HandDeck handDeck, CollectedDeck collectedDeck) {
         this.state = PlayerState.READY;
-        this.name = name;
+        this.ID = ID;
         this.handDeck = handDeck;
         this.collectedDeck = collectedDeck;
     }
@@ -28,16 +29,24 @@ public class Player {
      * Getter Methode für Name
      * @return name des Spielers
      */
+    public String getID() {
+        return ID;
+    }
+
     public String getName() {
         return name;
     }
 
-    /**
-     * Setter Methode für Name (falls benötigt)
-     * @param name des Spielers
-     */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Setter Methode für Name (falls benötigt)
+     * @param ID des Spielers
+     */
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     /**

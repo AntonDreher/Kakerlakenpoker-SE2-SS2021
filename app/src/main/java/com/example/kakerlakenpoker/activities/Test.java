@@ -44,14 +44,14 @@ public class Test {
             while (next) {
                 next = false;
                 if(game.getCurrentPlayer().getCollectedDeck().hasLost()){
-                    System.out.println("Player " + game.getCurrentPlayer().getName() +" lost the game!");
+                    System.out.println("Player " + game.getCurrentPlayer().getID() +" lost the game!");
                     System.out.println(game.getCurrentPlayer().getCollectedDeck().showAllCards().toString());
                     break;
                 }
                 System.out.println("####ROUND " + round + "#####");
                 game.resetPlayerStatus();
                 int local = round;
-                System.out.println("Turn of player: " + game.getCurrentPlayer().getName());
+                System.out.println("Turn of player: " + game.getCurrentPlayer().getID());
                 while (displ) {
                     System.out.println("Your Handcards are: " + game.getCurrentPlayer().getHandDeck().showAllCards().toString());
                     System.out.println("Choose a Card to play or enter display to see the collected Cards of your enemys: ");
@@ -59,7 +59,7 @@ public class Test {
                     if (card.equals("display")) {
                         for (Player p : player) {
                             System.out.println("---------------------------------");
-                            System.out.println("Collectded Deck of player: " + p.getName());
+                            System.out.println("Collectded Deck of player: " + p.getID());
                             System.out.println(p.getCollectedDeck().showAllCards().toString());
                             System.out.println();
                         }
@@ -72,13 +72,13 @@ public class Test {
                 game.getCurrentPlayer().getHandDeck().removeCard(currCard);
                 System.out.println("You choose: " + currCard.getType().toString());
                 while (local == round) {
-                    System.out.println("Current Player: " + game.getCurrentPlayer().getName());
+                    System.out.println("Current Player: " + game.getCurrentPlayer().getID());
                     System.out.println();
                     System.out.println("Possible Enemys: " );
                     possible = game.getAvailablePlayer();
                     for (Player p: possible) {
-                        if(!p.getName().equals(game.getCurrentPlayer().getName())){
-                        System.out.println("Player: " + p.getName());
+                        if(!p.getID().equals(game.getCurrentPlayer().getID())){
+                        System.out.println("Player: " + p.getID());
                         }
                     }
                     System.out.println();
@@ -88,23 +88,23 @@ public class Test {
                     System.out.println("What do you say to your enemy? ");
                     say = scanner.nextLine();
                     game.makeTurn(game.getCurrentPlayer(), new Turn(currCard, Type.valueOf(say), game.getPlayerbyName(enemy)));
-                    System.out.println(enemy + ": "  + game.getCurrentPlayer().getName() + " played " + say + "!");
+                    System.out.println(enemy + ": "  + game.getCurrentPlayer().getID() + " played " + say + "!");
                     System.out.println("Enter decision or reject!");
                     decission = scanner.nextLine();
 
                     if (decission.equals("decision")) {
                         System.out.println("Enter TRUTH or LIE");
-                        String printer = game.getCurrentPlayer().getName();
+                        String printer = game.getCurrentPlayer().getID();
                         decission = scanner.nextLine();
                         game.makeDecision(game.getPlayerbyName(enemy), Decision.valueOf(decission));
                         System.out.println("---------CHALLENGE---------");
                         System.out.println(printer + " played " + card + " and said " + say);
                         System.out.println(enemy + " said " + decission);
-                        System.out.println("New curr Player: = " + game.getCurrentPlayer().getName());
+                        System.out.println("New curr Player: = " + game.getCurrentPlayer().getID());
                         next = true;
                         round++;
                     } else if (decission.equals("reject")) {
-                        System.out.println("Player " + game.getCurrentPlayer().getName() + " played: " + card);
+                        System.out.println("Player " + game.getCurrentPlayer().getID() + " played: " + card);
                         game.reject(game.getPlayerbyName(enemy));
                         System.out.println();
                     }

@@ -48,7 +48,7 @@ public class BuildGameUnitTest {
     @Test
     public void testAddServerPlayer(){
         buildGame.addServerPlayer(one);
-        Assert.assertEquals("one",buildGame.getPlayers().get(0).getName());
+        Assert.assertEquals("one",buildGame.getPlayers().get(0).getID());
         buildGame.addServerPlayer(three);
         buildGame.addServerPlayer(two);
         buildGame.addServerPlayer(four);
