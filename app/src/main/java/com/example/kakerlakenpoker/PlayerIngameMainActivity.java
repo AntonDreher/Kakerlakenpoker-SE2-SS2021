@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.game.Game;
+import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.player.Player;
 
 import java.util.ArrayList;
@@ -51,8 +52,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
     List a = new ArrayList<>();
 
-    Game game;
-    Player me;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -159,10 +158,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
     //hollt sich alle Namen der anderen Spieler und fügt die Namen in den Spinner!
     public void setUpSpinner(){
-        namesOfPlayer.add("hans");
-        namesOfPlayer.add("peter");
-        namesOfPlayer.add("susi");
-        gameplay.setPlayers(a);
+        for (Player player : GameClient.getInstance().getGame().getPlayers()){
+            namesOfPlayer.add(player.getName());
+        }
         /*for (Player n : gameplay.getOtherPlayers()) {
             if(null
             namesOfPlayer.add(n.getName());
