@@ -29,8 +29,15 @@ import java.util.List;
 public class PlayerIngameMainActivity extends AppCompatActivity {
 
     Game gameplay;
-    LinearLayout dragView;
-    LinearLayout dragView1;
+    LinearLayout dragViewKakerlake;
+    LinearLayout dragViewBat;
+    LinearLayout dragViewFly;
+    LinearLayout dragViewFrog;
+    LinearLayout dragViewRat;
+    LinearLayout dragViewScorpion;
+    LinearLayout dragViewSpider;
+    LinearLayout dragViewStink;
+
     LinearLayout dropViewPlayer1;
     LinearLayout popUp;
     LinearLayout messageview;
@@ -75,16 +82,29 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         writeCardText = (EditText) findViewById(R.id.guessText);
 
         //init der KartenLayouts, Spinner(Wahl des Spielers) und der PlayerViews
-        dragView = (LinearLayout) findViewById(R.id.dragView);
-        dragView1 = (LinearLayout) findViewById(R.id.dragView2);
+        dragViewKakerlake = (LinearLayout) findViewById(R.id.dragViewKakerlake);
+        dragViewBat = (LinearLayout) findViewById(R.id.dragViewBat);
+        dragViewFly = (LinearLayout) findViewById(R.id.dragViewFly);
+        dragViewFrog = (LinearLayout) findViewById(R.id.dragViewFrog);
+        dragViewRat = (LinearLayout) findViewById(R.id.dragViewRat);
+        dragViewScorpion = (LinearLayout) findViewById(R.id.dragViewScorpion);
+        dragViewSpider = (LinearLayout) findViewById(R.id.dragViewSpider);
+        dragViewStink = (LinearLayout) findViewById(R.id.dragViewStink);
+
         dropViewPlayer1 = (LinearLayout) findViewById(R.id.Player1);
         choosePlayer = (Spinner) findViewById(R.id.spinnerPlayer);
 
         setUpSpinner();
 
         //Hier wird die View touchable
-        dragView.setOnTouchListener(new TouchListener());
-        dragView1.setOnTouchListener(new TouchListener());
+        dragViewKakerlake.setOnTouchListener(new TouchListener());
+        dragViewBat.setOnTouchListener(new TouchListener());
+        dragViewFly.setOnTouchListener(new TouchListener());
+        dragViewFrog.setOnTouchListener(new TouchListener());
+        dragViewRat.setOnTouchListener(new TouchListener());
+        dragViewScorpion.setOnTouchListener(new TouchListener());
+        dragViewSpider.setOnTouchListener(new TouchListener());
+        dragViewStink.setOnTouchListener(new TouchListener());
 
         //Hier wird die Fläche, wo ein Object hineingezogen wird, aktiviert!
         dropViewPlayer1.setOnDragListener(new DragListener());
