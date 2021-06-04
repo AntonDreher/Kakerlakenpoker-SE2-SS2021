@@ -35,10 +35,14 @@ public class BuildGame {
     public void distributeCards() {
         Collections.shuffle(gameDeck.getDeck());
         for (int i = 0; i < players.size(); i++) {
+            HandDeck deck = new HandDeck();
             for (int j = 0; j < 16; j++) {
-                players.get(i).getHandDeck().addCard(gameDeck.getDeck().get(0));
+                deck.addCard(gameDeck.getDeck().get(0));
+                //players.get(i).getHandDeck().addCard(gameDeck.getDeck().get(0));
                 gameDeck.getDeck().remove(0);
             }
+            players.get(i).setHandDeck(deck);
+            players.get(i).setCollectedDeck(new CollectedDeck());
         }
     }
 

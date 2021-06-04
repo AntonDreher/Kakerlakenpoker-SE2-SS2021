@@ -2,14 +2,18 @@ package com.example.kakerlakenpoker.network.game;
 
 
 import com.esotericsoftware.minlog.Log;
+import com.example.kakerlakenpoker.game.Game;
+import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoined;
 import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
 import com.example.kakerlakenpoker.network.dto.Lobby;
+import com.example.kakerlakenpoker.network.dto.PlayerReady;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
 import com.example.kakerlakenpoker.network.kryo.NetworkClientKryo;
 import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
 import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
+import com.example.kakerlakenpoker.player.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,9 +24,11 @@ public class GameClient {
     private NetworkClientKryo client;
     private ArrayList<String> ipList = new ArrayList<>();
     private ArrayList<Lobby> openLobbies = new ArrayList<>();
+    private Game game;
+    private String userName;
+
 
     private GameClient(){
-
     }
 
     public static GameClient getInstance(){
@@ -36,9 +42,11 @@ public class GameClient {
         try {
             client = new NetworkClientKryo();
             RegisterHelper.registerClasses(client.getClient().getKryo());
-            client.registerCallback(this::callback);
+            //client.registerCallback(this::callback);
+            client.getClient().addListener(new ClientListener(this));
             client.connect(NetworkConstants.MAIN_SERVER_IP);
             client.sendMessage(new ClientJoined(NetworkConstants.MAIN_SERVER_IP));
+            client.sendMessage(new PlayerReady());
             Log.info(ip + " sent to " + NetworkConstants.MAIN_SERVER_IP);
         }catch(IOException e){
             Log.info(e.getMessage());
@@ -46,14 +54,15 @@ public class GameClient {
         }
     }
 
+    //An Listener delegiert
     private void callback(BaseMessage message){
-        if(message instanceof  ClientsInLobby){
+        /*if(message instanceof  ClientsInLobby){
             ipList.clear();
             ipList.addAll(((ClientsInLobby) message).ipFromClients);
             Log.info(ipList.toString());
         } else if (message instanceof SendOpenLobbies){
             this.openLobbies = ((SendOpenLobbies) message).getLobbies();
-        }
+        }*/
     }
 
     public ArrayList<String> getIpList(){
@@ -76,5 +85,16 @@ public class GameClient {
         return openLobbies;
     }
 
+    public void setOpenLobbies(ArrayList<Lobby> openLobbies) {
+        this.openLobbies = openLobbies;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game){
+        this.game = game;
+    }
 
 }

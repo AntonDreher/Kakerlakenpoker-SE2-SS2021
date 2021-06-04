@@ -1,7 +1,10 @@
 package com.example.kakerlakenpoker.card;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
+import com.esotericsoftware.minlog.Log;
 
 /**
  * Abstrakte Klasse, die ein Karten Deck repräsentiert
@@ -173,6 +176,7 @@ public abstract class CardDeck {
                 default: break;
             }
         }
+        Log.info(fledermaus+" "+spinne+" "+scorpion+" "+kakerlake+" "+stinkwanze+" "+kroete+" "+fliege+" "+ratte+" ");
     }
     public List<Type> showAllCards(){
         List<Type> list = new ArrayList();

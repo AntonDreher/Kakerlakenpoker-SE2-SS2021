@@ -24,14 +24,14 @@ public class NetworkServerKryo implements NetworkServer, KryoNetComponent {
 
     public void start() throws IOException {
         server.start();
-        server.bind(54555);
+        server.bind(NetworkConstants.TCP_PORT);
 
-        server.addListener(new Listener() {
+        /*server.addListener(new Listener() {
             public void received(Connection connection, Object object) {
                 if (messageCallback != null && object instanceof BaseMessage)
                     messageCallback.callback((BaseMessage) object);
             }
-        });
+        });*/
     }
 
 
