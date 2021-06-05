@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.NetworkUtils;
-import com.example.kakerlakenpoker.network.dto.ClientJoined;
 import com.example.kakerlakenpoker.network.dto.Lobby;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
 import com.example.kakerlakenpoker.network.game.GameClient;
@@ -23,6 +22,7 @@ public class CreateLobbyActivity extends AppCompatActivity {
     Button startBtn;
     Intent intent;
     GameServer server;
+    GameClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +48,11 @@ public class CreateLobbyActivity extends AppCompatActivity {
     }
 
     public void startLobby() throws InterruptedException {
-        Thread startServer =
-        new Thread(() -> {
-            server = GameServer.getInstance();
-            server.init();
-        });
-        startServer.start();
-        startServer.join();
-
         Thread connectClient = new Thread(() -> {
             Lobby lobby = new Lobby(inputLobbyName.getText().toString(),NetworkUtils.getIpAddressFromDevice());
-            GameClient client = GameClient.getInstance();
+            client = GameClient.getInstance();
             client.getClient().sendMessage(new OpenLobby(lobby));
-            client.connect("localhost");
-            client.getClient().sendMessage(new ClientJoined(NetworkUtils.getIpAddressFromDevice()));
+            client.setCurrentLobby(lobby);
         });
 
         connectClient.start();

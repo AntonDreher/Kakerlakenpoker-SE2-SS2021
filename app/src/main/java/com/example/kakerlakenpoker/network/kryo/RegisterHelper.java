@@ -9,8 +9,8 @@ import com.example.kakerlakenpoker.game.Decision;
 import com.example.kakerlakenpoker.game.GameState;
 import com.example.kakerlakenpoker.game.Turn;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.dto.ClientJoined;
-import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
+import com.example.kakerlakenpoker.network.dto.ClientJoinedRequest;
+import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
 import com.example.kakerlakenpoker.network.dto.GameOver;
 import com.example.kakerlakenpoker.network.dto.GameUpdate;
 import com.example.kakerlakenpoker.network.dto.InitGame;
@@ -37,8 +37,8 @@ public class RegisterHelper {
     public static void registerClasses(Kryo kryo){
 
         kryo.register(BaseMessage.class);
-        kryo.register(ClientJoined.class);
-        kryo.register(ClientsInLobby.class);
+        kryo.register(ClientJoinedRequest.class);
+        kryo.register(ClientJoinedResponse.class);
         kryo.register(OpenLobby.class);
         kryo.register(Lobby.class);
         kryo.register(GetOpenLobbies.class);
