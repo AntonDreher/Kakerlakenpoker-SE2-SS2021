@@ -53,6 +53,9 @@ public class GameClient {
 
             ((ShowPlayersInLobbyActivity) listAdapter.getContext()).runOnUiThread(
                     () -> {
+                        for(int i = 0; i<listAdapter.getCount(); i++){
+                            listAdapter.remove(listAdapter.getItem(i));
+                        }
                         listAdapter.addAll(this.getCurrentLobby().getPlayersIpList());
                         listAdapter.notifyDataSetChanged();
                     });
