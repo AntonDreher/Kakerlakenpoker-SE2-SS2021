@@ -1,13 +1,9 @@
 package com.example.kakerlakenpoker.network.game;
 
-
-import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.dto.ClientJoinedRequest;
-import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
 import com.example.kakerlakenpoker.network.kryo.NetworkServerKryo;
 import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
 

@@ -4,12 +4,8 @@ package com.example.kakerlakenpoker.network.game;
 import com.esotericsoftware.minlog.Log;
 
 import com.example.kakerlakenpoker.IpListAdapter;
-import com.example.kakerlakenpoker.activities.ShowPlayersInLobbyActivity;
 import com.example.kakerlakenpoker.game.Game;
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
 import com.example.kakerlakenpoker.network.dto.Lobby;
-import com.example.kakerlakenpoker.network.dto.PlayerReady;
 import com.example.kakerlakenpoker.network.kryo.NetworkClientKryo;
 import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
 import com.example.kakerlakenpoker.network.kryo.RegisterHelper;

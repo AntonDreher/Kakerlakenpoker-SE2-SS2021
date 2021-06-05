@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.dto.Lobby;
@@ -49,14 +48,6 @@ public class CreateLobbyActivity extends AppCompatActivity {
     }
 
     public void startLobby() throws InterruptedException {
-      /*  Thread startServer =
-        new Thread(() -> {
-            server = GameServer.getInstance();
-            server.init();
-        });
-        startServer.start();
-        startServer.join();
-TODO */
         Thread connectClient = new Thread(() -> {
             Lobby lobby = new Lobby(inputLobbyName.getText().toString(),NetworkUtils.getIpAddressFromDevice());
             client = GameClient.getInstance();

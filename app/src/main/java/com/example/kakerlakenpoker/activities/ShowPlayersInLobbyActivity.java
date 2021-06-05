@@ -28,14 +28,14 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
         currentPlayersInLobby = findViewById(R.id.ListViewCurrentPlayersInLobby);
         currentPlayersInLobby.setAdapter(listAdapter);
         client.setListAdapter(listAdapter);
-        Thread clientJoined = new Thread(() -> {
-            client.getClient().sendMessage(new ClientJoinedRequest(client.getCurrentLobby().getName(), NetworkUtils.getIpAddressFromDevice()));
-        });
+        Thread clientJoined = new Thread(() ->
+            client.getClient().sendMessage(new ClientJoinedRequest(client.getCurrentLobby().getName(), NetworkUtils.getIpAddressFromDevice()))
+        );
         clientJoined.start();
         try {
             clientJoined.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.info(e.getMessage());
         }
     }
 

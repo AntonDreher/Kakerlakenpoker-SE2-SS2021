@@ -28,17 +28,4 @@ public class IpListAdapter extends ArrayAdapter<String> {
         return convertView;
     }
 
-    @Override
-    public void add(@Nullable String object) {
-        super.add(object);
-    }
-
-    @Override
-    public void remove(@Nullable String object) {
-        super.remove(object);
-    }
-
-    public IpListAdapter(@NonNull Context context, int resource) {
-        super(context, resource);
-    }
 }

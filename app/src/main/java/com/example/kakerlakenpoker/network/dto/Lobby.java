@@ -7,7 +7,7 @@ public class Lobby extends BaseMessage {
     private String name;
     private String HostIP;
     private int playerCount=1;
-    private List<String> playersIpList = new ArrayList<String>();
+    private List<String> playersIpList = new ArrayList<>();
 
     public Lobby(String name, String HostIP){
         this.name = name;
