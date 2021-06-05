@@ -2,6 +2,7 @@ package com.example.kakerlakenpoker;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.KeyEvent;
@@ -15,13 +16,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.game.Game;
+import com.example.kakerlakenpoker.game.GameState;
 import com.example.kakerlakenpoker.game.Turn;
 import com.example.kakerlakenpoker.network.game.GameClient;
+import com.example.kakerlakenpoker.network.game.GameServer;
 import com.example.kakerlakenpoker.player.Player;
 
 import java.util.ArrayList;
@@ -115,6 +120,10 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         goBack.setOnClickListener((View view)-> setInvisible(popUp));
         sendChallange.setOnClickListener((View view)-> sendChallengeInputs());
 
+
+        MutableLiveData<GameState> listen = new MutableLiveData<GameState>();
+        listen.setValue(GameClient.getInstance().getGame().getCurrentState());
+        listen.observe(this, gameState -> refreshView());
 
 
     }
@@ -212,6 +221,15 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         this.popUp.setVisibility(View.INVISIBLE);
         }
     }
+    /*
+    Refresh the current view
+     */
+    public void refreshView(){
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
 
     public void checkEditTextInput(){
 
