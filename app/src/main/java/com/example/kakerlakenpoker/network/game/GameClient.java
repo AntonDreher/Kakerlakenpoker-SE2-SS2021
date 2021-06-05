@@ -90,4 +90,8 @@ public class GameClient {
     public IpListAdapter getListAdapter() {
         return listAdapter;
     }
+
+    public void exitLobby(){
+
+    }
 }

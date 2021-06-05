@@ -1,7 +1,8 @@
 package com.example.kakerlakenpoker.activities;
 
-import android.net.wifi.p2p.WifiP2pManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 import com.esotericsoftware.minlog.Log;
@@ -18,14 +19,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ShowPlayersInLobbyActivity extends AppCompatActivity {
     private ListView currentPlayersInLobby;
-    private FloatingActionButton floatingActionButton;
+    private FloatingActionButton exitLobbyBtn;
     private GameClient client;
+    private Intent intent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.info("ShowPlayersInLobby started");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_players_in_lobby);
+        exitLobbyBtn = findViewById(R.id.exitLobbyBtn);
+        exitLobbyBtn.setOnClickListener((View view)->exitLobby());
         client = GameClient.getInstance();
         IpListAdapter listAdapter = new IpListAdapter(this, new ArrayList<String>());
         currentPlayersInLobby = findViewById(R.id.ListViewCurrentPlayersInLobby);
@@ -40,8 +45,12 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             Log.info(e.getMessage());
         }
-
     }
 
+    private void exitLobby(){
+        GameClient.getInstance().exitLobby();
+        intent = new Intent(ShowPlayersInLobbyActivity.this, MainMenuActivity.class);
+        startActivity(intent);
+    }
 
 }
