@@ -67,8 +67,6 @@ public class RegisterHelper {
         kryo.register(ExitLobby.class);
         kryo.register(ExitLobbyResponse.class);
 
-
-
         kryo.register(Array.class);
         kryo.register(IntArray.class);
         kryo.register(ArrayList.class);

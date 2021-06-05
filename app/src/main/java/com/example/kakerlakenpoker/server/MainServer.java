@@ -2,6 +2,7 @@ package com.example.kakerlakenpoker.server;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
+import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.network.dto.Lobby;
 import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
 import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
@@ -25,12 +26,6 @@ public class MainServer {
         server.bind(NetworkConstants.TCP_PORT);
     }
 
-    public void removeLobby(Connection connection){
-        for(Lobby lobby: allLobbies){
-            if(lobby.getHostIP().equals(connection.getRemoteAddressTCP().toString())) allLobbies.remove(lobby);
-        }
-    }
-
     public ArrayList<Lobby> getAllLobbies(){
         return allLobbies;
     }
@@ -41,5 +36,15 @@ public class MainServer {
 
     public Server getServer() {
         return server;
+    }
+
+    public Connection getConnectionFromIpAddress(String ipAddress){
+        for(Connection connection : server.getConnections()){
+            Log.info("Connection ip Address:" + connection.getRemoteAddressTCP().getAddress().getHostAddress());
+            if(connection.getRemoteAddressTCP().getAddress().getHostAddress().equals(ipAddress)){
+                return connection;
+            }
+        }
+        return null;
     }
 }

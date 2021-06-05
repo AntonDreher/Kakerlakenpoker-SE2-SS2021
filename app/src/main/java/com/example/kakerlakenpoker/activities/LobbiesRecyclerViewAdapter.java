@@ -69,7 +69,6 @@ public class LobbiesRecyclerViewAdapter extends RecyclerView.Adapter<LobbiesRecy
         viewholder.getLobbyID().setText(lobbies.get(position).getName());
         viewholder.getJoinUp().setOnClickListener((View view) -> {
             joinUp(viewholder, position);
-
         });
     }
 

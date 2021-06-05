@@ -48,15 +48,25 @@ public class ServerListener extends Listener {
             String ipAddress = ((ExitLobby) object).getIpAddress();
             for(Lobby currentLobby : server.getAllLobbies()){
                 if(currentLobby.getName().equals(lobbyToExitName)){
-                    currentLobby.getPlayersIpList().remove(ipAddress);
-                    Log.info(currentLobby.toString());
-                    server.getServer().sendToAllTCP(new ExitLobbyResponse(ipAddress));
-                    break;
+                    if(currentLobby.getHostIP().equals(ipAddress)){
+                        server.getAllLobbies().remove(currentLobby);
+              //          server.getServer().sendToAllTCP(new DestroyLobby);
+                    }else {
+                        sendExitLobbyResponseToAllClientsInLobby(currentLobby);
+                        currentLobby.getPlayersIpList().remove(ipAddress);
+                        break;
+                    }
                 }
             }
         }
     }
 
+    private void sendExitLobbyResponseToAllClientsInLobby(Lobby lobby){
+        for(String ipAddress : lobby.getPlayersIpList()){
+            Log.info(ipAddress + "current position");
+            server.getServer().sendToTCP(server.getConnectionFromIpAddress(ipAddress).getID(), new ExitLobbyResponse(ipAddress));
+        }
+    }
     @Override
     public void disconnected(Connection connection) {
         Log.info("Client disconnected: "+ connection.getRemoteAddressTCP());
