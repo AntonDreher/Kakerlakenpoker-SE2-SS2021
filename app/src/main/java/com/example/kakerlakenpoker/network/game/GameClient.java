@@ -14,9 +14,10 @@ import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observable;
 
 
-public class GameClient {
+public class GameClient extends Observable {
     private static GameClient instance;
     private NetworkClientKryo client;
     private ArrayList<Lobby> openLobbies = new ArrayList<>();

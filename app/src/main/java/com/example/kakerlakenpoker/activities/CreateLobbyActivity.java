@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.dto.Lobby;
@@ -36,7 +37,8 @@ public class CreateLobbyActivity extends AppCompatActivity {
             try {
                 startLobby();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
+                Log.info(e.getMessage());
             }
         });
 
