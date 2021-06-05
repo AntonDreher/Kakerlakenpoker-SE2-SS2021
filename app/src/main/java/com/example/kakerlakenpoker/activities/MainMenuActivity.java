@@ -9,7 +9,7 @@ import com.example.kakerlakenpoker.R;
 
 
 public class MainMenuActivity extends AppCompatActivity {
-    Intent intent;
+    private Intent intent;
 
 
     @Override

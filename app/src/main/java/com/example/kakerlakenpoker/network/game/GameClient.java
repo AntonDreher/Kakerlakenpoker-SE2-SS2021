@@ -40,8 +40,6 @@ public class GameClient {
             RegisterHelper.registerClasses(client.getClient().getKryo());
             client.getClient().addListener(new ClientListener(this));
             client.connect(NetworkConstants.MAIN_SERVER_IP);
-       //TODO     client.sendMessage(new ClientJoined(NetworkConstants.MAIN_SERVER_IP));
-       //     client.sendMessage(new PlayerReady());
             Log.info(ip + " sent to " + NetworkConstants.MAIN_SERVER_IP);
         }catch(IOException e){
             Log.info(e.getMessage());
@@ -72,6 +70,7 @@ public class GameClient {
     public void setCurrentLobby(Lobby lobby){
             currentLobby = lobby;
         }
+
     public void setOpenLobbies(ArrayList<Lobby> openLobbies) {
         this.openLobbies = openLobbies;
     }

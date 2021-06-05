@@ -16,9 +16,9 @@ import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.game.GameClient;
 
 public class EnterUserNameActivity extends AppCompatActivity {
-    ProgressDialog dialog;
-    AlertDialog.Builder builder;
-    Intent intent;
+    private ProgressDialog dialog;
+    private AlertDialog.Builder builder;
+    private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -17,12 +17,12 @@ import com.example.kakerlakenpoker.network.game.GameServer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class CreateLobbyActivity extends AppCompatActivity {
-    FloatingActionButton floatingActionButton;
-    TextView inputLobbyName;
-    Button startBtn;
-    Intent intent;
-    GameServer server;
-    GameClient client;
+    private FloatingActionButton floatingActionButton;
+    private TextView inputLobbyName;
+    private Button startBtn;
+    private Intent intent;
+    private GameServer server;
+    private GameClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

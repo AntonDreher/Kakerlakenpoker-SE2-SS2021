@@ -1,5 +1,6 @@
 package com.example.kakerlakenpoker.activities;
 
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -9,14 +10,16 @@ import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.dto.ClientJoinedRequest;
 import com.example.kakerlakenpoker.network.game.GameClient;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ShowPlayersInLobbyActivity extends AppCompatActivity {
-    ListView currentPlayersInLobby;
-    GameClient client;
+    private ListView currentPlayersInLobby;
+    private FloatingActionButton floatingActionButton;
+    private GameClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             Log.info(e.getMessage());
         }
+
     }
 
 
