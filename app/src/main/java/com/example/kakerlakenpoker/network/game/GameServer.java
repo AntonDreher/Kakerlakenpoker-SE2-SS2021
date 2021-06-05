@@ -4,6 +4,7 @@ package com.example.kakerlakenpoker.network.game;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
+import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.network.dto.ClientJoinedRequest;
 import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
@@ -16,6 +17,7 @@ public class GameServer {
     private static GameServer instance;
     private NetworkServerKryo server;
     private boolean waitingForClients = true;
+    private Game game;
 
     private GameServer(){
     }
@@ -29,9 +31,10 @@ public class GameServer {
 
     public void init(){
         server = new NetworkServerKryo();
+
         try {
             RegisterHelper.registerClasses(server.getServer().getKryo());
-            this.getServer().addListener(new GameServerListener(this));
+            server.getServer().addListener(new ServerListener(this));
             server.start();
             Log.info("Server started successful");
         }catch(IOException e){
@@ -39,11 +42,24 @@ public class GameServer {
         }
     }
 
+    public void broadcastMessage(BaseMessage message) {
+        server.broadcastMessage(message);
+    }
+
     public boolean isWaitingForClients(){
         return waitingForClients;
     }
 
-    public Server getServer(){
+
+    public Server getServer() {
         return server.getServer();
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

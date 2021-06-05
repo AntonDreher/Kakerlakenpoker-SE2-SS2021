@@ -7,6 +7,8 @@ package com.example.kakerlakenpoker.card;
 public class Card {
     private Type type;
 
+    public Card(){}
+
     public Card(Type type) {
         this.type = type;
     }

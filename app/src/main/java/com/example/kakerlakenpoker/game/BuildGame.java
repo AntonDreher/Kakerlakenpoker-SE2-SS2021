@@ -1,5 +1,7 @@
 package com.example.kakerlakenpoker.game;
 
+import android.widget.TextView;
+
 import com.example.kakerlakenpoker.card.GameDeck;
 import com.example.kakerlakenpoker.player.CollectedDeck;
 import com.example.kakerlakenpoker.player.HandDeck;
@@ -17,6 +19,7 @@ public class BuildGame {
     private GameDeck gameDeck = new GameDeck(); //Liste mit allen 64 Karten
 
 
+
     /**
      * Wenn ein player dem Spiel hinzugefügt wurde
      *
@@ -32,10 +35,14 @@ public class BuildGame {
     public void distributeCards() {
         Collections.shuffle(gameDeck.getDeck());
         for (int i = 0; i < players.size(); i++) {
+            HandDeck deck = new HandDeck();
             for (int j = 0; j < 16; j++) {
-                players.get(i).getHandDeck().addCard(gameDeck.getDeck().get(0));
+                deck.addCard(gameDeck.getDeck().get(0));
+                //players.get(i).getHandDeck().addCard(gameDeck.getDeck().get(0));
                 gameDeck.getDeck().remove(0);
             }
+            players.get(i).setHandDeck(deck);
+            players.get(i).setCollectedDeck(new CollectedDeck());
         }
     }
 
@@ -52,6 +59,10 @@ public class BuildGame {
             return new Game(players);
         }
     }
+    // Routine, die den Text von den View immer aktualisiert.
+    public void updateCurrentCount(Player player){
+        player.getHandDeck().displayCard();
+    }
 
     /**
      * Setter + Getter Methoden
@@ -63,4 +74,8 @@ public class BuildGame {
     public void setPlayers(List<Player> players) {
         this.players = (ArrayList<Player>) players;
     }
+
+
+
+
 }

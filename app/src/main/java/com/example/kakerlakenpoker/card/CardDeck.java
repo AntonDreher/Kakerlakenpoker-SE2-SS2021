@@ -1,7 +1,10 @@
 package com.example.kakerlakenpoker.card;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
+import com.esotericsoftware.minlog.Log;
 
 /**
  * Abstrakte Klasse, die ein Karten Deck repräsentiert
@@ -94,13 +97,11 @@ public abstract class CardDeck {
 
     /**
      * Entfernt eine Karte aus dem Deck, hier wird nach ENUM gesucht
-     * @param type einer der 8 Typen aus der ENUM Klasse
+     *
      */
-    public void removeCard(Type type){
-        Card c = findCard(type);
-        if(c != null){
-            deck.remove(c);
-        }
+
+    public void removeCard(Card card){
+        deck.remove(card);
     }
 
     /**
@@ -108,9 +109,9 @@ public abstract class CardDeck {
      * @param type einer der 8 Typen aus der ENUM Klasse
      * @return wenn Typ gefunden eine Karte sons NULL
      */
-    public Card findCard(Type type){
+    public Card findCard(String type){
         for(Card c: deck){
-            if(c.getType().equals(type)){
+            if(c.getType().toString().equals(type)){
                 return c;
             }
         }
@@ -138,7 +139,14 @@ public abstract class CardDeck {
     }
 
     public void countAllCards(){
-
+        this.fledermaus = 0;
+        this.fliege = 0;
+        this.kakerlake = 0;
+        this.kroete = 0;
+        this.ratte = 0;
+        this.scorpion = 0;
+        this.spinne = 0;
+        this.stinkwanze = 0;
         for (Card c : getDeck()) {
             switch (c.getType().toString()) {
                 case "FLEDERMAUS":
@@ -168,6 +176,14 @@ public abstract class CardDeck {
                 default: break;
             }
         }
+        Log.info(fledermaus+" "+spinne+" "+scorpion+" "+kakerlake+" "+stinkwanze+" "+kroete+" "+fliege+" "+ratte+" ");
+    }
+    public List<Type> showAllCards(){
+        List<Type> list = new ArrayList();
+        for (Card c: deck){
+            list.add(c.getType());
+        }
+        return list;
     }
     
 

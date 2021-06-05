@@ -6,6 +6,7 @@ package com.example.kakerlakenpoker.card;
  */
 public class GameDeck extends CardDeck {
     boolean createdDeck = false;
+
     public GameDeck() {
         createDeck();
     }

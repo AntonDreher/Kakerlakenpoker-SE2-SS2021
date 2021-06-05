@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kakerlakenpoker">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -9,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-
         <activity
             android:name=".activities.EnterUserNameActivity"
             android:screenOrientation="landscape">
@@ -29,15 +31,15 @@
             android:name=".activities.SearchLobbyActivity"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".PlayerIngameMainActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".activities.MainMenuActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activities.CreateLobbyActivity"
             android:screenOrientation="landscape" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 </manifest>
