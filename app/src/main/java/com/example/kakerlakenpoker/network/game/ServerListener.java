@@ -6,6 +6,7 @@ import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.game.BuildGame;
 import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.game.listener.GameListenerServerSide;
+import com.example.kakerlakenpoker.network.dto.ExitLobby;
 import com.example.kakerlakenpoker.network.dto.GameOver;
 import com.example.kakerlakenpoker.network.dto.MakeDecision;
 import com.example.kakerlakenpoker.network.dto.MakeTurn;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 public class ServerListener extends Listener {
     private GameServer gameServer;
     private HashMap<Connection, Player> players = new HashMap<>();
-
+    private static final int NEEDED_PLAYERS_TO_PLAY = 4;
     public ServerListener(GameServer gameServer){
         this.gameServer = gameServer;
     }
@@ -34,7 +35,7 @@ public class ServerListener extends Listener {
             gameServer.getGame().gameOver(players.get(connection));
         }else if(object instanceof PlayerReady){
             players.put(connection, new Player(String.valueOf(connection.getID()),null, null));
-            if(players.size()==4){
+            if(players.size()==NEEDED_PLAYERS_TO_PLAY){
                 ArrayList<Player> playersList = new ArrayList<>(players.values());
                 BuildGame buildGame = new BuildGame();
                 buildGame.setPlayers(playersList);

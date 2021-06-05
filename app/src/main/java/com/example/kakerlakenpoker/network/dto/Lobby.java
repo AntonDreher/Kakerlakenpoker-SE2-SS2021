@@ -6,7 +6,6 @@ import java.util.List;
 public class Lobby extends BaseMessage {
     private String name;
     private String HostIP;
-    private int playerCount=1;
     private List<String> playersIpList = new ArrayList<>();
 
     public Lobby(String name, String HostIP){
@@ -15,11 +14,6 @@ public class Lobby extends BaseMessage {
     }
 
     public Lobby(){}
-
-    public int getPlayerCount(){
-        return playerCount;
-    }
-
     public String getName() {
         return name;
     }
@@ -37,7 +31,6 @@ public class Lobby extends BaseMessage {
         return "Lobby{" +
                 "name='" + name + '\'' +
                 ", HostIP='" + HostIP + '\'' +
-                ", playerCount=" + playerCount +
                 ", playersIpList=" + playersIpList +
                 '}';
     }

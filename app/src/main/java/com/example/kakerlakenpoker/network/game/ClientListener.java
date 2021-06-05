@@ -6,7 +6,9 @@ import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.activities.ShowPlayersInLobbyActivity;
 import com.example.kakerlakenpoker.game.BuildGame;
 import com.example.kakerlakenpoker.game.listener.GameListenerClientSide;
+import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
+import com.example.kakerlakenpoker.network.dto.ExitLobbyResponse;
 import com.example.kakerlakenpoker.network.dto.GameOver;
 import com.example.kakerlakenpoker.network.dto.GameUpdate;
 import com.example.kakerlakenpoker.network.dto.InitGame;
@@ -55,6 +57,25 @@ public class ClientListener extends Listener {
                         gameClient.getListAdapter().notifyDataSetChanged();
                     });
             Log.info(gameClient.getCurrentLobby().getPlayersIpList().toString());
+        }else if (object instanceof ExitLobbyResponse){
+            String ipAddress = ((ExitLobbyResponse) object).getIpAddress();
+            if(ipAddress.equals(NetworkUtils.getIpAddressFromDevice())){
+                gameClient.setCurrentLobby(null);
+            }
+            Log.info("To search:" + ipAddress);
+            ((ShowPlayersInLobbyActivity) gameClient.getListAdapter().getContext()).runOnUiThread(
+                    () ->{
+                        for(int i=0; i<gameClient.getListAdapter().getCount(); i++){
+                            Log.info("Current at "+ gameClient.getListAdapter().getItem(i));
+                            if(gameClient.getListAdapter().getItem(i).equals(ipAddress)){
+                                gameClient.getListAdapter().remove(gameClient.getListAdapter().getItem(i));
+                                Log.info("found");
+                                break;
+                            }
+                        }
+                        gameClient.getListAdapter().notifyDataSetChanged();
+                    }
+            );
         }
     }
 

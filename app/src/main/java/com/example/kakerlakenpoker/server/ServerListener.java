@@ -5,6 +5,8 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.network.dto.ClientJoinedRequest;
 import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
+import com.example.kakerlakenpoker.network.dto.ExitLobby;
+import com.example.kakerlakenpoker.network.dto.ExitLobbyResponse;
 import com.example.kakerlakenpoker.network.dto.Lobby;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
@@ -25,19 +27,30 @@ public class ServerListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if(object instanceof GetOpenLobbies){
-            connection.sendTCP(new SendOpenLobbies(server.getOpenLobbies()));
+            connection.sendTCP(new SendOpenLobbies(server.getAllLobbies()));
         } else if (object instanceof OpenLobby){
             Lobby lobbyToAdd = ((OpenLobby) object).getLobby();
             server.addLobby(lobbyToAdd);
         }else if(object instanceof ClientJoinedRequest){
-            String lobbyToJoin = ((ClientJoinedRequest) object).getLobbyName();
+            String lobbyToJoinName = ((ClientJoinedRequest) object).getLobbyName();
             String ipAddress   = ((ClientJoinedRequest) object).getIpAddress();
 
-            for(Lobby openLobby : server.getOpenLobbies()){
-                if(openLobby.getName().equals(lobbyToJoin)){
+            for(Lobby openLobby : server.getAllLobbies()){
+                if(openLobby.getName().equals(lobbyToJoinName)){
                     openLobby.getPlayersIpList().add(ipAddress);
                     Log.info(openLobby.toString());
                     server.getServer().sendToAllTCP(new ClientJoinedResponse(openLobby));
+                    break;
+                }
+            }
+        }else if (object instanceof ExitLobby){
+            String lobbyToExitName = ((ExitLobby) object).getLobbyToExitName();
+            String ipAddress = ((ExitLobby) object).getIpAddress();
+            for(Lobby currentLobby : server.getAllLobbies()){
+                if(currentLobby.getName().equals(lobbyToExitName)){
+                    currentLobby.getPlayersIpList().remove(ipAddress);
+                    Log.info(currentLobby.toString());
+                    server.getServer().sendToAllTCP(new ExitLobbyResponse(ipAddress));
                     break;
                 }
             }

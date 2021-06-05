@@ -5,6 +5,8 @@ import com.esotericsoftware.minlog.Log;
 
 import com.example.kakerlakenpoker.IpListAdapter;
 import com.example.kakerlakenpoker.game.Game;
+import com.example.kakerlakenpoker.network.NetworkUtils;
+import com.example.kakerlakenpoker.network.dto.ExitLobby;
 import com.example.kakerlakenpoker.network.dto.Lobby;
 import com.example.kakerlakenpoker.network.kryo.NetworkClientKryo;
 import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
@@ -92,6 +94,6 @@ public class GameClient {
     }
 
     public void exitLobby(){
-
+        this.getClient().sendMessage(new ExitLobby(NetworkUtils.getIpAddressFromDevice(), currentLobby.getName()));
     }
 }
