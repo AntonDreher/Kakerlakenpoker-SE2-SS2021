@@ -3,6 +3,7 @@ package com.example.kakerlakenpoker.network.kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.network.Callback;
 import com.example.kakerlakenpoker.network.NetworkClient;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;

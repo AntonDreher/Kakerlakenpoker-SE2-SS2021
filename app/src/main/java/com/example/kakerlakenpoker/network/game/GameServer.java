@@ -2,15 +2,15 @@ package com.example.kakerlakenpoker.network.game;
 
 
 import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.dto.ClientJoined;
-import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
+import com.example.kakerlakenpoker.network.dto.ClientJoinedRequest;
+import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
 import com.example.kakerlakenpoker.network.kryo.NetworkServerKryo;
 import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class GameServer {
     private static GameServer instance;
@@ -31,7 +31,7 @@ public class GameServer {
         server = new NetworkServerKryo();
         try {
             RegisterHelper.registerClasses(server.getServer().getKryo());
-            server.registerCallback(this::callback);
+            this.getServer().addListener(new GameServerListener(this));
             server.start();
             Log.info("Server started successful");
         }catch(IOException e){
@@ -39,19 +39,11 @@ public class GameServer {
         }
     }
 
-    private void callback(BaseMessage message){
-        if (message instanceof ClientJoined){
-            Log.info("Client joined received on Server");
-            ArrayList<String> ipList = new ArrayList<>();
-            for(Connection connection : server.getConnections()){
-                ipList.add(connection.getRemoteAddressTCP().toString());
-                Log.info(connection.getRemoteAddressTCP().toString());
-            }
-            server.getServer().sendToAllTCP(new ClientsInLobby(ipList));
-        }
-    }
-
     public boolean isWaitingForClients(){
         return waitingForClients;
+    }
+
+    public Server getServer(){
+        return server.getServer();
     }
 }

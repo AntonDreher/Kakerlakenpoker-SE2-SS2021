@@ -4,8 +4,8 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.util.IntArray;
 import com.example.kakerlakenpoker.card.GameDeck;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.dto.ClientJoined;
-import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
+import com.example.kakerlakenpoker.network.dto.ClientJoinedRequest;
+import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
 import com.example.kakerlakenpoker.network.dto.Lobby;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
@@ -22,8 +22,8 @@ public class RegisterHelper {
     public static void registerClasses(Kryo kryo){
 
         kryo.register(BaseMessage.class);
-        kryo.register(ClientJoined.class);
-        kryo.register(ClientsInLobby.class);
+        kryo.register(ClientJoinedRequest.class);
+        kryo.register(ClientJoinedResponse.class);
         kryo.register(OpenLobby.class);
         kryo.register(Lobby.class);
         kryo.register(GetOpenLobbies.class);

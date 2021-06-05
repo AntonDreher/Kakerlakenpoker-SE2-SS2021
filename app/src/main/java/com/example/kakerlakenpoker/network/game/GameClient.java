@@ -5,8 +5,7 @@ import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.IpListAdapter;
 import com.example.kakerlakenpoker.activities.ShowPlayersInLobbyActivity;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.dto.ClientJoined;
-import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
+import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
 import com.example.kakerlakenpoker.network.dto.Lobby;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
 import com.example.kakerlakenpoker.network.kryo.NetworkClientKryo;
@@ -20,8 +19,8 @@ import java.util.ArrayList;
 public class GameClient {
     private static GameClient instance;
     private NetworkClientKryo client;
-    private ArrayList<String> ipList = new ArrayList<>();
     private ArrayList<Lobby> openLobbies = new ArrayList<>();
+    private Lobby currentLobby;
     private IpListAdapter listAdapter;
 
     private GameClient(){
@@ -41,7 +40,6 @@ public class GameClient {
             RegisterHelper.registerClasses(client.getClient().getKryo());
             client.registerCallback(this::callback);
             client.connect(NetworkConstants.MAIN_SERVER_IP);
-            client.sendMessage(new ClientJoined(NetworkConstants.MAIN_SERVER_IP));
             Log.info(ip + " sent to " + NetworkConstants.MAIN_SERVER_IP);
         }catch(IOException e){
             Log.info(e.getMessage());
@@ -50,25 +48,18 @@ public class GameClient {
     }
 
     private void callback(BaseMessage message){
-        if(message instanceof  ClientsInLobby){
-            ipList.clear();
-            ipList.addAll(((ClientsInLobby) message).ipFromClients);
+        if(message instanceof ClientJoinedResponse){
+            this.setCurrentLobby(((ClientJoinedResponse) message).getLobbyJoined());
 
             ((ShowPlayersInLobbyActivity) listAdapter.getContext()).runOnUiThread(
                     () -> {
-                        listAdapter.addAll(ipList);
+                        listAdapter.addAll(this.getCurrentLobby().getPlayersIpList());
                         listAdapter.notifyDataSetChanged();
-                    }
-            );
-        //    listAdapter.notifyDataSetChanged();
-            Log.info(ipList.toString());
+                    });
+            Log.info(this.getCurrentLobby().getPlayersIpList().toString());
         } else if (message instanceof SendOpenLobbies){
             this.openLobbies = ((SendOpenLobbies) message).getLobbies();
         }
-    }
-
-    public ArrayList<String> getIpList(){
-        return ipList;
     }
 
     public void connect(String ip){
@@ -89,5 +80,13 @@ public class GameClient {
 
     public void setListAdapter(IpListAdapter listAdapter) {
         this.listAdapter = listAdapter;
+    }
+
+    public void setCurrentLobby(Lobby lobby) {
+        currentLobby = lobby;
+    }
+
+    public Lobby getCurrentLobby(){
+        return currentLobby;
     }
 }
