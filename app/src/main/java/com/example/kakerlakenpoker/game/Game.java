@@ -216,4 +216,12 @@ public class Game {
         this.turn = gameUpdate.getTurn();
         this.currentState =gameUpdate.getState();
     }
+
+    public GameState getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(GameState currentState) {
+        this.currentState = currentState;
+    }
 }
