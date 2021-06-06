@@ -10,7 +10,10 @@ import com.example.kakerlakenpoker.activities.ShowPlayersInLobbyActivity;
 import com.example.kakerlakenpoker.game.BuildGame;
 import com.example.kakerlakenpoker.game.listener.GameListenerClientSide;
 import com.example.kakerlakenpoker.network.NetworkUtils;
+import com.example.kakerlakenpoker.network.dto.PlayerReady;
+import com.example.kakerlakenpoker.network.dto.clienttomainserver.GameServerReadyToConnect;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.ClientJoinedResponse;
+import com.example.kakerlakenpoker.network.dto.mainservertoclient.ClientsToJoinGameServer;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.DestroyLobby;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.ExitLobbyResponse;
 import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameOver;
@@ -18,6 +21,8 @@ import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameUpdate;
 import com.example.kakerlakenpoker.network.dto.gameservertoclient.InitGame;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.StartUpGameServer;
+
+import java.util.Observable;
 
 
 public class ClientListener extends Listener {
@@ -56,6 +61,9 @@ public class ClientListener extends Listener {
             DestroyLobbyHandler();
         }else if (object instanceof StartUpGameServer){
             StartGameServerOnThisDeviceHandler();
+        }else if (object instanceof ClientsToJoinGameServer){
+            gameClient.connect(((ClientsToJoinGameServer) object).getIpToConnect());
+            gameClient.getClient().sendMessage(new PlayerReady());
         }
     }
 
@@ -101,6 +109,7 @@ public class ClientListener extends Listener {
 
     private void StartGameServerOnThisDeviceHandler(){
         GameServer.getInstance().init();
+        gameClient.getClient().sendMessage(new GameServerReadyToConnect(NetworkUtils.getIpAddressFromDevice()));
     }
     @Override
     public void disconnected(Connection connection) {

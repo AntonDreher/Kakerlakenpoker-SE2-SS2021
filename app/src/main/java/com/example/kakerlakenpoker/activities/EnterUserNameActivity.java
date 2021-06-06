@@ -12,7 +12,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
-import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.game.GameClient;
 
 public class EnterUserNameActivity extends AppCompatActivity {
@@ -46,7 +45,7 @@ public class EnterUserNameActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            GameClient.getInstance().init(NetworkUtils.getIpAddressFromDevice());
+            GameClient.getInstance().init();
             return "Client initialized";
         }
 

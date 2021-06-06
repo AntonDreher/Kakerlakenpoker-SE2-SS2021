@@ -36,13 +36,12 @@ public class GameClient {
         return instance;
     }
 
-    public void init(String ip) {
+    public void init() {
         try {
             client = new NetworkClientKryo();
             RegisterHelper.registerClasses(client.getClient().getKryo());
             client.getClient().addListener(new ClientListener(this));
             client.connect(NetworkConstants.MAIN_SERVER_IP);
-            Log.info(ip + " sent to " + NetworkConstants.MAIN_SERVER_IP);
         }catch(IOException e){
             Log.info(e.getMessage());
             Log.info("Could not connect to host " + NetworkConstants.MAIN_SERVER_IP);

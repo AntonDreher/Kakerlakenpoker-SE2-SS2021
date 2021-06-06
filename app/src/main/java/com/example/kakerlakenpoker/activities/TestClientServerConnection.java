@@ -48,7 +48,7 @@ public class TestClientServerConnection extends AppCompatActivity {
         Thread thread = new Thread(){
             @Override
             public void run() {
-                GameClient.getInstance().init("");
+                GameClient.getInstance().init();
 
             }
         };
