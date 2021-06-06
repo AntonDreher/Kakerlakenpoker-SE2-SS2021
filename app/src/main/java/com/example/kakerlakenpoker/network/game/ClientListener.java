@@ -90,7 +90,11 @@ public class ClientListener extends Listener {
     }
 
     private void DestroyLobbyHandler(){
-        gameClient.notifyObservers();
+        Log.info("Destroy Lobby");
+        ((ShowPlayersInLobbyActivity) gameClient.getListAdapter().getContext()).runOnUiThread(
+                () -> {
+                    gameClient.getListAdapter().getContext().startActivity(new Intent(gameClient.getListAdapter().getContext(), MainMenuActivity.class));
+                });
     }
     @Override
     public void disconnected(Connection connection) {

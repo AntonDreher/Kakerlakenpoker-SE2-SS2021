@@ -20,12 +20,11 @@ import java.util.Observer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ShowPlayersInLobbyActivity extends AppCompatActivity implements Observer {
+public class ShowPlayersInLobbyActivity extends AppCompatActivity {
     private ListView currentPlayersInLobby;
     private FloatingActionButton exitLobbyBtn;
     private GameClient client;
     private Intent intent;
-    private Handler mHanlder = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,6 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity implements Obs
         exitLobbyBtn = findViewById(R.id.exitLobbyBtn);
         exitLobbyBtn.setOnClickListener((View view)->exitLobby());
         client = GameClient.getInstance();
-        client.addObserver(this);
         IpListAdapter listAdapter = new IpListAdapter(this, new ArrayList<String>());
         currentPlayersInLobby = findViewById(R.id.ListViewCurrentPlayersInLobby);
         currentPlayersInLobby.setAdapter(listAdapter);
@@ -58,17 +56,5 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity implements Obs
         startActivity(intent);
     }
 
-    @Override
-    public void update(Observable observable, final Object data){
-        if (observable instanceof GameClient){
-            mHanlder.post(new Runnable(){
-               @Override
-               public void run(){
-                   intent = new Intent(ShowPlayersInLobbyActivity.this, MainMenuActivity.class);
-                   startActivity(intent);
-               }
-            });
-        }
-    }
 
 }

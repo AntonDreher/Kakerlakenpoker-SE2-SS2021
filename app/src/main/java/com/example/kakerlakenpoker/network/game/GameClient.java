@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 
-public class GameClient extends Observable {
+public class GameClient {
     private static GameClient instance;
     private NetworkClientKryo client;
     private ArrayList<Lobby> openLobbies = new ArrayList<>();
