@@ -20,4 +20,15 @@ public class CollectedDeck extends CardDeck {
         } else
             return this.getFledermaus() ==  1 &&  this.getFliege() ==  1 &&  this.getRatte() ==  1 &&  this.getScorpion() ==  1 && this.getKakerlake()==  1 &&  this.getKroete() ==  1 && this.getSpinne() == 1 && this.getStinkwanze() == 1;
     }
+
+    public String toString(){
+        return "Kakerlake= " + super.getKakerlake() + " " +
+                "Fledermaus= " + super.getFledermaus() + " " +
+                "Fliege= " + super.getFledermaus() + " " +
+                "Ratte= " + super.getRatte() + " " +
+                "Scorpion" + super.getScorpion() + " " +
+                "Kroete= " + super.getKroete() + " " +
+                "Spinne= " + super.getSpinne() + " " +
+                "Stinkwanze= " + super.getStinkwanze();
+    }
 }

@@ -28,6 +28,7 @@ import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.player.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PlayerIngameMainActivity extends AppCompatActivity {
@@ -52,6 +53,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
     //TextViews für die ausgabe der vorläufigen zahlen oder Nachrichten
     TextView messageText;
+
     TextView krötenView;
     TextView spinnenView;
     TextView fliegenView;
@@ -373,7 +375,29 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     }
         //möchte man den Stand verändern (Display), ruft man diese Klasse auf.
         public void updateTheCollectedCards () {
+            krötenView.setText(me.getCollectedDeck().getKroete());
+            spinnenView.setText(me.getCollectedDeck().getSpinne());
+            fliegenView.setText(me.getCollectedDeck().getFliege());
+            scorpionView.setText(me.getCollectedDeck().getScorpion());
+            kakerlakeView.setText(me.getCollectedDeck().getKakerlake());
+            ratteView.setText(me.getCollectedDeck().getRatte());
+            stinkwanzeView.setText(me.getCollectedDeck().getStinkwanze());
+            fledermausView.setText(me.getCollectedDeck().getFledermaus());
+        }
 
+        //zeigt die gesammelten Karten der Gegner
+        public void showEnemyCollectCards(){
+        String output = "";
+
+        for(Player all : GameClient.getInstance().getGame().getPlayers()){
+
+            //hier soll die ausgaben meiner karten verhindert werden.
+            if(all == me){
+            }
+            else{ output += all.getCollectedDeck().toString() + ("\n");}
+        }
+        messageText.setText(output);
+        messageview.setVisibility(View.VISIBLE);
         }
     }
 
