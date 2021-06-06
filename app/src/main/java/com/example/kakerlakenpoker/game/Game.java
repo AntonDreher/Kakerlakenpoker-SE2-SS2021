@@ -179,9 +179,14 @@ public class Game {
         }
     }
 
+    public Turn getTurn() {
+        return turn;
+    }
+
     /**
      * Getter + Setter
      */
+
 
     public List<Player> getPlayers() {
         return players;

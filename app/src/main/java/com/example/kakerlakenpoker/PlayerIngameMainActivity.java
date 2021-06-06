@@ -1,11 +1,11 @@
 package com.example.kakerlakenpoker;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.DragEvent;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,21 +17,17 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.game.Decision;
-import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.game.GameState;
 import com.example.kakerlakenpoker.game.Turn;
 import com.example.kakerlakenpoker.network.game.GameClient;
-import com.example.kakerlakenpoker.network.game.GameServer;
 import com.example.kakerlakenpoker.player.Player;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PlayerIngameMainActivity extends AppCompatActivity {
@@ -71,9 +67,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     List<String> namesOfPlayer = new ArrayList<String>();
     Boolean check;
 
-    List a = new ArrayList<>();
-
     Player me = null;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +76,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         setContentView(R.layout.player_ingameview);
 
         me = getLocalPlayer();
-
+        me.getHandDeck().countAllCards();
         messageText = (TextView) findViewById(R.id.messageText);
 
         krötenView = (TextView) findViewById(R.id.krotenView);
@@ -152,21 +147,26 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         goBack.setOnClickListener((View view)-> setInvisible(popUp));
         sendChallange.setOnClickListener((View view)-> sendChallengeInputs());
 
-
-        if(me!= GameClient.getInstance().getGame().getCurrentPlayer()){
+        //me ist nicht aktuell am Spiel beteiligt
+        if(me!= GameClient.getInstance().getGame().getCurrentPlayer() || me != GameClient.getInstance().getGame().getTurn().getSelectedEnemy()){
             Log.debug("Not your turn!");
             Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
-            //Hier könnte ein Fenster aufgehen, welches Zeigt, welcher Spieler gerade an der Reihe ist
+            Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
+            showDialogeWait();
         }
 
-        if(GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && GameClient.getInstance().getGame().getCurrentPlayer() == me){
-            //Hier müsste dann ein Fenster oder so aufgehen zum auswählen ob Wahr, Falsch usw.
+        //Turn wurde ausgeführt und me wurde als Enemy ausgewählt
+        if(GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && GameClient.getInstance().getGame().getTurn().getSelectedEnemy() == me){
+            Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
+            Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
             Log.debug("You have to make a decission!");
+            showDialogeChallenge();
 
         }
-
+        //Observer, der bei Änderung des GameState die Activity neu ladet
         MutableLiveData<GameState> stateListen = new MutableLiveData<GameState>();
         stateListen.setValue(GameClient.getInstance().getGame().getCurrentState());
+        Log.debug("Observer notifyed GameState changes!");
         stateListen.observe(this, gameState -> refreshView());
 
 
@@ -241,7 +241,10 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     //hollt sich alle Namen der anderen Spieler und fügt die Namen in den Spinner!
     public void setUpSpinner(){
         for (Player player : GameClient.getInstance().getGame().getPlayers()){
-            namesOfPlayer.add(player.getName());
+            if(!namesOfPlayer.contains(player.getName())){
+                namesOfPlayer.add(player.getName());
+            }
+
         }
         ArrayAdapter chooser = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, namesOfPlayer);
         choosePlayer.setAdapter(chooser);
@@ -273,8 +276,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void decission(){
-        Decision decision = null;
+    public void decission(Decision decision){
         GameClient.getInstance().getGame().makeDecision(me,decision);
     }
 
@@ -328,6 +330,36 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    public void showDialogeChallenge(){
+        Dialog dia = new Dialog(this);
+        dia.setContentView(R.layout.decision_dialoge);
+        TextView text = dia.findViewById(R.id.info);
+        Button buttonTruth = dia.findViewById(R.id.truth);
+        Button buttonLie = dia.findViewById(R.id.lie);
+        dia.show();
+        buttonTruth.setOnClickListener(view -> {
+            decission(Decision.TRUTH);
+            dia.dismiss();
+        });
+
+        buttonLie.setOnClickListener(view -> {
+            decission(Decision.LIE);
+            dia.dismiss();
+        });
+
+        text.setText("Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName() + " played: " + GameClient.getInstance().getGame().getTurn().getSelectedType().toString());
+
+    }
+
+    public void showDialogeWait(){
+        Dialog dia = new Dialog(this);
+        TextView text = dia.findViewById(R.id.notYoutTurn);
+        text.setText("Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName() + " turn!");
+        dia.setContentView(R.layout.waiting_dialoge);
+        dia.show();
+
     }
         //möchte man den Stand verändern (Display), ruft man diese Klasse auf.
         public void updateTheCollectedCards () {
