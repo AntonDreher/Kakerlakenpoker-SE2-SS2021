@@ -22,6 +22,7 @@ import androidx.lifecycle.Observer;
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
+import com.example.kakerlakenpoker.game.Decision;
 import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.game.GameState;
 import com.example.kakerlakenpoker.game.Turn;
@@ -152,9 +153,20 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         sendChallange.setOnClickListener((View view)-> sendChallengeInputs());
 
 
-        MutableLiveData<GameState> listen = new MutableLiveData<GameState>();
-        listen.setValue(GameClient.getInstance().getGame().getCurrentState());
-        listen.observe(this, gameState -> refreshView());
+        if(me!= GameClient.getInstance().getGame().getCurrentPlayer()){
+            Log.debug("Not your turn!");
+            //Hier könnte ein Fenster aufgehen, welches Zeigt, welcher Spieler gerade an der Reihe ist
+        }
+
+        if(GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && GameClient.getInstance().getGame().getCurrentPlayer() == me){
+            //Hier müsste dann ein Fenster oder so aufgehen zum auswählen ob Wahr, Falsch usw.
+            Log.debug("You have to make a decission!");
+
+        }
+
+        MutableLiveData<GameState> stateListen = new MutableLiveData<GameState>();
+        stateListen.setValue(GameClient.getInstance().getGame().getCurrentState());
+        stateListen.observe(this, gameState -> refreshView());
 
 
     }
@@ -258,6 +270,11 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         finish();
         startActivity(intent);
+    }
+
+    public void decission(){
+        Decision decision = null;
+        GameClient.getInstance().getGame().makeDecision(me,decision);
     }
 
 
