@@ -3,7 +3,7 @@ package com.example.kakerlakenpoker.network.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lobby extends BaseMessage {
+public class Lobby extends BaseMessage{
     private String name;
     private String HostIP;
     private List<String> playersIpList = new ArrayList<>();

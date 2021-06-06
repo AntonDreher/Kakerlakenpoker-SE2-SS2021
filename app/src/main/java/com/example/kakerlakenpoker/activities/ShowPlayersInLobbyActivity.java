@@ -2,7 +2,6 @@ package com.example.kakerlakenpoker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ListView;
 
@@ -10,13 +9,11 @@ import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.IpListAdapter;
 import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.NetworkUtils;
-import com.example.kakerlakenpoker.network.dto.ClientJoinedRequest;
+import com.example.kakerlakenpoker.network.dto.clienttomainserver.ClientJoinedRequest;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import androidx.appcompat.app.AppCompatActivity;
 

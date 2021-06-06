@@ -6,7 +6,7 @@ import com.example.kakerlakenpoker.PlayerIngameMainActivity;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.game.listener.GameListener;
-import com.example.kakerlakenpoker.network.dto.GameUpdate;
+import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameUpdate;
 import com.example.kakerlakenpoker.player.Player;
 import com.example.kakerlakenpoker.player.PlayerState;
 

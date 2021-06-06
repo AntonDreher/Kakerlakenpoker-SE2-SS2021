@@ -10,14 +10,14 @@ import com.example.kakerlakenpoker.activities.ShowPlayersInLobbyActivity;
 import com.example.kakerlakenpoker.game.BuildGame;
 import com.example.kakerlakenpoker.game.listener.GameListenerClientSide;
 import com.example.kakerlakenpoker.network.NetworkUtils;
-import com.example.kakerlakenpoker.network.dto.ClientJoinedRequest;
-import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
-import com.example.kakerlakenpoker.network.dto.DestroyLobby;
-import com.example.kakerlakenpoker.network.dto.ExitLobbyResponse;
-import com.example.kakerlakenpoker.network.dto.GameOver;
-import com.example.kakerlakenpoker.network.dto.GameUpdate;
-import com.example.kakerlakenpoker.network.dto.InitGame;
+import com.example.kakerlakenpoker.network.dto.mainservertoclient.ClientJoinedResponse;
+import com.example.kakerlakenpoker.network.dto.mainservertoclient.DestroyLobby;
+import com.example.kakerlakenpoker.network.dto.mainservertoclient.ExitLobbyResponse;
+import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameOver;
+import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameUpdate;
+import com.example.kakerlakenpoker.network.dto.gameservertoclient.InitGame;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
+import com.example.kakerlakenpoker.network.dto.mainservertoclient.StartUpGameServer;
 
 
 public class ClientListener extends Listener {
@@ -54,6 +54,8 @@ public class ClientListener extends Listener {
             ExitLobbyResponseHandler(object);
         }else if (object instanceof DestroyLobby){
             DestroyLobbyHandler();
+        }else if (object instanceof StartUpGameServer){
+            StartGameServerOnThisDeviceHandler();
         }
     }
 
@@ -95,6 +97,10 @@ public class ClientListener extends Listener {
                 () -> {
                     gameClient.getListAdapter().getContext().startActivity(new Intent(gameClient.getListAdapter().getContext(), MainMenuActivity.class));
                 });
+    }
+
+    private void StartGameServerOnThisDeviceHandler(){
+        GameServer.getInstance().init();
     }
     @Override
     public void disconnected(Connection connection) {
