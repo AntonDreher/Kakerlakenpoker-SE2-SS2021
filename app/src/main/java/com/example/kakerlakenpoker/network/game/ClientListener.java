@@ -3,18 +3,14 @@ package com.example.kakerlakenpoker.network.game;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.example.kakerlakenpoker.activities.ShowPlayersInLobbyActivity;
 import com.example.kakerlakenpoker.game.BuildGame;
-import com.example.kakerlakenpoker.game.Game;
-import com.example.kakerlakenpoker.game.GameState;
 import com.example.kakerlakenpoker.game.listener.GameListenerClientSide;
-import com.example.kakerlakenpoker.network.dto.ClientsInLobby;
+import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
 import com.example.kakerlakenpoker.network.dto.GameOver;
 import com.example.kakerlakenpoker.network.dto.GameUpdate;
 import com.example.kakerlakenpoker.network.dto.InitGame;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
-import com.example.kakerlakenpoker.server.MainServer;
 
 
 public class ClientListener extends Listener {
@@ -34,11 +30,7 @@ public class ClientListener extends Listener {
     public void received(Connection connection, Object object) {
         Log.info("Received Object: " + object.getClass());
 
-        if (object instanceof ClientsInLobby) {
-            gameClient.getIpList().clear();
-            gameClient.getIpList().addAll(((ClientsInLobby) object).ipFromClients);
-            Log.info(gameClient.getIpList().toString());
-        } else if (object instanceof SendOpenLobbies) {
+        if (object instanceof SendOpenLobbies) {
             gameClient.setOpenLobbies(((SendOpenLobbies) object).getLobbies());
         } else if(object instanceof InitGame){
             BuildGame buildGame = new BuildGame();
@@ -51,12 +43,23 @@ public class ClientListener extends Listener {
 
         } else if(object instanceof GameOver){
 
+        } else if(object instanceof ClientJoinedResponse) {
+            gameClient.setCurrentLobby(((ClientJoinedResponse) object).getLobbyJoined());
+
+            ((ShowPlayersInLobbyActivity) gameClient.getListAdapter().getContext()).runOnUiThread(
+                    () -> {
+                        for (int i = 0; i < gameClient.getListAdapter().getCount(); i++) {
+                            gameClient.getListAdapter().remove(gameClient.getListAdapter().getItem(i));
+                        }
+                        gameClient.getListAdapter().addAll(gameClient.getCurrentLobby().getPlayersIpList());
+                        gameClient.getListAdapter().notifyDataSetChanged();
+                    });
+            Log.info(gameClient.getCurrentLobby().getPlayersIpList().toString());
         }
     }
 
     @Override
     public void disconnected(Connection connection) {
         Log.info("Client disconnected: " + connection.getRemoteAddressTCP());
-        //server.removeLobby(connection);
     }
 }

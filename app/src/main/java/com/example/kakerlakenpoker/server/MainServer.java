@@ -41,4 +41,8 @@ public class MainServer {
     public void addLobby(Lobby Lobby){
         openLobbies.add(Lobby);
     }
+
+    public Server getServer() {
+        return server;
+    }
 }

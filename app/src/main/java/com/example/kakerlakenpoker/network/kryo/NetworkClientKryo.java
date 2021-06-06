@@ -1,8 +1,6 @@
 package com.example.kakerlakenpoker.network.kryo;
 
 import com.esotericsoftware.kryonet.Client;
-import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
 import com.example.kakerlakenpoker.network.Callback;
 import com.example.kakerlakenpoker.network.NetworkClient;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
@@ -24,13 +22,6 @@ public class NetworkClientKryo implements NetworkClient, KryoNetComponent {
 
     public void connect(String host) throws IOException {
         client.connect(5000, host, NetworkConstants.TCP_PORT);
-
-        /*client.addListener(new Listener() {
-            public void received(Connection connection, Object object) {
-                if (callback != null && object instanceof BaseMessage)
-                    callback.callback((BaseMessage) object);
-            }
-        });*/
     }
 
     public void registerCallback(Callback<BaseMessage> callback) {

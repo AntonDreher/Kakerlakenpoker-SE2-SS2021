@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kakerlakenpoker.R;
-import com.example.kakerlakenpoker.network.NetworkUtils;
-import com.example.kakerlakenpoker.network.dto.ClientJoined;
 import com.example.kakerlakenpoker.network.dto.Lobby;
 import com.example.kakerlakenpoker.network.game.GameClient;
 
@@ -78,8 +76,7 @@ public class LobbiesRecyclerViewAdapter extends RecyclerView.Adapter<LobbiesRecy
     public void joinUp(ViewHolder viewHolder, int position) {
         new Thread(() -> {
             GameClient client = GameClient.getInstance();
-            client.connect(lobbies.get(position).getHostIP());
-            client.getClient().sendMessage(new ClientJoined(NetworkUtils.getIpAddressFromDevice()));
+            client.setCurrentLobby(lobbies.get(position));
             Intent intent = new Intent(viewHolder.context, ShowPlayersInLobbyActivity.class);
             viewHolder.context.startActivity(intent);
         }).start();
