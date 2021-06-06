@@ -155,6 +155,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
         if(me!= GameClient.getInstance().getGame().getCurrentPlayer()){
             Log.debug("Not your turn!");
+            Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
             //Hier könnte ein Fenster aufgehen, welches Zeigt, welcher Spieler gerade an der Reihe ist
         }
 
