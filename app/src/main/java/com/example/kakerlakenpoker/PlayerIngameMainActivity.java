@@ -35,7 +35,6 @@ import java.util.List;
 
 public class PlayerIngameMainActivity extends AppCompatActivity {
 
-    Game gameplay;
     LinearLayout dragViewKakerlake;
     LinearLayout dragViewBat;
     LinearLayout dragViewFly;
@@ -57,6 +56,13 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     //TextViews für die ausgabe der vorläufigen zahlen oder Nachrichten
     TextView messageText;
     TextView krötenView;
+    TextView spinnenView;
+    TextView fliegenView;
+    TextView scorpionView;
+    TextView kakerlakeView;
+    TextView ratteView;
+    TextView stinkwanzeView;
+    TextView fledermausView;
 
     String playedcard;
     String guessText;
@@ -66,16 +72,41 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
     List a = new ArrayList<>();
 
-
+    Player me = null;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_ingameview);
 
-        gameplay = new Game();
+        me = getLocalPlayer();
+
         messageText = (TextView) findViewById(R.id.messageText);
+
         krötenView = (TextView) findViewById(R.id.krotenView);
+        krötenView.setText(me.getHandDeck().getKroete());
+
+        spinnenView = findViewById(R.id.spinnenVIew);
+        spinnenView.setText(me.getHandDeck().getSpinne());
+
+        fliegenView = findViewById(R.id.fliegeView);
+        fliegenView.setText(me.getHandDeck().getFliege());
+
+        scorpionView = findViewById(R.id.skorpionView);
+        scorpionView.setText(me.getHandDeck().getScorpion());
+
+        kakerlakeView = findViewById(R.id.kakerlakenView);
+        kakerlakeView.setText(me.getHandDeck().getKakerlake());
+
+        ratteView = findViewById(R.id.rattenView);
+        ratteView.setText(me.getHandDeck().getRatte());
+
+        fledermausView = findViewById(R.id.fledermausView);
+        fledermausView.setText(me.getHandDeck().getFledermaus());
+
+        stinkwanzeView = findViewById(R.id.stinkwanzeView);
+        stinkwanzeView.setText(me.getHandDeck().getStinkwanze());
+
 
         //init des popUp Fensters
         messageview = (LinearLayout) findViewById(R.id.notificationView);
@@ -207,7 +238,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         checkEditTextInput();
         if(check){
             Turn turn;
-            Player me= GameClient.getInstance().getGame().getCurrentPlayer();
             Type selectedType = Type.valueOf(guessText);
             Player enemy = null;
             for(Player player: GameClient.getInstance().getGame().getPlayers()){
@@ -273,15 +303,22 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         }
 
     }
+    public Player getLocalPlayer() {
+        for (Player p : GameClient.getInstance().getGame().getPlayers()) {
+            if (p.getID().equals(String.valueOf(GameClient.getInstance().getClient().getClient().getID()))) {
+                return p;
+            }
+        }
+        return null;
+    }
+        //möchte man den Stand verändern (Display), ruft man diese Klasse auf.
+        public void updateTheCollectedCards () {
 
-    //möchte man den Stand verändern (Display), ruft man diese Klasse auf.
-    public void updateTheCollectedCards(){
-
+        }
     }
 
 
 
-    }
 
 
 
