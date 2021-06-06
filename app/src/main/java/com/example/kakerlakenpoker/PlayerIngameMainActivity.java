@@ -249,7 +249,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         ArrayAdapter chooser = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, namesOfPlayer);
         choosePlayer.setAdapter(chooser);
     }
-
+    /*
+    Hier wird ein Spielzug (TURN) gemacht
+     */
     public void sendChallengeInputs(){
         checkEditTextInput();
         if(check){
@@ -276,6 +278,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Methode, die eine Decision (Truth/Lie) ausführt
     public void decission(Decision decision){
         GameClient.getInstance().getGame().makeDecision(me,decision);
     }
@@ -323,6 +326,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         }
 
     }
+    //Gibt das Player Object des spielenden Client zurück
     public Player getLocalPlayer() {
         for (Player p : GameClient.getInstance().getGame().getPlayers()) {
             if (p.getID().equals(String.valueOf(GameClient.getInstance().getClient().getClient().getID()))) {
@@ -332,6 +336,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         return null;
     }
 
+    /*
+    Öffnet einen Dialog, wenn man eine Decision machen muss
+     */
     public void showDialogeChallenge(){
         Dialog dia = new Dialog(this);
         dia.setContentView(R.layout.decision_dialoge);
@@ -353,6 +360,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
     }
 
+    /*
+    Wird geöffnet, wenn man nicht an der Reihe ist
+     */
     public void showDialogeWait(){
         Dialog dia = new Dialog(this);
         TextView text = dia.findViewById(R.id.notYoutTurn);
