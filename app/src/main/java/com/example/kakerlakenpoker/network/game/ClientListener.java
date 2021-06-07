@@ -92,8 +92,9 @@ public class ClientListener extends Listener {
         ((ShowPlayersInLobbyActivity) gameClient.getListAdapter().getContext()).runOnUiThread(
                 () -> {
                     for (int i = 0; i < gameClient.getListAdapter().getCount(); i++) {
-                        gameClient.getListAdapter().remove(gameClient.getListAdapter().getItem(i));
+                        gameClient.getListAdapter().clear();
                     }
+
                     gameClient.getListAdapter().addAll(gameClient.getCurrentLobby().getPlayersIpList());
                     gameClient.getListAdapter().notifyDataSetChanged();
                 });
@@ -111,7 +112,7 @@ public class ClientListener extends Listener {
     private void StartGameServerOnThisDeviceHandler(){
         Log.info("Starting Game Server");
         GameServer.getInstance().init();
-        gameClient.getClient().sendMessage(new GameServerReadyToConnect(NetworkUtils.getIpAddressFromDevice()));
+        gameClient.getClient().sendMessage(new GameServerReadyToConnect());
     }
     @Override
     public void disconnected(Connection connection) {

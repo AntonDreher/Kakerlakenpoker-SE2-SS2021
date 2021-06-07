@@ -10,7 +10,7 @@ public class ExitLobby extends BaseMessage {
 
     }
 
-    public ExitLobby(String ipAddress, String lobbyToExitName) {
+    public ExitLobby(String lobbyToExitName) {
         this.ipAddress = ipAddress;
         this.lobbyToExitName = lobbyToExitName;
     }

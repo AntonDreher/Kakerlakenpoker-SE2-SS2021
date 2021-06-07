@@ -93,7 +93,7 @@ public class GameClient {
     }
 
     public void exitLobby(){
-        this.getClient().sendMessage(new ExitLobby(NetworkUtils.getIpAddressFromDevice(), currentLobby.getName()));
+        this.getClient().sendMessage(new ExitLobby(currentLobby.getName()));
     }
 
     public void connectToNewServer(String ip, ClientListener listener){

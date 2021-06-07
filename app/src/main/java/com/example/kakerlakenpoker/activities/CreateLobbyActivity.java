@@ -51,7 +51,7 @@ public class CreateLobbyActivity extends AppCompatActivity {
 
     public void startLobby() throws InterruptedException {
         Thread connectClient = new Thread(() -> {
-            Lobby lobby = new Lobby(inputLobbyName.getText().toString(),NetworkUtils.getIpAddressFromDevice());
+            Lobby lobby = new Lobby(inputLobbyName.getText().toString());
             client = GameClient.getInstance();
             client.getClient().sendMessage(new OpenLobby(lobby));
             client.setCurrentLobby(lobby);
