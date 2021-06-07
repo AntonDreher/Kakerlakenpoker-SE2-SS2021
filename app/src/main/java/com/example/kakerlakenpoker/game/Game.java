@@ -3,12 +3,12 @@ package com.example.kakerlakenpoker.game;
 
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.activities.PlayerIngameMainActivity;
-import com.example.kakerlakenpoker.card.Card;
-import com.example.kakerlakenpoker.card.Type;
+import com.example.kakerlakenpoker.game.card.Card;
+import com.example.kakerlakenpoker.game.card.Type;
 import com.example.kakerlakenpoker.game.listener.GameListener;
 import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameUpdate;
-import com.example.kakerlakenpoker.player.Player;
-import com.example.kakerlakenpoker.player.PlayerState;
+import com.example.kakerlakenpoker.game.player.Player;
+import com.example.kakerlakenpoker.game.player.PlayerState;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,7 +10,7 @@ import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameOver;
 import com.example.kakerlakenpoker.network.dto.clienttogameserver.MakeDecision;
 import com.example.kakerlakenpoker.network.dto.clienttogameserver.MakeTurn;
 import com.example.kakerlakenpoker.network.dto.PlayerReady;
-import com.example.kakerlakenpoker.player.Player;
+import com.example.kakerlakenpoker.game.player.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;

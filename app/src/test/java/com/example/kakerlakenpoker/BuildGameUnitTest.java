@@ -1,12 +1,12 @@
 package com.example.kakerlakenpoker;
 
 
-import com.example.kakerlakenpoker.card.GameDeck;
+import com.example.kakerlakenpoker.game.card.GameDeck;
 import com.example.kakerlakenpoker.game.BuildGame;
 import com.example.kakerlakenpoker.game.Game;
-import com.example.kakerlakenpoker.player.CollectedDeck;
-import com.example.kakerlakenpoker.player.HandDeck;
-import com.example.kakerlakenpoker.player.Player;
+import com.example.kakerlakenpoker.game.player.CollectedDeck;
+import com.example.kakerlakenpoker.game.player.HandDeck;
+import com.example.kakerlakenpoker.game.player.Player;
 
 import org.junit.After;
 import org.junit.Assert;

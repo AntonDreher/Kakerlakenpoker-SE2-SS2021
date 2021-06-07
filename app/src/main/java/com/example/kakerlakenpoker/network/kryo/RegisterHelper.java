@@ -2,13 +2,14 @@ package com.example.kakerlakenpoker.network.kryo;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.util.IntArray;
-import com.example.kakerlakenpoker.card.Card;
-import com.example.kakerlakenpoker.card.GameDeck;
-import com.example.kakerlakenpoker.card.Type;
+import com.example.kakerlakenpoker.game.card.Card;
+import com.example.kakerlakenpoker.game.card.GameDeck;
+import com.example.kakerlakenpoker.game.card.Type;
 import com.example.kakerlakenpoker.game.Decision;
 import com.example.kakerlakenpoker.game.GameState;
 import com.example.kakerlakenpoker.game.Turn;
 import com.example.server.dto.Lobby;
+import com.example.server.dto.clienttomainserver.ClientName;
 import com.example.server.dto.clienttomainserver.ClientJoinedRequest;
 import com.example.server.dto.clienttomainserver.GameServerReadyToConnect;
 import com.example.server.dto.mainservertoclient.ClientJoinedResponse;
@@ -29,19 +30,21 @@ import com.example.server.dto.mainservertoclient.SendOpenLobbies;
 import com.example.server.dto.mainservertoclient.StartUpGameServer;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.network.game.GameServer;
-import com.example.kakerlakenpoker.player.CollectedDeck;
-import com.example.kakerlakenpoker.player.HandDeck;
-import com.example.kakerlakenpoker.player.Player;
-import com.example.kakerlakenpoker.player.PlayerState;
+import com.example.kakerlakenpoker.game.player.CollectedDeck;
+import com.example.kakerlakenpoker.game.player.HandDeck;
+import com.example.kakerlakenpoker.game.player.Player;
+import com.example.kakerlakenpoker.game.player.PlayerState;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RegisterHelper {
     private RegisterHelper(){}
 
     public static void registerClasses(Kryo kryo){
         kryo.register(BaseMessage.class);
+        kryo.register(ClientName.class);
         kryo.register(ClientJoinedRequest.class);
         kryo.register(ClientJoinedResponse.class);
         kryo.register(OpenLobby.class);
@@ -77,6 +80,7 @@ public class RegisterHelper {
         kryo.register(Array.class);
         kryo.register(IntArray.class);
         kryo.register(ArrayList.class);
+        kryo.register(HashMap.class);
         kryo.register(String.class);
         kryo.register(int[].class);
         kryo.register(Object[].class);

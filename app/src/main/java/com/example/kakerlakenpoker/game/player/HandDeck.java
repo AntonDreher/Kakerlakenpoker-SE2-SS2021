@@ -1,12 +1,7 @@
-package com.example.kakerlakenpoker.player;
-import androidx.annotation.NonNull;
+package com.example.kakerlakenpoker.game.player;
 
-import com.example.kakerlakenpoker.card.Card;
-import com.example.kakerlakenpoker.card.CardDeck;
-import com.example.kakerlakenpoker.card.Type;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.kakerlakenpoker.game.card.Card;
+import com.example.kakerlakenpoker.game.card.CardDeck;
 
 /**
  * Repräsentiert die Handkarten eines Spielers

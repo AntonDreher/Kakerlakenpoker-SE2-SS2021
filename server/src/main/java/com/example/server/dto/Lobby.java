@@ -1,12 +1,13 @@
 package com.example.server.dto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Lobby extends BaseMessage{
     private String name;
     private String hostIP;
-    private List<String> playersIpList = new ArrayList<>();
+    private HashMap<String, String> playersIp = new HashMap<>();
 
     public Lobby(String name){
         this.name = name;
@@ -26,8 +27,8 @@ public class Lobby extends BaseMessage{
         return hostIP;
     }
 
-    public List<String> getPlayersIpList() {
-        return playersIpList;
+    public HashMap<String, String> getPlayersIpList() {
+        return playersIp;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class Lobby extends BaseMessage{
         return "Lobby{" +
                 "name='" + name + '\'' +
                 ", HostIP='" + hostIP + '\'' +
-                ", playersIpList=" + playersIpList +
+                ", playersIpList=" + playersIp +
                 '}';
     }
 }

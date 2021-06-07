@@ -8,14 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.R;
-import com.example.kakerlakenpoker.card.Card;
-import com.example.kakerlakenpoker.card.Type;
+import com.example.kakerlakenpoker.game.card.Card;
+import com.example.kakerlakenpoker.game.card.Type;
 import com.example.kakerlakenpoker.game.Decision;
 import com.example.kakerlakenpoker.game.Turn;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.network.game.GameServer;
 
-import com.example.kakerlakenpoker.player.Player;
+import com.example.kakerlakenpoker.game.player.Player;
 import com.example.server.NetworkConstants;
 
 

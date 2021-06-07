@@ -8,6 +8,7 @@ import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.server.NetworkConstants;
 import com.example.server.RegisterClasses;
+import com.example.server.dto.clienttomainserver.ClientName;
 import com.example.server.dto.clienttomainserver.ExitLobby;
 import com.example.server.dto.Lobby;
 import com.example.kakerlakenpoker.network.kryo.NetworkClientKryo;
@@ -23,9 +24,8 @@ public class GameClient {
     private ArrayList<Lobby> openLobbies = new ArrayList<>();
     private Lobby currentLobby;
     private IpListAdapter listAdapter;
-    private Game game;
     private String userName;
-
+    private Game game;
 
     private GameClient(){
     }
@@ -44,6 +44,7 @@ public class GameClient {
             else RegisterHelper.registerClasses(client.getClient().getKryo());
             client.getClient().addListener(new ClientListener(this));
             client.connect(ipToConnect);
+            client.getClient().sendTCP(new ClientName(userName));
         }catch(IOException e){
             Log.info(e.getMessage());
             Log.info("Could not connect to host " + ipToConnect);
@@ -97,6 +98,10 @@ public class GameClient {
 
     public void exitLobby(){
         this.getClient().sendMessage(new ExitLobby(currentLobby.getName()));
+    }
+
+    public void setUserName(String userName){
+        this.userName = userName;
     }
 
     public void connectToNewServer(String ip, ClientListener listener){

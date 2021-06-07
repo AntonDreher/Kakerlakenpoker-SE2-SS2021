@@ -1,14 +1,14 @@
 package com.example.kakerlakenpoker.activities;
 
-import com.example.kakerlakenpoker.card.Card;
-import com.example.kakerlakenpoker.card.Type;
+import com.example.kakerlakenpoker.game.card.Card;
+import com.example.kakerlakenpoker.game.card.Type;
 import com.example.kakerlakenpoker.game.BuildGame;
 import com.example.kakerlakenpoker.game.Decision;
 import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.game.Turn;
-import com.example.kakerlakenpoker.player.CollectedDeck;
-import com.example.kakerlakenpoker.player.HandDeck;
-import com.example.kakerlakenpoker.player.Player;
+import com.example.kakerlakenpoker.game.player.CollectedDeck;
+import com.example.kakerlakenpoker.game.player.HandDeck;
+import com.example.kakerlakenpoker.game.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

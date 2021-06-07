@@ -1,7 +1,6 @@
-package com.example.kakerlakenpoker.player;
+package com.example.kakerlakenpoker.game.player;
 
-import com.example.kakerlakenpoker.card.Card;
-import com.example.kakerlakenpoker.card.CardDeck;
+import com.example.kakerlakenpoker.game.card.CardDeck;
 
 /**
  * Klasse die die gesammelten Karten repräsentiert

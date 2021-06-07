@@ -7,11 +7,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
+import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.server.NetworkConstants;
 
@@ -20,18 +22,23 @@ public class EnterUserNameActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private AlertDialog.Builder builder;
     private Intent intent;
+    private EditText userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enterusername);
 
         intent = new Intent(this, MainMenuActivity.class);
+
+        userName = findViewById(R.id.enterUsernameTextField);
+
         Button goButton = (Button) findViewById(R.id.goBtn);
         goButton.setOnClickListener((View view) -> connectToMainServer());
 
     }
 
     public void connectToMainServer() {
+        GameClient.getInstance().setUserName(userName.getText().toString());
         new InitClientAsyncTask().execute();
     }
 

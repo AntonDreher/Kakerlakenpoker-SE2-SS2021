@@ -22,6 +22,8 @@ import com.example.kakerlakenpoker.network.dto.gameservertoclient.InitGame;
 import com.example.server.dto.mainservertoclient.SendOpenLobbies;
 import com.example.server.dto.mainservertoclient.StartUpGameServer;
 
+import java.util.ArrayList;
+
 
 public class ClientListener extends Listener {
     private final GameClient gameClient;
@@ -92,7 +94,7 @@ public class ClientListener extends Listener {
                         gameClient.getListAdapter().clear();
                     }
 
-                    gameClient.getListAdapter().addAll(gameClient.getCurrentLobby().getPlayersIpList());
+                    gameClient.getListAdapter().addAll(gameClient.getCurrentLobby().getPlayersIpList().values());
                     gameClient.getListAdapter().notifyDataSetChanged();
                 });
         Log.info(gameClient.getCurrentLobby().getPlayersIpList().toString());

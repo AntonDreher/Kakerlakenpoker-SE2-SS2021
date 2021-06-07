@@ -1,8 +1,8 @@
 package com.example.kakerlakenpoker.game;
 
-import com.example.kakerlakenpoker.card.Card;
-import com.example.kakerlakenpoker.card.Type;
-import com.example.kakerlakenpoker.player.Player;
+import com.example.kakerlakenpoker.game.card.Card;
+import com.example.kakerlakenpoker.game.card.Type;
+import com.example.kakerlakenpoker.game.player.Player;
 
 public class Turn {
     private Card selectedCard;

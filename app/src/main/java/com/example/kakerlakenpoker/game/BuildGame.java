@@ -1,9 +1,9 @@
 package com.example.kakerlakenpoker.game;
 
-import com.example.kakerlakenpoker.card.GameDeck;
-import com.example.kakerlakenpoker.player.CollectedDeck;
-import com.example.kakerlakenpoker.player.HandDeck;
-import com.example.kakerlakenpoker.player.Player;
+import com.example.kakerlakenpoker.game.card.GameDeck;
+import com.example.kakerlakenpoker.game.player.CollectedDeck;
+import com.example.kakerlakenpoker.game.player.HandDeck;
+import com.example.kakerlakenpoker.game.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;

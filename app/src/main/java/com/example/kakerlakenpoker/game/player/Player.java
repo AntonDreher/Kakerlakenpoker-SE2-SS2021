@@ -1,4 +1,4 @@
-package com.example.kakerlakenpoker.player;
+package com.example.kakerlakenpoker.game.player;
 
 /**
  * Repräsentiert einen Spieler.

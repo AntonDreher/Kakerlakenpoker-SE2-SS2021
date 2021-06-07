@@ -1,8 +1,8 @@
 package com.example.kakerlakenpoker;
 
-import com.example.kakerlakenpoker.card.Card;
-import com.example.kakerlakenpoker.card.Type;
-import com.example.kakerlakenpoker.player.HandDeck;
+import com.example.kakerlakenpoker.game.card.Card;
+import com.example.kakerlakenpoker.game.card.Type;
+import com.example.kakerlakenpoker.game.player.HandDeck;
 
 import org.junit.After;
 import org.junit.Before;

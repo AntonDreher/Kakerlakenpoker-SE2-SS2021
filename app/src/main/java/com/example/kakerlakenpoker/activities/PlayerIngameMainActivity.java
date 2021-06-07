@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.game.Game;
-import com.example.kakerlakenpoker.player.Player;
+import com.example.kakerlakenpoker.game.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

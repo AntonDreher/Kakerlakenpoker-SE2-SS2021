@@ -1,4 +1,4 @@
-package com.example.kakerlakenpoker.player;
+package com.example.kakerlakenpoker.game.player;
 
 public enum PlayerState {
     READY,

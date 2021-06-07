@@ -4,6 +4,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.util.IntArray;
 import com.example.server.dto.BaseMessage;
 import com.example.server.dto.Lobby;
+import com.example.server.dto.clienttomainserver.ClientName;
 import com.example.server.dto.clienttomainserver.ClientJoinedRequest;
 import com.example.server.dto.clienttomainserver.ExitLobby;
 import com.example.server.dto.clienttomainserver.GameServerReadyToConnect;
@@ -18,12 +19,14 @@ import com.example.server.dto.mainservertoclient.StartUpGameServer;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RegisterClasses {
     private RegisterClasses(){}
 
     public static void registerClasses(Kryo kryo){
         kryo.register(BaseMessage.class);
+        kryo.register(ClientName.class);
         kryo.register(ClientJoinedRequest.class);
         kryo.register(ClientJoinedResponse.class);
         kryo.register(OpenLobby.class);
@@ -41,6 +44,7 @@ public class RegisterClasses {
         kryo.register(Array.class);
         kryo.register(IntArray.class);
         kryo.register(ArrayList.class);
+        kryo.register(HashMap.class);
         kryo.register(String.class);
         kryo.register(int[].class);
         kryo.register(Object[].class);

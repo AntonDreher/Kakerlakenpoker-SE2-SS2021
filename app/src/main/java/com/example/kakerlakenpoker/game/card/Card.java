@@ -1,4 +1,4 @@
-package com.example.kakerlakenpoker.card;
+package com.example.kakerlakenpoker.game.card;
 
 /**
  * Card Klasse repräsentiert eine Karte im Spiel.
