@@ -1,5 +1,6 @@
 package com.example.kakerlakenpoker.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class TestClientServerConnection extends AppCompatActivity {
     private Button makeServer;
     private Button makeClient;
     private Button makeDecision;
+    private Button showGameView;
     private TextView text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,11 @@ public class TestClientServerConnection extends AppCompatActivity {
         makeServer = findViewById(R.id.btnmakeServer);
         makeClient = findViewById(R.id.btnmakeClient);
         makeDecision = findViewById(R.id.btnmakeDecision);
+        showGameView = findViewById(R.id.showGameView);
         text = findViewById(R.id.playeridTextView);
 
 
+        showGameView.setOnClickListener(v->showGameView());
         makeClient.setOnClickListener(v->makeClient());
         makeServer.setOnClickListener(v->makeTurn());
         makeDecision.setOnClickListener(v->makeDecision());
@@ -59,6 +63,11 @@ public class TestClientServerConnection extends AppCompatActivity {
             Thread.currentThread().interrupt();
         }
         text.setText(String.valueOf(GameClient.getInstance().getClient().getClient().getID()));
+    }
+
+    public void showGameView(){
+        Intent intent = new Intent(this, PlayerIngameMainActivity.class);
+        startActivity(intent);
     }
 
     public void makeTurn(){

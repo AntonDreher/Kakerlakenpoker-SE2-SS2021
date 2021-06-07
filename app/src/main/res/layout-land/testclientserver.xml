@@ -7,36 +7,37 @@
 
     <Button
         android:id="@+id/btnmakeServer"
-        android:layout_width="211dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
+        android:layout_width="185dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginLeft="96dp"
         android:text="makeTurn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnmakeClient"
-        android:layout_width="234dp"
-        android:layout_height="69dp"
+        android:layout_width="185dp"
+        android:layout_height="71dp"
         android:text="createClient"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.793"
+        app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toEndOf="@+id/btnmakeServer"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnmakeDecision"
-        android:layout_width="163dp"
-        android:layout_height="62dp"
+        android:layout_width="185dp"
+        android:layout_height="71dp"
         android:text="makedecision"
         app:layout_constraintBottom_toTopOf="@+id/btnmakeServer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.788"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.63" />
 
     <TextView
         android:id="@+id/playeridTextView"
@@ -52,4 +53,18 @@
         app:layout_constraintEnd_toStartOf="@+id/btnmakeClient"
         app:layout_constraintStart_toEndOf="@+id/btnmakeServer"
         app:layout_constraintTop_toBottomOf="@+id/btnmakeDecision" />
+
+    <Button
+        android:id="@+id/showGameView"
+        android:layout_width="185dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:text="showGameView"
+        app:layout_constraintBottom_toTopOf="@+id/btnmakeServer"
+        app:layout_constraintEnd_toStartOf="@+id/btnmakeDecision"
+        app:layout_constraintHorizontal_bias="0.154"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56" />
 </androidx.constraintlayout.widget.ConstraintLayout>
