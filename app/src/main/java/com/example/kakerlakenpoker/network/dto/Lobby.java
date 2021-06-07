@@ -5,13 +5,17 @@ import java.util.List;
 
 public class Lobby extends BaseMessage{
     private String name;
-    private String HostIP;
+    private String hostIP;
     private List<String> playersIpList = new ArrayList<>();
 
-    public Lobby(String name, String HostIP){
+    public Lobby(String name){
         this.name = name;
-        this.HostIP = HostIP;
     }
+
+    public void setHostIP(String hostIP){
+        this.hostIP = hostIP;
+    }
+
 
     public Lobby(){}
     public String getName() {
@@ -19,7 +23,7 @@ public class Lobby extends BaseMessage{
     }
 
     public String getHostIP() {
-        return HostIP;
+        return hostIP;
     }
 
     public List<String> getPlayersIpList() {
@@ -30,7 +34,7 @@ public class Lobby extends BaseMessage{
     public String toString() {
         return "Lobby{" +
                 "name='" + name + '\'' +
-                ", HostIP='" + HostIP + '\'' +
+                ", HostIP='" + hostIP + '\'' +
                 ", playersIpList=" + playersIpList +
                 '}';
     }

@@ -40,7 +40,7 @@ public class MainServer {
 
     public Connection getConnectionFromIpAddress(String ipAddress){
         for(Connection connection : server.getConnections()){
-            if(connection.getRemoteAddressTCP().getAddress().getHostAddress().equals(ipAddress)){
+            if(connection.getRemoteAddressTCP().toString().equals(ipAddress)){
                 return connection;
             }
         }

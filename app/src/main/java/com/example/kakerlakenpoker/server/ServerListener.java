@@ -36,20 +36,21 @@ public class ServerListener extends Listener {
             connection.sendTCP(new SendOpenLobbies(server.getAllLobbies()));
         } else if (object instanceof OpenLobby){
             Lobby lobbyToAdd = ((OpenLobby) object).getLobby();
+            lobbyToAdd.setHostIP(connection.getRemoteAddressTCP().toString());
             server.addLobby(lobbyToAdd);
         }else if(object instanceof ClientJoinedRequest){
-            ClientJoinedResponseHandler(object);
+            ClientJoinedResponseHandler(object, connection);
         }else if (object instanceof ExitLobby){
-            ExitLobbyHandler(object);
+            ExitLobbyHandler(object, connection);
         }else if (object instanceof GameServerReadyToConnect){
-            Lobby lobby = findLobbyByHostId(((GameServerReadyToConnect) object).getIpAddressToConnect());
-            sendMessageToAllClientsInLobby(lobby, new ClientsToJoinGameServer(lobby.getHostIP()));
+            Lobby lobby = findLobbyByHostId(connection.getRemoteAddressTCP().toString());
+            sendMessageToAllClientsInLobby(lobby, new ClientsToJoinGameServer(connection.getRemoteAddressTCP().getAddress().getHostAddress()));
         }
     }
 
-    private void ExitLobbyHandler(Object object){
+    private void ExitLobbyHandler(Object object, Connection connection){
         String lobbyToExitName = ((ExitLobby) object).getLobbyToExitName();
-        String ipAddress = ((ExitLobby) object).getIpAddress();
+        String ipAddress = connection.getRemoteAddressTCP().toString();
         for(Lobby currentLobby : server.getAllLobbies()){
             if(currentLobby.getName().equals(lobbyToExitName)){
                 if(currentLobby.getHostIP().equals(ipAddress)){
@@ -64,9 +65,9 @@ public class ServerListener extends Listener {
         }
     }
 
-    private void ClientJoinedResponseHandler(Object object){
+    private void ClientJoinedResponseHandler(Object object, Connection connection){
         String lobbyToJoinName = ((ClientJoinedRequest) object).getLobbyName();
-        String ipAddress   = ((ClientJoinedRequest) object).getIpAddress();
+        String ipAddress   = connection.getRemoteAddressTCP().toString();
 
         for(Lobby openLobby : server.getAllLobbies()){
             if(openLobby.getName().equals(lobbyToJoinName)){
