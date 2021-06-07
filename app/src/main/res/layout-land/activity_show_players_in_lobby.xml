@@ -7,7 +7,7 @@
     tools:context=".activities.ShowPlayersInLobbyActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/exitLobbyBtn"
         android:layout_width="147dp"
         android:layout_height="295dp"
         android:layout_alignParentBottom="true"

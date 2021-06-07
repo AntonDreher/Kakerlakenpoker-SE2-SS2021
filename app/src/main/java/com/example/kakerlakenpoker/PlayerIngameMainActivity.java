@@ -27,32 +27,32 @@ import java.util.List;
 
 public class PlayerIngameMainActivity extends AppCompatActivity {
 
-    Game gameplay;
-    LinearLayout dragView;
-    LinearLayout dragView1;
-    LinearLayout dropViewPlayer1;
-    LinearLayout popUp;
-    LinearLayout messageview;
+    private Game gameplay;
+    private LinearLayout dragView;
+    private LinearLayout dragView1;
+    private LinearLayout dropViewPlayer1;
+    private LinearLayout popUp;
+    private LinearLayout messageview;
 
-    Button sendChallange;
-    Button goBack;
-    EditText writeCardText;
-    Spinner choosePlayer;
+    private Button sendChallange;
+    private Button goBack;
+    private EditText writeCardText;
+    private Spinner choosePlayer;
 
     //TextViews für die ausgabe der vorläufigen zahlen oder Nachrichten
-    TextView messageText;
-    TextView krötenView;
+    private TextView messageText;
+    private TextView krötenView;
 
-    String playedcard;
-    String guessText;
+    private String playedcard;
+    private String guessText;
 
-    List<String> namesOfPlayer = new ArrayList<String>();
-    Boolean check;
+    private List<String> namesOfPlayer = new ArrayList<String>();
+    private Boolean check;
 
-    List a = new ArrayList<>();
+    private List a = new ArrayList<>();
 
-    Game game;
-    Player me;
+    private Game game;
+    private Player me;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override

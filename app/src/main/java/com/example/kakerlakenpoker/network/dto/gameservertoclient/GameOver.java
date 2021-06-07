@@ -1,5 +1,6 @@
-package com.example.kakerlakenpoker.network.dto;
+package com.example.kakerlakenpoker.network.dto.gameservertoclient;
 
+import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.player.Player;
 
 public class GameOver extends BaseMessage {

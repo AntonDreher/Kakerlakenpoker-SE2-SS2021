@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.dto.Lobby;
@@ -17,12 +18,12 @@ import com.example.kakerlakenpoker.network.game.GameServer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class CreateLobbyActivity extends AppCompatActivity {
-    FloatingActionButton floatingActionButton;
-    TextView inputLobbyName;
-    Button startBtn;
-    Intent intent;
-    GameServer server;
-    GameClient client;
+    private FloatingActionButton floatingActionButton;
+    private TextView inputLobbyName;
+    private Button startBtn;
+    private Intent intent;
+    private GameServer server;
+    private GameClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,8 @@ public class CreateLobbyActivity extends AppCompatActivity {
             try {
                 startLobby();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
+                Log.info(e.getMessage());
             }
         });
 

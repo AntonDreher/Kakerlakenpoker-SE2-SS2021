@@ -9,18 +9,24 @@ import com.example.kakerlakenpoker.game.Decision;
 import com.example.kakerlakenpoker.game.GameState;
 import com.example.kakerlakenpoker.game.Turn;
 import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.dto.ClientJoinedRequest;
-import com.example.kakerlakenpoker.network.dto.ClientJoinedResponse;
-import com.example.kakerlakenpoker.network.dto.GameOver;
-import com.example.kakerlakenpoker.network.dto.GameUpdate;
-import com.example.kakerlakenpoker.network.dto.InitGame;
+import com.example.kakerlakenpoker.network.dto.clienttomainserver.ClientJoinedRequest;
+import com.example.kakerlakenpoker.network.dto.clienttomainserver.GameServerReadyToConnect;
+import com.example.kakerlakenpoker.network.dto.mainservertoclient.ClientJoinedResponse;
+import com.example.kakerlakenpoker.network.dto.mainservertoclient.ClientsToJoinGameServer;
+import com.example.kakerlakenpoker.network.dto.mainservertoclient.DestroyLobby;
+import com.example.kakerlakenpoker.network.dto.clienttomainserver.ExitLobby;
+import com.example.kakerlakenpoker.network.dto.mainservertoclient.ExitLobbyResponse;
+import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameOver;
+import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameUpdate;
+import com.example.kakerlakenpoker.network.dto.gameservertoclient.InitGame;
 import com.example.kakerlakenpoker.network.dto.Lobby;
-import com.example.kakerlakenpoker.network.dto.MakeDecision;
-import com.example.kakerlakenpoker.network.dto.MakeTurn;
+import com.example.kakerlakenpoker.network.dto.clienttogameserver.MakeDecision;
+import com.example.kakerlakenpoker.network.dto.clienttogameserver.MakeTurn;
 import com.example.kakerlakenpoker.network.dto.PlayerReady;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
 import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
+import com.example.kakerlakenpoker.network.dto.mainservertoclient.StartUpGameServer;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.network.game.GameServer;
 import com.example.kakerlakenpoker.player.CollectedDeck;
@@ -35,7 +41,6 @@ public class RegisterHelper {
     private RegisterHelper(){}
 
     public static void registerClasses(Kryo kryo){
-
         kryo.register(BaseMessage.class);
         kryo.register(ClientJoinedRequest.class);
         kryo.register(ClientJoinedResponse.class);
@@ -62,8 +67,12 @@ public class RegisterHelper {
         kryo.register(Turn.class);
         kryo.register(InitGame.class);
         kryo.register(GameOver.class);
-
-
+        kryo.register(ExitLobby.class);
+        kryo.register(ExitLobbyResponse.class);
+        kryo.register(DestroyLobby.class);
+        kryo.register(StartUpGameServer.class);
+        kryo.register(GameServerReadyToConnect.class);
+        kryo.register(ClientsToJoinGameServer.class);
 
         kryo.register(Array.class);
         kryo.register(IntArray.class);

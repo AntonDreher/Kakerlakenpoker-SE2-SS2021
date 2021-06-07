@@ -1,6 +1,7 @@
-package com.example.kakerlakenpoker.network.dto;
+package com.example.kakerlakenpoker.network.dto.gameservertoclient;
 
-import com.example.kakerlakenpoker.game.Game;
+import com.example.kakerlakenpoker.network.dto.BaseMessage;
+import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameUpdate;
 
 public class InitGame extends BaseMessage {
     private GameUpdate gameUpdate;
