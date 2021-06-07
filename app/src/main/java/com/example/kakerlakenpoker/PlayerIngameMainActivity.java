@@ -22,6 +22,7 @@ import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.game.Decision;
+import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.game.GameState;
 import com.example.kakerlakenpoker.game.Turn;
 import com.example.kakerlakenpoker.network.game.GameClient;
@@ -68,7 +69,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
     List<String> namesOfPlayer = new ArrayList<String>();
     Boolean check;
-
+    MutableLiveData<GameState> stateListen = new MutableLiveData<GameState>();
     Player me = null;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -166,10 +167,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
         }
         //Observer, der bei Änderung des GameState die Activity neu ladet
-        MutableLiveData<GameState> stateListen = new MutableLiveData<GameState>();
-        stateListen.setValue(GameClient.getInstance().getGame().getCurrentState());
-        Log.debug("Observer notifyed GameState changes!");
-        stateListen.observe(this, gameState -> refreshView());
+        stateListen.observe(this, Observer -> refreshView());
 
 
     }
@@ -243,8 +241,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     //hollt sich alle Namen der anderen Spieler und fügt die Namen in den Spinner!
     public void setUpSpinner(){
         for (Player player : GameClient.getInstance().getGame().getPlayers()){
-            if(!namesOfPlayer.contains(player.getName())){
-                namesOfPlayer.add(player.getName());
+            if(!namesOfPlayer.contains(player.getName()) || !player.getID().equals(me.getID())){
+                namesOfPlayer.add(player.getID());
             }
 
         }
@@ -261,13 +259,12 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
             Type selectedType = Type.valueOf(guessText);
             Player enemy = null;
             for(Player player: GameClient.getInstance().getGame().getPlayers()){
-                if(player.getName().equals(choosePlayer.getSelectedItem().toString()))
+                if(player.getID().equals(choosePlayer.getSelectedItem().toString()))
                     enemy = player;
             }
             Card selectedCard = me.getHandDeck().findCard(playedcard);
             turn = new Turn(selectedCard, selectedType,enemy);
             GameClient.getInstance().getGame().makeTurn(me,turn);
-
         this.popUp.setVisibility(View.INVISIBLE);
         }
     }
@@ -367,9 +364,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
      */
     public void showDialogeWait(){
         Dialog dia = new Dialog(this);
+        dia.setContentView(R.layout.waiting_dialoge);
         TextView text = dia.findViewById(R.id.notYoutTurn);
         text.setText("Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName() + " turn!");
-        dia.setContentView(R.layout.waiting_dialoge);
         dia.show();
 
     }
