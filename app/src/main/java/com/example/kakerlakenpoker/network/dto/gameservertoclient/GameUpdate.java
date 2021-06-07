@@ -3,8 +3,8 @@ package com.example.kakerlakenpoker.network.dto.gameservertoclient;
 import com.example.kakerlakenpoker.game.Decision;
 import com.example.kakerlakenpoker.game.GameState;
 import com.example.kakerlakenpoker.game.Turn;
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
 import com.example.kakerlakenpoker.player.Player;
+import com.example.server.dto.BaseMessage;
 
 import java.util.List;
 

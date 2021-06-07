@@ -1,6 +1,6 @@
 package com.example.kakerlakenpoker.network;
 
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
+import com.example.server.dto.*;
 
 import java.io.IOException;
 

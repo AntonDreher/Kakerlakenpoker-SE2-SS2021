@@ -1,9 +1,6 @@
 package com.example.kakerlakenpoker.game;
 
-import android.widget.TextView;
-
 import com.example.kakerlakenpoker.card.GameDeck;
-import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
 import com.example.kakerlakenpoker.player.CollectedDeck;
 import com.example.kakerlakenpoker.player.HandDeck;
 import com.example.kakerlakenpoker.player.Player;

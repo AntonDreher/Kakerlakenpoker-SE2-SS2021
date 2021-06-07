@@ -1,8 +1,7 @@
-package com.example.kakerlakenpoker.server;
+package com.example.server;
 
 import com.esotericsoftware.minlog.Log;
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.kryo.NetworkServerKryo;
+
 
 import java.io.IOException;
 

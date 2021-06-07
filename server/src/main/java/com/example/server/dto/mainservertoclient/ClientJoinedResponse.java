@@ -1,7 +1,7 @@
-package com.example.kakerlakenpoker.network.dto.mainservertoclient;
+package com.example.server.dto.mainservertoclient;
 
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.dto.Lobby;
+import com.example.server.dto.BaseMessage;
+import com.example.server.dto.Lobby;
 
 public class ClientJoinedResponse extends BaseMessage {
     public Lobby lobbyJoined = null;

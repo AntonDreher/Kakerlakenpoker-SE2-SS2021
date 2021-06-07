@@ -1,6 +1,7 @@
-package com.example.kakerlakenpoker.network.dto.mainservertoclient;
+package com.example.server.dto.mainservertoclient;
 
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
+import com.example.server.dto.BaseMessage;
+
 
 public class ClientsToJoinGameServer extends BaseMessage {
     public String ipToConnect;

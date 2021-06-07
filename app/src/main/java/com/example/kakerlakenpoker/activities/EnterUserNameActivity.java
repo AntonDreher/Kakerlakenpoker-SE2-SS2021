@@ -12,9 +12,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
-import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.game.GameClient;
-import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
+import com.example.server.NetworkConstants;
+
 
 public class EnterUserNameActivity extends AppCompatActivity {
     private ProgressDialog dialog;

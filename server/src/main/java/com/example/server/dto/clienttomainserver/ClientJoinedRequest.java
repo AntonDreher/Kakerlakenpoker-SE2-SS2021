@@ -1,7 +1,6 @@
-package com.example.kakerlakenpoker.network.dto.clienttomainserver;
+package com.example.server.dto.clienttomainserver;
 
-
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
+import com.example.server.dto.BaseMessage;
 
 public class ClientJoinedRequest extends BaseMessage {
     public String ipAddress = null;

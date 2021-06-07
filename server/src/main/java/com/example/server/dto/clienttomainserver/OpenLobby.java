@@ -1,7 +1,7 @@
-package com.example.kakerlakenpoker.network.dto.clienttomainserver;
+package com.example.server.dto.clienttomainserver;
 
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.dto.Lobby;
+import com.example.server.dto.BaseMessage;
+import com.example.server.dto.Lobby;
 
 public class OpenLobby extends BaseMessage {
     private Lobby lobby;

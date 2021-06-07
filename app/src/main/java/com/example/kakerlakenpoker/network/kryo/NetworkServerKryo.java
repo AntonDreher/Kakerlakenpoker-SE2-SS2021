@@ -1,11 +1,10 @@
 package com.example.kakerlakenpoker.network.kryo;
 
 import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.example.kakerlakenpoker.network.Callback;
 import com.example.kakerlakenpoker.network.NetworkServer;
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
+import com.example.server.dto.*;
 
 import java.io.IOException;
 

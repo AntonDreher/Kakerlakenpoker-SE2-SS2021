@@ -2,7 +2,7 @@ package com.example.kakerlakenpoker.game;
 
 
 import com.esotericsoftware.minlog.Log;
-import com.example.kakerlakenpoker.PlayerIngameMainActivity;
+import com.example.kakerlakenpoker.activities.PlayerIngameMainActivity;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.game.listener.GameListener;

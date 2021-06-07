@@ -3,13 +3,14 @@ package com.example.kakerlakenpoker.network.game;
 
 import com.esotericsoftware.minlog.Log;
 
-import com.example.kakerlakenpoker.IpListAdapter;
+import com.example.kakerlakenpoker.activities.IpListAdapter;
 import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.network.NetworkUtils;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.ExitLobby;
-import com.example.kakerlakenpoker.network.dto.Lobby;
+import com.example.server.NetworkConstants;
+import com.example.server.RegisterClasses;
+import com.example.server.dto.clienttomainserver.ExitLobby;
+import com.example.server.dto.Lobby;
 import com.example.kakerlakenpoker.network.kryo.NetworkClientKryo;
-import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
 import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
 
 import java.io.IOException;
@@ -39,7 +40,8 @@ public class GameClient {
     public void init(String ipToConnect) {
         try {
             client = new NetworkClientKryo();
-            RegisterHelper.registerClasses(client.getClient().getKryo());
+            if(ipToConnect.equals(NetworkConstants.MAIN_SERVER_IP))RegisterClasses.registerClasses(client.getClient().getKryo());
+            else RegisterHelper.registerClasses(client.getClient().getKryo());
             client.getClient().addListener(new ClientListener(this));
             client.connect(ipToConnect);
         }catch(IOException e){
@@ -83,6 +85,7 @@ public class GameClient {
     public void setGame(Game game){
         this.game = game;
     }
+
 
     public Lobby getCurrentLobby(){
         return currentLobby;

@@ -1,6 +1,5 @@
-package com.example.kakerlakenpoker.network.dto.mainservertoclient;
-
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
+package com.example.server.dto.mainservertoclient;
+import com.example.server.dto.BaseMessage;
 
 public class ExitLobbyResponse extends BaseMessage {
     public String ipAddress = null;

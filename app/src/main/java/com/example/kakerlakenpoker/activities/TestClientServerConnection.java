@@ -1,9 +1,7 @@
 package com.example.kakerlakenpoker.activities;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,12 +12,12 @@ import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
 import com.example.kakerlakenpoker.game.Decision;
 import com.example.kakerlakenpoker.game.Turn;
-import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.network.game.GameServer;
-import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
+
 import com.example.kakerlakenpoker.player.Player;
-import com.example.kakerlakenpoker.server.Main;
+import com.example.server.NetworkConstants;
+
 
 import java.util.Collections;
 

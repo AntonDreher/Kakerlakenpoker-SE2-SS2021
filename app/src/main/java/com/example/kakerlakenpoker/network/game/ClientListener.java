@@ -11,19 +11,16 @@ import com.example.kakerlakenpoker.game.BuildGame;
 import com.example.kakerlakenpoker.game.listener.GameListenerClientSide;
 import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.dto.PlayerReady;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.GameServerReadyToConnect;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.ClientJoinedResponse;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.ClientsToJoinGameServer;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.DestroyLobby;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.ExitLobbyResponse;
+import com.example.server.dto.clienttomainserver.GameServerReadyToConnect;
+import com.example.server.dto.mainservertoclient.ClientJoinedResponse;
+import com.example.server.dto.mainservertoclient.ClientsToJoinGameServer;
+import com.example.server.dto.mainservertoclient.DestroyLobby;
+import com.example.server.dto.mainservertoclient.ExitLobbyResponse;
 import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameOver;
 import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameUpdate;
 import com.example.kakerlakenpoker.network.dto.gameservertoclient.InitGame;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.StartUpGameServer;
-
-import java.io.IOException;
-import java.util.Observable;
+import com.example.server.dto.mainservertoclient.SendOpenLobbies;
+import com.example.server.dto.mainservertoclient.StartUpGameServer;
 
 
 public class ClientListener extends Listener {

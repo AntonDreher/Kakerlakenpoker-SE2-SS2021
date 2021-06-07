@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.R;
-import com.example.kakerlakenpoker.network.NetworkUtils;
-import com.example.kakerlakenpoker.network.dto.Lobby;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
+
+import com.example.server.dto.Lobby;
+import com.example.server.dto.clienttomainserver.OpenLobby;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.network.game.GameServer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

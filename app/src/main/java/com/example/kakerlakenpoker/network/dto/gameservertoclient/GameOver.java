@@ -1,7 +1,8 @@
 package com.example.kakerlakenpoker.network.dto.gameservertoclient;
 
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
+
 import com.example.kakerlakenpoker.player.Player;
+import com.example.server.dto.BaseMessage;
 
 public class GameOver extends BaseMessage {
     private Player loser;

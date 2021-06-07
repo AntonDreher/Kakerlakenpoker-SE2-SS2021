@@ -1,4 +1,4 @@
-package com.example.kakerlakenpoker;
+package com.example.kakerlakenpoker.activities;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.kakerlakenpoker.R;
 
 public class IpListAdapter extends ArrayAdapter<String> {
     public IpListAdapter(Context context, List<String> ipList){

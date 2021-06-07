@@ -1,4 +1,4 @@
-package com.example.kakerlakenpoker.network.dto;
+package com.example.server.dto;
 
 import java.util.ArrayList;
 import java.util.List;

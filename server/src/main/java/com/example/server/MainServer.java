@@ -1,11 +1,11 @@
-package com.example.kakerlakenpoker.server;
+package com.example.server;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
-import com.example.kakerlakenpoker.network.dto.Lobby;
-import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
-import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
+
+import com.example.server.dto.Lobby;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class MainServer {
 
         server.addListener(new ServerListener(this));
 
-        RegisterHelper.registerClasses(server.getKryo());
+        RegisterClasses.registerClasses(server.getKryo());
 
         server.start();
         server.bind(NetworkConstants.TCP_PORT);

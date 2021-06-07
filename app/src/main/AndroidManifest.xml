@@ -31,7 +31,7 @@
             android:name=".activities.SearchLobbyActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".PlayerIngameMainActivity"
+            android:name=".activities.PlayerIngameMainActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activities.MainMenuActivity"

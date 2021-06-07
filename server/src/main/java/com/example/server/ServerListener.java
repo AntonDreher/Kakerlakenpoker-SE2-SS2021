@@ -1,22 +1,21 @@
-package com.example.kakerlakenpoker.server;
+package com.example.server;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
-import com.example.kakerlakenpoker.game.GameConstants;
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.ClientJoinedRequest;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.GameServerReadyToConnect;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.ClientJoinedResponse;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.ClientsToJoinGameServer;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.DestroyLobby;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.ExitLobby;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.ExitLobbyResponse;
-import com.example.kakerlakenpoker.network.dto.Lobby;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.OpenLobby;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.GetOpenLobbies;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
-import com.example.kakerlakenpoker.network.dto.mainservertoclient.StartUpGameServer;
+import com.example.server.dto.clienttomainserver.ClientJoinedRequest;
+import com.example.server.dto.clienttomainserver.GameServerReadyToConnect;
+import com.example.server.dto.mainservertoclient.ClientJoinedResponse;
+import com.example.server.dto.mainservertoclient.ClientsToJoinGameServer;
+import com.example.server.dto.mainservertoclient.DestroyLobby;
+import com.example.server.dto.clienttomainserver.ExitLobby;
+import com.example.server.dto.mainservertoclient.ExitLobbyResponse;
+import com.example.server.dto.BaseMessage;
+import com.example.server.dto.Lobby;
+import com.example.server.dto.clienttomainserver.OpenLobby;
+import com.example.server.dto.clienttomainserver.GetOpenLobbies;
+import com.example.server.dto.mainservertoclient.SendOpenLobbies;
+import com.example.server.dto.mainservertoclient.StartUpGameServer;
 
 public class ServerListener extends Listener {
     private final MainServer server;
@@ -75,7 +74,7 @@ public class ServerListener extends Listener {
                 Log.info(openLobby.toString());
                 sendMessageToAllClientsInLobby(openLobby, new ClientJoinedResponse(openLobby));
 
-                if(openLobby.getPlayersIpList().size() == GameConstants.NEEDED_PLAYERS_TO_PLAY){
+                if(openLobby.getPlayersIpList().size() == 4){
                     sendMessageToHostFromLobby(openLobby, new StartUpGameServer());
                 }
                 break;

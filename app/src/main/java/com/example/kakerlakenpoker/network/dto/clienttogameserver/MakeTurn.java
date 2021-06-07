@@ -1,7 +1,8 @@
 package com.example.kakerlakenpoker.network.dto.clienttogameserver;
 
 import com.example.kakerlakenpoker.game.Turn;
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
+import com.example.server.dto.BaseMessage;
+
 
 public class MakeTurn extends BaseMessage {
     private Turn turn;

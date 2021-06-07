@@ -3,9 +3,10 @@ package com.example.kakerlakenpoker.network.game;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.game.Game;
-import com.example.kakerlakenpoker.network.dto.BaseMessage;
+
 import com.example.kakerlakenpoker.network.kryo.NetworkServerKryo;
 import com.example.kakerlakenpoker.network.kryo.RegisterHelper;
+import com.example.server.dto.BaseMessage;
 
 import java.io.IOException;
 

@@ -1,11 +1,9 @@
-package com.example.kakerlakenpoker;
+package com.example.kakerlakenpoker.activities;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.DragEvent;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,8 +15,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.kakerlakenpoker.card.Card;
-import com.example.kakerlakenpoker.card.Type;
+import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.player.Player;
 
