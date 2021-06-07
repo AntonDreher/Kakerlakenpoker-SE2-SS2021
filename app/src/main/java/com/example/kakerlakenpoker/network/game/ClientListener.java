@@ -75,7 +75,7 @@ public class ClientListener extends Listener {
         ((ShowPlayersInLobbyActivity) gameClient.getListAdapter().getContext()).runOnUiThread(
                 () ->{
                     for(int i=0; i<gameClient.getListAdapter().getCount(); i++){
-                        if(gameClient.getListAdapter().getItem(i).equals(ipAddress)){
+                        if(gameClient.getListAdapter().getItem(i).equals(gameClient.getCurrentLobby().getPlayersIpList().get(ipAddress))){
                             gameClient.getListAdapter().remove(gameClient.getListAdapter().getItem(i));
                             break;
                         }
