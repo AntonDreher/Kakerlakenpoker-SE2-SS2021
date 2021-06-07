@@ -6,6 +6,7 @@ import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.activities.IpListAdapter;
 import com.example.kakerlakenpoker.game.Game;
 import com.example.kakerlakenpoker.network.NetworkUtils;
+import com.example.kakerlakenpoker.network.dto.PlayerReady;
 import com.example.server.NetworkConstants;
 import com.example.server.RegisterClasses;
 import com.example.server.dto.clienttomainserver.ClientName;
@@ -38,13 +39,15 @@ public class GameClient {
     }
 
     public void init(String ipToConnect) {
+        boolean connectionIsToMainServer = ipToConnect.equals("se2-demo.aau.at");
         try {
             client = new NetworkClientKryo();
-            if(ipToConnect.equals(NetworkConstants.MAIN_SERVER_IP))RegisterClasses.registerClasses(client.getClient().getKryo());
+            if(connectionIsToMainServer)RegisterClasses.registerClasses(client.getClient().getKryo());
             else RegisterHelper.registerClasses(client.getClient().getKryo());
             client.getClient().addListener(new ClientListener(this));
             client.connect(ipToConnect);
-            client.getClient().sendTCP(new ClientName(userName));
+            if(connectionIsToMainServer) client.getClient().sendTCP(new ClientName(userName));
+            else client.getClient().sendTCP(new PlayerReady());
         }catch(IOException e){
             Log.info(e.getMessage());
             Log.info("Could not connect to host " + ipToConnect);
