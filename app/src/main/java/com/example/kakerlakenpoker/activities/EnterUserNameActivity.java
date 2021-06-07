@@ -12,7 +12,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
+import com.example.kakerlakenpoker.network.NetworkUtils;
 import com.example.kakerlakenpoker.network.game.GameClient;
+import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
 
 public class EnterUserNameActivity extends AppCompatActivity {
     private ProgressDialog dialog;
@@ -45,7 +47,7 @@ public class EnterUserNameActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            GameClient.getInstance().init();
+            GameClient.getInstance().init(NetworkConstants.MAIN_SERVER_IP);
             return "Client initialized";
         }
 

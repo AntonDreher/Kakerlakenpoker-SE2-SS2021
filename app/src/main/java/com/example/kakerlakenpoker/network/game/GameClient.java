@@ -36,15 +36,15 @@ public class GameClient {
         return instance;
     }
 
-    public void init() {
+    public void init(String ipToConnect) {
         try {
             client = new NetworkClientKryo();
             RegisterHelper.registerClasses(client.getClient().getKryo());
             client.getClient().addListener(new ClientListener(this));
-            client.connect(NetworkConstants.MAIN_SERVER_IP);
+            client.connect(ipToConnect);
         }catch(IOException e){
             Log.info(e.getMessage());
-            Log.info("Could not connect to host " + NetworkConstants.MAIN_SERVER_IP);
+            Log.info("Could not connect to host " + ipToConnect);
         }
     }
 
@@ -94,5 +94,10 @@ public class GameClient {
 
     public void exitLobby(){
         this.getClient().sendMessage(new ExitLobby(NetworkUtils.getIpAddressFromDevice(), currentLobby.getName()));
+    }
+
+    public void connectToNewServer(String ip, ClientListener listener){
+        client.getClient().removeListener(listener);
+        this.init(ip);
     }
 }

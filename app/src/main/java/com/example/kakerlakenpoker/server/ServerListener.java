@@ -90,6 +90,7 @@ public class ServerListener extends Listener {
     }
 
     private void sendMessageToHostFromLobby(Lobby lobby, BaseMessage message){
+        Log.info("Send Message to Host from Lobby");
         server.getServer().sendToTCP(server.getConnectionFromIpAddress(lobby.getHostIP()).getID(), message);
     }
 

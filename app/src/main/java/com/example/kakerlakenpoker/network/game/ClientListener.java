@@ -22,6 +22,7 @@ import com.example.kakerlakenpoker.network.dto.gameservertoclient.InitGame;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.SendOpenLobbies;
 import com.example.kakerlakenpoker.network.dto.mainservertoclient.StartUpGameServer;
 
+import java.io.IOException;
 import java.util.Observable;
 
 
@@ -62,7 +63,7 @@ public class ClientListener extends Listener {
         }else if (object instanceof StartUpGameServer){
             StartGameServerOnThisDeviceHandler();
         }else if (object instanceof ClientsToJoinGameServer){
-            gameClient.connect(((ClientsToJoinGameServer) object).getIpToConnect());
+            gameClient.connectToNewServer(((ClientsToJoinGameServer) object).getIpToConnect(), this);
             gameClient.getClient().sendMessage(new PlayerReady());
         }
     }
@@ -108,6 +109,7 @@ public class ClientListener extends Listener {
     }
 
     private void StartGameServerOnThisDeviceHandler(){
+        Log.info("Starting Game Server");
         GameServer.getInstance().init();
         gameClient.getClient().sendMessage(new GameServerReadyToConnect(NetworkUtils.getIpAddressFromDevice()));
     }
