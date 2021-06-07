@@ -43,7 +43,7 @@ public class ServerListener extends Listener {
             ExitLobbyHandler(object, connection);
         }else if (object instanceof GameServerReadyToConnect){
             Lobby lobby = findLobbyByHostId(connection.getRemoteAddressTCP().toString());
-            sendMessageToAllClientsInLobby(lobby, new ClientsToJoinGameServer(connection.getRemoteAddressTCP().getAddress().getHostAddress()));
+            sendMessageToAllClientsInLobby(lobby, new ClientsToJoinGameServer(connection.getRemoteAddressTCP().getAddress().toString()));
         }
     }
 

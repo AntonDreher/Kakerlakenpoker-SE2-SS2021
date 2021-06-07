@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 import com.example.kakerlakenpoker.network.Callback;
 import com.example.kakerlakenpoker.network.NetworkServer;
+import com.example.server.NetworkConstants;
 import com.example.server.dto.*;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class NetworkServerKryo implements NetworkServer, KryoNetComponent {
 
     public void start() throws IOException {
         server.start();
-        server.bind(54556);
+        server.bind(NetworkConstants.TCP_PORT);
 
         /*server.addListener(new Listener() {
             public void received(Connection connection, Object object) {
