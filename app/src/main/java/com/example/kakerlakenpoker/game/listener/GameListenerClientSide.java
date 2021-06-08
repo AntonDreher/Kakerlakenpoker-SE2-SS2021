@@ -1,10 +1,10 @@
 package com.example.kakerlakenpoker.game.listener;
 
 import com.example.kakerlakenpoker.game.GameState;
-import com.example.kakerlakenpoker.network.dto.GameOver;
-import com.example.kakerlakenpoker.network.dto.GameUpdate;
-import com.example.kakerlakenpoker.network.dto.MakeDecision;
-import com.example.kakerlakenpoker.network.dto.MakeTurn;
+import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameOver;
+import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameUpdate;
+import com.example.kakerlakenpoker.network.dto.clienttogameserver.MakeDecision;
+import com.example.kakerlakenpoker.network.dto.clienttogameserver.MakeTurn;
 import com.example.kakerlakenpoker.network.game.GameClient;
 
 public class GameListenerClientSide implements GameListener {

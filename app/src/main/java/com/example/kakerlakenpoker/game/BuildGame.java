@@ -3,6 +3,7 @@ package com.example.kakerlakenpoker.game;
 import android.widget.TextView;
 
 import com.example.kakerlakenpoker.card.GameDeck;
+import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
 import com.example.kakerlakenpoker.player.CollectedDeck;
 import com.example.kakerlakenpoker.player.HandDeck;
 import com.example.kakerlakenpoker.player.Player;
@@ -52,7 +53,7 @@ public class BuildGame {
      * @return neues spiel mit 4 Spielen in denen 16 Karten verteil wurden
      */
     public Game buildGame() {
-        if (players.size() < 4) {
+        if (players.size() < GameConstants.NEEDED_PLAYERS_TO_PLAY) {
             throw new IllegalArgumentException("Need more players");
         } else {
             distributeCards();

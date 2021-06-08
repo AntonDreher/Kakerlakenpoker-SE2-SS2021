@@ -17,6 +17,7 @@ import com.example.kakerlakenpoker.game.Decision;
 import com.example.kakerlakenpoker.game.Turn;
 import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.kakerlakenpoker.network.game.GameServer;
+import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
 import com.example.kakerlakenpoker.player.Player;
 
 import java.util.Collections;
@@ -53,7 +54,7 @@ public class TestClientServerConnection extends AppCompatActivity {
         Thread thread = new Thread(){
             @Override
             public void run() {
-                GameClient.getInstance().init("");
+                GameClient.getInstance().init(NetworkConstants.MAIN_SERVER_IP);
 
             }
         };

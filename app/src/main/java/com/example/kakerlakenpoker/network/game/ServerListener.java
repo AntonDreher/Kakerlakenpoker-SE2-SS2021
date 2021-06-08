@@ -4,16 +4,17 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.game.BuildGame;
-import com.example.kakerlakenpoker.game.Game;
+import com.example.kakerlakenpoker.game.GameConstants;
 import com.example.kakerlakenpoker.game.listener.GameListenerServerSide;
-import com.example.kakerlakenpoker.network.dto.GameOver;
-import com.example.kakerlakenpoker.network.dto.MakeDecision;
-import com.example.kakerlakenpoker.network.dto.MakeTurn;
+import com.example.kakerlakenpoker.network.dto.gameservertoclient.GameOver;
+import com.example.kakerlakenpoker.network.dto.clienttogameserver.MakeDecision;
+import com.example.kakerlakenpoker.network.dto.clienttogameserver.MakeTurn;
 import com.example.kakerlakenpoker.network.dto.PlayerReady;
 import com.example.kakerlakenpoker.player.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
 
 public class ServerListener extends Listener {
     private GameServer gameServer;
@@ -34,7 +35,7 @@ public class ServerListener extends Listener {
             gameServer.getGame().gameOver(players.get(connection));
         }else if(object instanceof PlayerReady){
             players.put(connection, new Player(String.valueOf(connection.getID()),null, null));
-            if(players.size()==4){
+            if(players.size()== GameConstants.NEEDED_PLAYERS_TO_PLAY){
                 ArrayList<Player> playersList = new ArrayList<>(players.values());
                 BuildGame buildGame = new BuildGame();
                 buildGame.setPlayers(playersList);

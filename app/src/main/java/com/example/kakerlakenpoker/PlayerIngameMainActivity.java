@@ -34,6 +34,7 @@ import java.util.List;
 
 public class PlayerIngameMainActivity extends AppCompatActivity {
 
+
     LinearLayout dragViewKakerlake;
     LinearLayout dragViewBat;
     LinearLayout dragViewFly;
@@ -64,13 +65,16 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     TextView stinkwanzeView;
     TextView fledermausView;
 
-    String playedcard;
-    String guessText;
+
+    private String playedcard;
+    private String guessText;
+
 
     List<String> namesOfPlayer = new ArrayList<String>();
     Boolean check;
     MutableLiveData<GameState> stateListen = new MutableLiveData<GameState>();
     Player me = null;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override

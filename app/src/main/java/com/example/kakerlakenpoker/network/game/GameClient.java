@@ -5,6 +5,8 @@ import com.esotericsoftware.minlog.Log;
 
 import com.example.kakerlakenpoker.IpListAdapter;
 import com.example.kakerlakenpoker.game.Game;
+import com.example.kakerlakenpoker.network.NetworkUtils;
+import com.example.kakerlakenpoker.network.dto.clienttomainserver.ExitLobby;
 import com.example.kakerlakenpoker.network.dto.Lobby;
 import com.example.kakerlakenpoker.network.kryo.NetworkClientKryo;
 import com.example.kakerlakenpoker.network.kryo.NetworkConstants;
@@ -34,18 +36,15 @@ public class GameClient {
         return instance;
     }
 
-    public void init(String ip) {
+    public void init(String ipToConnect) {
         try {
             client = new NetworkClientKryo();
             RegisterHelper.registerClasses(client.getClient().getKryo());
             client.getClient().addListener(new ClientListener(this));
-            client.connect(NetworkConstants.MAIN_SERVER_IP);
-       //TODO     client.sendMessage(new ClientJoined(NetworkConstants.MAIN_SERVER_IP));
-       //     client.sendMessage(new PlayerReady());
-            Log.info(ip + " sent to " + NetworkConstants.MAIN_SERVER_IP);
+            client.connect(ipToConnect);
         }catch(IOException e){
             Log.info(e.getMessage());
-            Log.info("Could not connect to host " + NetworkConstants.MAIN_SERVER_IP);
+            Log.info("Could not connect to host " + ipToConnect);
         }
     }
 
@@ -72,6 +71,7 @@ public class GameClient {
     public void setCurrentLobby(Lobby lobby){
             currentLobby = lobby;
         }
+
     public void setOpenLobbies(ArrayList<Lobby> openLobbies) {
         this.openLobbies = openLobbies;
     }
@@ -90,5 +90,14 @@ public class GameClient {
 
     public IpListAdapter getListAdapter() {
         return listAdapter;
+    }
+
+    public void exitLobby(){
+        this.getClient().sendMessage(new ExitLobby(currentLobby.getName()));
+    }
+
+    public void connectToNewServer(String ip, ClientListener listener){
+        client.getClient().removeListener(listener);
+        this.init(ip);
     }
 }
