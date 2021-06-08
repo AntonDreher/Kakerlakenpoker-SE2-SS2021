@@ -16,8 +16,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
-import com.example.kakerlakenpoker.game.Game;
-import com.example.kakerlakenpoker.game.player.Player;
+import com.example.game.Game;
+import com.example.game.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

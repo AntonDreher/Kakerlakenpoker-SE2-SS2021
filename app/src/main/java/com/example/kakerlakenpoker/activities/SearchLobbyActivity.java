@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kakerlakenpoker.R;
 import com.example.server.dto.clienttomainserver.GetOpenLobbies;
-import com.example.kakerlakenpoker.network.game.GameClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class SearchLobbyActivity extends AppCompatActivity {

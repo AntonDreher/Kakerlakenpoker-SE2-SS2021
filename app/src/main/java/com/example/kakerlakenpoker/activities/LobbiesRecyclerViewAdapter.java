@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kakerlakenpoker.R;
 
-import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.server.dto.Lobby;
 
 import java.util.ArrayList;

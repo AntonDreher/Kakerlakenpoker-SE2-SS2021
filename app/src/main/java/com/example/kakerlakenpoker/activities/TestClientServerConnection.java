@@ -9,14 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.R;
-import com.example.kakerlakenpoker.game.card.Card;
-import com.example.kakerlakenpoker.game.card.Type;
-import com.example.kakerlakenpoker.game.Decision;
-import com.example.kakerlakenpoker.game.Turn;
-import com.example.kakerlakenpoker.network.game.GameClient;
-import com.example.kakerlakenpoker.network.game.GameServer;
+import com.example.game.card.Card;
+import com.example.game.card.Type;
+import com.example.game.Decision;
+import com.example.game.Turn;
+import com.example.server.network.game.GameData;
 
-import com.example.kakerlakenpoker.game.player.Player;
+import com.example.game.player.Player;
 import com.example.server.NetworkConstants;
 
 
@@ -42,8 +41,8 @@ public class TestClientServerConnection extends AppCompatActivity {
 
         showGameView.setOnClickListener(v->showGameView());
         makeClient.setOnClickListener(v->makeClient());
-        makeServer.setOnClickListener(v->makeTurn());
-        makeDecision.setOnClickListener(v->makeDecision());
+        /*makeServer.setOnClickListener(v->makeTurn());
+        makeDecision.setOnClickListener(v->makeDecision());*/
     }
 
 
@@ -70,7 +69,7 @@ public class TestClientServerConnection extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void makeTurn(){
+   /* public void makeTurn(){
         Turn turn;
         Player me=null;
 
@@ -81,11 +80,11 @@ public class TestClientServerConnection extends AppCompatActivity {
 
         for(Player player: GameClient.getInstance().getGame().getPlayers()){
             Log.info(String.valueOf(GameClient.getInstance().getClient().getClient().getID()));
-            Log.info(player.getName());
-            if(player.getName().equals(String.valueOf(GameClient.getInstance().getClient().getClient().getID()))){
+            Log.info(player.getId());
+            if(player.getId().equals(String.valueOf(GameClient.getInstance().getClient().getClient().getID()))){
                 me = player;
             }
-            if(!player.getName().equals(String.valueOf(GameClient.getInstance().getClient().getClient().getID())))enemy= player;
+            if(!player.getId().equals(String.valueOf(GameClient.getInstance().getClient().getClient().getID())))enemy= player;
         }
 
         assert me != null;
@@ -102,17 +101,14 @@ public class TestClientServerConnection extends AppCompatActivity {
         Player me=null;
         for(Player player: GameClient.getInstance().getGame().getPlayers()){
             Log.info(String.valueOf(GameClient.getInstance().getClient().getClient().getID()));
-            Log.info(player.getName());
-            if(player.getName().equals(String.valueOf(GameClient.getInstance().getClient().getClient().getID()))){
+            Log.info(player.getId());
+            if(player.getId().equals(String.valueOf(GameClient.getInstance().getClient().getClient().getID()))){
                 me = player;
             }
 
         }
         GameClient.getInstance().getGame().makeDecision(me, Decision.TRUTH);
-    }
+    }*/
 
-    public static void main(String[] args) {
-        GameServer.getInstance().init();
-    }
 
 }

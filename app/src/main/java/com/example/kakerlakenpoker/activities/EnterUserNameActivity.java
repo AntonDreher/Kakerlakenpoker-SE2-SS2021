@@ -13,8 +13,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
-import com.example.kakerlakenpoker.game.Game;
-import com.example.kakerlakenpoker.network.game.GameClient;
 import com.example.server.NetworkConstants;
 
 

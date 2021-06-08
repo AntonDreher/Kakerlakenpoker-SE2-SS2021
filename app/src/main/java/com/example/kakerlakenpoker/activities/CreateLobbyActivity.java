@@ -13,8 +13,7 @@ import com.example.kakerlakenpoker.R;
 
 import com.example.server.dto.Lobby;
 import com.example.server.dto.clienttomainserver.OpenLobby;
-import com.example.kakerlakenpoker.network.game.GameClient;
-import com.example.kakerlakenpoker.network.game.GameServer;
+import com.example.server.network.game.GameData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class CreateLobbyActivity extends AppCompatActivity {
@@ -22,7 +21,7 @@ public class CreateLobbyActivity extends AppCompatActivity {
     private TextView inputLobbyName;
     private Button startBtn;
     private Intent intent;
-    private GameServer server;
+    private GameData server;
     private GameClient client;
 
     @Override

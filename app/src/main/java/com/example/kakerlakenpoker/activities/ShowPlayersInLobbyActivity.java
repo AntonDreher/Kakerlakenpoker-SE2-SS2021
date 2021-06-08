@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.esotericsoftware.minlog.Log;
+import com.example.game.Game;
 import com.example.kakerlakenpoker.R;
-import com.example.kakerlakenpoker.network.NetworkUtils;
+import com.example.server.network.NetworkUtils;
 import com.example.server.dto.clienttomainserver.ClientJoinedRequest;
-import com.example.kakerlakenpoker.network.game.GameClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -28,14 +28,15 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_players_in_lobby);
         exitLobbyBtn = findViewById(R.id.exitLobbyBtn);
-        exitLobbyBtn.setOnClickListener((View view)->exitLobby());
+        exitLobbyBtn.setOnClickListener((View view) -> exitLobby());
         client = GameClient.getInstance();
+        client.setActivity(this);
         IpListAdapter listAdapter = new IpListAdapter(this, new ArrayList<String>());
         currentPlayersInLobby = findViewById(R.id.ListViewCurrentPlayersInLobby);
         currentPlayersInLobby.setAdapter(listAdapter);
         client.setListAdapter(listAdapter);
         Thread clientJoined = new Thread(() ->
-            client.getClient().sendMessage(new ClientJoinedRequest(client.getCurrentLobby().getName(), NetworkUtils.getIpAddressFromDevice()))
+                client.getClient().sendMessage(new ClientJoinedRequest(client.getCurrentLobby().getName(), NetworkUtils.getIpAddressFromDevice()))
         );
         clientJoined.start();
         try {
@@ -46,9 +47,20 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
         }
     }
 
-    private void exitLobby(){
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GameClient.getInstance().setActivity(null);
+    }
+
+    private void exitLobby() {
         GameClient.getInstance().exitLobby();
         intent = new Intent(ShowPlayersInLobbyActivity.this, MainMenuActivity.class);
+        startActivity(intent);
+    }
+
+    public void showGame() {
+        Intent intent = new Intent(this, PlayerIngameMainActivity.class);
         startActivity(intent);
     }
 

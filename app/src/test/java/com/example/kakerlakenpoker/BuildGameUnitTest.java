@@ -1,12 +1,12 @@
 package com.example.kakerlakenpoker;
 
 
-import com.example.kakerlakenpoker.game.card.GameDeck;
-import com.example.kakerlakenpoker.game.BuildGame;
-import com.example.kakerlakenpoker.game.Game;
-import com.example.kakerlakenpoker.game.player.CollectedDeck;
-import com.example.kakerlakenpoker.game.player.HandDeck;
-import com.example.kakerlakenpoker.game.player.Player;
+import com.example.game.card.GameDeck;
+import com.example.game.BuildGame;
+import com.example.game.Game;
+import com.example.game.player.CollectedDeck;
+import com.example.game.player.HandDeck;
+import com.example.game.player.Player;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -17,10 +17,10 @@ import org.junit.jupiter.api.Assertions;
 import java.util.ArrayList;
 
 public class BuildGameUnitTest {
-    String one;
-    String two;
-    String three;
-    String four;
+    int one;
+    int two;
+    int three;
+    int four;
     BuildGame buildGame;
     ArrayList<Player> list;
     GameDeck gameDeck;
@@ -48,7 +48,7 @@ public class BuildGameUnitTest {
     @Test
     public void testAddServerPlayer(){
         buildGame.addServerPlayer(one);
-        Assert.assertEquals("one",buildGame.getPlayers().get(0).getName());
+        Assert.assertEquals("one",buildGame.getPlayers().get(0).getId());
         buildGame.addServerPlayer(three);
         buildGame.addServerPlayer(two);
         buildGame.addServerPlayer(four);
