@@ -8,53 +8,178 @@
 
 
     <LinearLayout
-        android:id="@+id/dragView"
-        android:layout_width="95dp"
+        android:id="@+id/dragViewKakerlake"
+        android:layout_width="85dp"
         android:layout_height="146dp"
-        android:background="@color/design_default_color_primary"
         android:gravity="center"
         android:orientation="vertical"
-        android:tag="Kakerlake"
-        android:contentDescription="Kakerlake"
+        android:tag="KAKERLAKE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintHorizontal_bias="0.020"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.837">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/picture1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="false"
-            android:gravity="center"
-            android:text="@string/karte" />
+            app:srcCompat="@drawable/kakerlakenkarte2" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/dragView2"
-        android:layout_width="95dp"
+        android:id="@+id/dragViewBat"
+        android:layout_width="85dp"
         android:layout_height="146dp"
-        android:background="@color/design_default_color_primary"
         android:gravity="center"
         android:orientation="vertical"
-        android:tag="Fledermaus"
+        android:tag="FLEDERMAUS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.309"
+        app:layout_constraintHorizontal_bias="0.160"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.837">
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/picture2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="false"
-            android:gravity="center"
-            android:text="@string/karte1" />
+            app:srcCompat="@drawable/bat" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dragViewFly"
+        android:layout_width="85dp"
+        android:layout_height="146dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:tag="FLIEGE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.300"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.837">
+
+        <ImageView
+            android:id="@+id/picture3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/fly" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dragViewFrog"
+        android:layout_width="85dp"
+        android:layout_height="146dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:tag="FROSCH"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.440"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.837">
+
+        <ImageView
+            android:id="@+id/picture4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/kermit" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dragViewRat"
+        android:layout_width="85dp"
+        android:layout_height="146dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:tag="RATTE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.580"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.837">
+
+        <ImageView
+            android:id="@+id/picture5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ratte" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dragViewScorpion"
+        android:layout_width="85dp"
+        android:layout_height="146dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:tag="SCORPION"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.720"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.837">
+
+        <ImageView
+            android:id="@+id/picture6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/skorpion" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dragViewSpider"
+        android:layout_width="85dp"
+        android:layout_height="146dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:tag="SPINNE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.860"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.837">
+
+        <ImageView
+            android:id="@+id/picture7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/spinne" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dragViewStink"
+        android:layout_width="85dp"
+        android:layout_height="146dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:tag="RATTE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.998"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.837">
+
+        <ImageView
+            android:id="@+id/picture8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/stinkwanze" />
 
     </LinearLayout>
 
@@ -244,12 +369,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="invisible">>
+        tools:visibility="invisible">
 
         <TextView
             android:id="@+id/messageText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"

@@ -42,23 +42,23 @@ public class Game {
         GameUpdate gameUpdate = new GameUpdate(players, currentPlayer, state, turn, decision);
         if(listener!=null)listener.notify(gameUpdate, this.currentState);
         this.currentState = state;
-        Log.info("GameState changed to " + state.name() + " and current players name is: " + currentPlayer.getName());
-        if(turn != null) Log.info("Current turn contains: Card: "+turn.getSelectedCard().getType()+", Type: "+ turn.getSelectedType()+", enemy: "+turn.getSelectedEnemy().getName());
+        Log.info("GameState changed to " + state.name() + " and current players name is: " + currentPlayer.getID());
+        if(turn != null) Log.info("Current turn contains: Card: "+turn.getSelectedCard().getType()+", Type: "+ turn.getSelectedType()+", enemy: "+turn.getSelectedEnemy().getID());
 
     }
 
     public void makeTurn(Player player, Turn turn) {
 
-        if (currentState == GameState.AWAITING_TURN && player.getName().equals(currentPlayer.getName())) {
+        if (currentState == GameState.AWAITING_TURN && player.getID().equals(currentPlayer.getID())) {
             this.turn = turn;
             changeState(GameState.AWAITING_DECISION);
             //currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
             currentPlayer.setState(PlayerState.PLAYED);
-        } else  Log.info("not permitted to make a turn player: "+currentPlayer.getName());
+        } else  Log.info("not permitted to make a turn player: "+currentPlayer.getID());
     }
 
     public void makeDecision(Player player, Decision decision) {
-        if (currentState == GameState.AWAITING_DECISION && player.getName().equals(turn.getSelectedEnemy().getName())) {
+        if (currentState == GameState.AWAITING_DECISION && player.getID().equals(turn.getSelectedEnemy().getID())) {
             this.decision=decision;
             if ((turn.getSelectedCard().getType() != turn.getSelectedType() && decision == Decision.TRUTH) ||
                     (turn.getSelectedCard().getType() == turn.getSelectedType() && decision == Decision.LIE)) {
@@ -67,7 +67,7 @@ public class Game {
             currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
             if(currentPlayer.getCollectedDeck().hasLost())changeState(GameState.GAME_OVER);
             else changeState(GameState.AWAITING_TURN);
-        } else  Log.info("not permitted to make a decision player: "+player.getName());
+        } else  Log.info("not permitted to make a decision player: "+player.getID());
         Log.info("the decision is: "+ decision.name());
 
     }
@@ -97,7 +97,7 @@ public class Game {
 
     public void gameOver(Player player){
         Log.info("gameover");
-        if(player !=null && player.getName().equals(currentPlayer.getName())){
+        if(player !=null && player.getID().equals(currentPlayer.getID())){
             Log.info("gameover");
             changeState(GameState.GAME_OVER);
         }
@@ -179,9 +179,14 @@ public class Game {
         }
     }
 
+    public Turn getTurn() {
+        return turn;
+    }
+
     /**
      * Getter + Setter
      */
+
 
     public List<Player> getPlayers() {
         return players;
@@ -198,7 +203,7 @@ public class Game {
 
     public Player getPlayerbyName(String name) {
         for (int i = 0; i < this.players.size(); i++) {
-            if (players.get(i).getName().contains(name)) {
+            if (players.get(i).getID().contains(name)) {
                 return players.get(i);
             }
         }
@@ -215,5 +220,13 @@ public class Game {
         this.currentPlayer = gameUpdate.getCurrentPlayer();
         this.turn = gameUpdate.getTurn();
         this.currentState =gameUpdate.getState();
+    }
+
+    public GameState getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(GameState currentState) {
+        this.currentState = currentState;
     }
 }

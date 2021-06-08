@@ -29,13 +29,13 @@ public class PlayerClassUnitTest {
 
     @Test
     public void testGetName(){
-        Assertions.assertEquals("Testi",this.player.getName());
+        Assertions.assertEquals("Testi",this.player.getID());
     }
 
     @Test
     public void testSetName(){
-        this.player.setName("Testu");
-        Assertions.assertEquals("Testu",this.player.getName());
+        this.player.setID("Testu");
+        Assertions.assertEquals("Testu",this.player.getID());
     }
 
     @Test

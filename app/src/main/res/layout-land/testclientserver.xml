@@ -52,4 +52,14 @@
         app:layout_constraintEnd_toStartOf="@+id/btnmakeClient"
         app:layout_constraintStart_toEndOf="@+id/btnmakeServer"
         app:layout_constraintTop_toBottomOf="@+id/btnmakeDecision" />
+
+    <Button
+        android:id="@+id/starttest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/playeridTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnmakeServer" />
 </androidx.constraintlayout.widget.ConstraintLayout>
