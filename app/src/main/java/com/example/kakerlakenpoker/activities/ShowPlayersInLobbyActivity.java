@@ -21,6 +21,7 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
     private FloatingActionButton exitLobbyBtn;
     private GameClient client;
     private Intent intent;
+    private static boolean isJoined = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +31,8 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
         exitLobbyBtn = findViewById(R.id.exitLobbyBtn);
         exitLobbyBtn.setOnClickListener((View view) -> exitLobby());
         client = GameClient.getInstance();
-        client.setActivity(this);
-        IpListAdapter listAdapter = new IpListAdapter(this, new ArrayList<String>());
-        currentPlayersInLobby = findViewById(R.id.ListViewCurrentPlayersInLobby);
-        currentPlayersInLobby.setAdapter(listAdapter);
-        client.setListAdapter(listAdapter);
+        if(!isJoined){
+        GameClient client = GameClient.getInstance();
         Thread clientJoined = new Thread(() ->
                 client.getClient().sendMessage(new ClientJoinedRequest(client.getCurrentLobby().getName(), NetworkUtils.getIpAddressFromDevice()))
         );
@@ -43,8 +41,16 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
             clientJoined.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            Log.info(e.getMessage());
+            com.esotericsoftware.minlog.Log.info(e.getMessage());
         }
+        isJoined=false;
+        }
+        client.setActivity(this);
+        IpListAdapter listAdapter = new IpListAdapter(this, new ArrayList<String>());
+        currentPlayersInLobby = findViewById(R.id.ListViewCurrentPlayersInLobby);
+        currentPlayersInLobby.setAdapter(listAdapter);
+        client.setListAdapter(listAdapter);
+
     }
 
     @Override

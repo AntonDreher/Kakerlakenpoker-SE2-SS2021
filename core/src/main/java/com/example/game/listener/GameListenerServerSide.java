@@ -22,7 +22,9 @@ public class GameListenerServerSide implements GameListener {
 
     @Override
     public void notify(GameUpdate gameUpdate, GameState previousState){
-        if(gameUpdate.getState()==GameState.AWAITING_GO)sendToPlayers((new InitGame(gameUpdate)));
+        if(gameUpdate.getState()==GameState.AWAITING_GO){
+
+        }
         else if(gameUpdate.getState()==GameState.GAME_OVER)sendToPlayers(new GameOver(gameUpdate.getCurrentPlayer()));
         else sendToPlayers(gameUpdate);
     }

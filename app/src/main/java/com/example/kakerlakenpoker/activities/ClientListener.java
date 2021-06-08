@@ -8,6 +8,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import com.example.game.BuildGame;
+import com.example.game.Game;
 import com.example.server.network.NetworkUtils;
 import com.example.server.network.dto.PlayerReady;
 import com.example.server.network.game.GameData;
@@ -43,11 +44,9 @@ public class ClientListener extends Listener {
         if (object instanceof SendOpenLobbies) {
             gameClient.setOpenLobbies(((SendOpenLobbies) object).getLobbies());
         } else if(object instanceof InitGame){
-            BuildGame buildGame = new BuildGame();
-            buildGame.setPlayers(((InitGame) object).getGameUpdate().getPlayers());
-            gameClient.setGame(buildGame.buildGame());
+            Game game = ((InitGame) object).getGame();
+            gameClient.setGame(game);
             gameClient.getGame().setGameListener(new GameListenerClientSide(gameClient));
-            gameClient.getGame().updateGame(((InitGame) object).getGameUpdate());
             if(gameClient.getActivity() instanceof ShowPlayersInLobbyActivity)((ShowPlayersInLobbyActivity) gameClient.getActivity()).showGame();
 
         }else if (object instanceof GameUpdate){

@@ -26,6 +26,7 @@ import com.example.server.network.dto.PlayerReady;
 import com.example.server.network.dto.clienttogameserver.MakeDecision;
 import com.example.server.network.dto.clienttogameserver.MakeTurn;
 import com.example.server.network.dto.gameservertoclient.GameOver;
+import com.example.server.network.dto.gameservertoclient.InitGame;
 import com.example.server.network.game.GameData;
 
 import java.net.InetSocketAddress;
@@ -74,7 +75,7 @@ public class ServerListener extends Listener {
             GameData gameData = null;
             Player currentPlayer = null;
             for (GameData data : gameDatas) {
-                if (data.getUsers().contains(connection.getRemoteAddressTCP())) {
+                if (data.getUsers().contains(connection.getRemoteAddressTCP().toString())) {
                     gameData = data;
                     for (Player player : gameData.getGame().getPlayers()) {
                         if (player.getId() == connection.getID()) {
@@ -83,6 +84,9 @@ public class ServerListener extends Listener {
                     }
                 }
             }
+
+            if(gameData==null||currentPlayer==null)return;
+
 
             if (object instanceof MakeTurn) {
                 gameData.getGame().makeTurn(currentPlayer, ((MakeTurn) object).getTurn());
@@ -137,16 +141,25 @@ public class ServerListener extends Listener {
     private void createGameData(Lobby lobby){
         GameData gameData;
         ArrayList<Player> players = new ArrayList<>();
+        Set<String> keySet = lobby.getPlayersIpList().keySet();
         for(Map.Entry<String , String> set: lobby.getPlayersIpList().entrySet()){
             players.add(new Player(server.getConnectionFromIpAddress(set.getKey().toString()).getID(),null, null));
         }
         BuildGame buildGame = new BuildGame();
         buildGame.setPlayers(players);
-        gameData = new GameData(buildGame.buildGame());
+        Game game = buildGame.buildGame();
+        gameData = new GameData(game);
+        gameData.getUsers().addAll(keySet);
         gameData.setIpUserMapping(lobby.getPlayersIpList());
+
+
+        gameDatas.add(gameData);
+
+        for(String address : lobby.getPlayersIpList().keySet()){
+            server.getServer().sendToTCP(server.getConnectionFromIpAddress(address).getID(), new InitGame(game));
+        }
         gameData.getGame().setGameListener(new GameListenerServerSide(server,gameData));
         gameData.getGame().startGame();
-        gameDatas.add(gameData);
     }
 
     private void sendMessageToAllClientsInLobby(Lobby lobby, BaseMessage message){

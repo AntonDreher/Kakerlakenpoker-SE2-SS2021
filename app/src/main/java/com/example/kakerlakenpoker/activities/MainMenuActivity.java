@@ -5,7 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.esotericsoftware.minlog.Log;
+import com.example.game.Game;
 import com.example.kakerlakenpoker.R;
+import com.example.server.dto.clienttomainserver.ClientJoinedRequest;
+import com.example.server.dto.clienttomainserver.GetOpenLobbies;
+import com.example.server.network.NetworkUtils;
 
 
 public class MainMenuActivity extends AppCompatActivity {

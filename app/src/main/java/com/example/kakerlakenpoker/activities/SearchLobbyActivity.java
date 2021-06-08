@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kakerlakenpoker.R;
+import com.example.server.dto.clienttomainserver.ClientJoinedRequest;
 import com.example.server.dto.clienttomainserver.GetOpenLobbies;
+import com.example.server.network.NetworkUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class SearchLobbyActivity extends AppCompatActivity {
@@ -25,7 +27,6 @@ public class SearchLobbyActivity extends AppCompatActivity {
 
         floatingActionButton = findViewById(R.id.floatingActionButtonSearchLobbyView);
         floatingActionButton.setOnClickListener((View view)->goBack());
-
         Thread thread = new Thread(){
             @Override
             public void run() {

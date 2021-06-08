@@ -1,18 +1,17 @@
 package com.example.server.network.dto.gameservertoclient;
 
 
+import com.example.game.Game;
 import com.example.server.dto.BaseMessage;
 
 public class InitGame extends BaseMessage {
-    private GameUpdate gameUpdate;
-    public InitGame(){
-
+    Game game;
+    public InitGame(Game game){
+        this.game = game;
     }
+    public InitGame(){}
 
-    public InitGame(GameUpdate gameUpdate){
-        this.gameUpdate=gameUpdate;
-    }
-    public GameUpdate getGameUpdate(){
-        return gameUpdate;
+    public Game getGame(){
+        return game;
     }
 }

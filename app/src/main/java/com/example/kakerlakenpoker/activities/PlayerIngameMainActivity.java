@@ -241,10 +241,12 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
             Type selectedType = Type.valueOf(guessText);
             Player enemy = null;
             for(Player player: GameClient.getInstance().getGame().getPlayers()){
-                if(player.getId()  == new Integer(choosePlayer.getSelectedItem().toString()))
+                if(player.getId()  == Integer.parseInt(choosePlayer.getSelectedItem().toString()));
                     enemy = player;
             }
+
             Card selectedCard = me.getHandDeck().findCard(playedcard);
+            Log.info("selected things", selectedType+" "+selectedCard+" "+ enemy.getId());
             turn = new Turn(selectedCard, selectedType,enemy);
             GameClient.getInstance().getGame().makeTurn(me,turn);
         this.popUp.setVisibility(View.INVISIBLE);
@@ -382,19 +384,19 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         }
 
         public void displayCardAmounts(){
-            krötenView.setText(me.getHandDeck().getKroete());
-            spinnenView.setText(me.getHandDeck().getSpinne());
-            fliegenView.setText(me.getHandDeck().getFliege());
-            scorpionView.setText(me.getHandDeck().getScorpion());
-            kakerlakeView.setText(me.getHandDeck().getKakerlake());
-            ratteView.setText(me.getHandDeck().getRatte());
-            fledermausView.setText(me.getHandDeck().getFledermaus());
-            stinkwanzeView.setText(me.getHandDeck().getStinkwanze());
+            krötenView.setText(String.valueOf(me.getHandDeck().getKroete()));
+            spinnenView.setText(String.valueOf(me.getHandDeck().getSpinne()));
+            fliegenView.setText(String.valueOf(me.getHandDeck().getFliege()));
+            scorpionView.setText(String.valueOf(me.getHandDeck().getScorpion()));
+            kakerlakeView.setText(String.valueOf(me.getHandDeck().getKakerlake()));
+            ratteView.setText(String.valueOf(me.getHandDeck().getRatte()));
+            fledermausView.setText(String.valueOf(me.getHandDeck().getFledermaus()));
+            stinkwanzeView.setText(String.valueOf(me.getHandDeck().getStinkwanze()));
         }
 
         public void checkTurn(){
             //me ist nicht aktuell am Spiel beteiligt
-            if(!(me.getId() == (GameClient.getInstance().getGame().getCurrentPlayer().getId()) || !(me.getId() == GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId()))){
+            if(!(me.getId() == (GameClient.getInstance().getGame().getCurrentPlayer().getId()) || GameClient.getInstance().getGame().getTurn()!=null&&!(me.getId() == GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId()))){
                 Log.debug("Not your turn!");
             //TODO    Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
             //TODO    Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());

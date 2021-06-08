@@ -2,6 +2,7 @@ package com.example.server.network.kryo;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.util.IntArray;
+import com.example.game.Game;
 import com.example.game.card.Card;
 import com.example.game.card.GameDeck;
 import com.example.game.card.Type;
@@ -45,7 +46,7 @@ public class RegisterHelper {
     public static void registerClasses(Kryo kryo){
         kryo.register(BaseMessage.class);
         kryo.register(ClientName.class);
-        kryo.register(InetSocketAddress.class);
+        kryo.register(Game.class);
         kryo.register(ClientJoinedRequest.class);
         kryo.register(ClientJoinedResponse.class);
         kryo.register(OpenLobby.class);
