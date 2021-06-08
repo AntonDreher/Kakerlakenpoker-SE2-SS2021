@@ -1,8 +1,8 @@
 package com.example.kakerlakenpoker;
 
-import com.example.kakerlakenpoker.player.CollectedDeck;
-import com.example.kakerlakenpoker.player.HandDeck;
-import com.example.kakerlakenpoker.player.Player;
+import com.example.game.player.CollectedDeck;
+import com.example.game.player.HandDeck;
+import com.example.game.player.Player;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,7 +18,7 @@ public class PlayerClassUnitTest {
     public void setUp(){
        this.handDeck = new HandDeck();
         this.collectedDeck = new CollectedDeck();
-        this.player = new Player("Testi",this.handDeck,this.collectedDeck);
+        this.player = new Player(1,this.handDeck,this.collectedDeck);
     }
     @After
     public void tearDown(){
@@ -29,13 +29,13 @@ public class PlayerClassUnitTest {
 
     @Test
     public void testGetName(){
-        Assertions.assertEquals("Testi",this.player.getID());
+        Assertions.assertEquals(1,this.player.getId());
     }
 
     @Test
     public void testSetName(){
-        this.player.setID("Testu");
-        Assertions.assertEquals("Testu",this.player.getID());
+        this.player.setId(2);
+        Assertions.assertEquals(2,this.player.getId());
     }
 
     @Test

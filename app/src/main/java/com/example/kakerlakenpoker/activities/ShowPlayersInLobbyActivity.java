@@ -6,11 +6,10 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.esotericsoftware.minlog.Log;
-import com.example.kakerlakenpoker.IpListAdapter;
+import com.example.game.Game;
 import com.example.kakerlakenpoker.R;
-import com.example.kakerlakenpoker.network.NetworkUtils;
-import com.example.kakerlakenpoker.network.dto.clienttomainserver.ClientJoinedRequest;
-import com.example.kakerlakenpoker.network.game.GameClient;
+import com.example.server.network.NetworkUtils;
+import com.example.server.dto.clienttomainserver.ClientJoinedRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
     private FloatingActionButton exitLobbyBtn;
     private GameClient client;
     private Intent intent;
+    private static boolean isJoined = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,27 +29,44 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_players_in_lobby);
         exitLobbyBtn = findViewById(R.id.exitLobbyBtn);
-        exitLobbyBtn.setOnClickListener((View view)->exitLobby());
+        exitLobbyBtn.setOnClickListener((View view) -> exitLobby());
         client = GameClient.getInstance();
-        IpListAdapter listAdapter = new IpListAdapter(this, new ArrayList<String>());
-        currentPlayersInLobby = findViewById(R.id.ListViewCurrentPlayersInLobby);
-        currentPlayersInLobby.setAdapter(listAdapter);
-        client.setListAdapter(listAdapter);
+        if(!isJoined){
+        GameClient client = GameClient.getInstance();
         Thread clientJoined = new Thread(() ->
-            client.getClient().sendMessage(new ClientJoinedRequest(client.getCurrentLobby().getName(), NetworkUtils.getIpAddressFromDevice()))
+                client.getClient().sendMessage(new ClientJoinedRequest(client.getCurrentLobby().getName(), NetworkUtils.getIpAddressFromDevice()))
         );
         clientJoined.start();
         try {
             clientJoined.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            Log.info(e.getMessage());
+            com.esotericsoftware.minlog.Log.info(e.getMessage());
         }
+        isJoined=false;
+        }
+        client.setActivity(this);
+        IpListAdapter listAdapter = new IpListAdapter(this, new ArrayList<String>());
+        currentPlayersInLobby = findViewById(R.id.ListViewCurrentPlayersInLobby);
+        currentPlayersInLobby.setAdapter(listAdapter);
+        client.setListAdapter(listAdapter);
+
     }
 
-    private void exitLobby(){
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GameClient.getInstance().setActivity(null);
+    }
+
+    private void exitLobby() {
         GameClient.getInstance().exitLobby();
         intent = new Intent(ShowPlayersInLobbyActivity.this, MainMenuActivity.class);
+        startActivity(intent);
+    }
+
+    public void showGame() {
+        Intent intent = new Intent(this, PlayerIngameMainActivity.class);
         startActivity(intent);
     }
 

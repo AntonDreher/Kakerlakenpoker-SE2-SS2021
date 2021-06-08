@@ -1,12 +1,12 @@
 package com.example.kakerlakenpoker;
 
 
-import com.example.kakerlakenpoker.card.GameDeck;
-import com.example.kakerlakenpoker.game.BuildGame;
-import com.example.kakerlakenpoker.game.Game;
-import com.example.kakerlakenpoker.player.CollectedDeck;
-import com.example.kakerlakenpoker.player.HandDeck;
-import com.example.kakerlakenpoker.player.Player;
+import com.example.game.card.GameDeck;
+import com.example.game.BuildGame;
+import com.example.game.Game;
+import com.example.game.player.CollectedDeck;
+import com.example.game.player.HandDeck;
+import com.example.game.player.Player;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -17,19 +17,19 @@ import org.junit.jupiter.api.Assertions;
 import java.util.ArrayList;
 
 public class BuildGameUnitTest {
-    String one;
-    String two;
-    String three;
-    String four;
+    int one;
+    int two;
+    int three;
+    int four;
     BuildGame buildGame;
     ArrayList<Player> list;
     GameDeck gameDeck;
     @Before
     public void setUp(){
-        one = "one";
-        two = "two";
-        three = "three";
-        four = "four";
+        one = 1;
+        two = 2;
+        three = 3;
+        four = 4;
         buildGame = new BuildGame();
         list = new ArrayList<>();
         gameDeck = new GameDeck();
@@ -37,10 +37,6 @@ public class BuildGameUnitTest {
 
     @After
     public void tearDown() {
-        one = null;
-        two = null;
-        three = null;
-        four = null;
         buildGame = null;
         list = null;
         gameDeck = null;
@@ -48,7 +44,8 @@ public class BuildGameUnitTest {
     @Test
     public void testAddServerPlayer(){
         buildGame.addServerPlayer(one);
-        Assert.assertEquals("one",buildGame.getPlayers().get(0).getID());
+        Assert.assertEquals("one",buildGame.getPlayers().get(0).getId());
+
         buildGame.addServerPlayer(three);
         buildGame.addServerPlayer(two);
         buildGame.addServerPlayer(four);
@@ -85,7 +82,7 @@ public class BuildGameUnitTest {
     }
     @Test
     public void testsetPlayer(){
-        list.add(new Player("testi",new HandDeck(),new CollectedDeck()));
+        list.add(new Player(1,new HandDeck(),new CollectedDeck()));
         buildGame.setPlayers(list);
         Assert.assertEquals(1,buildGame.getPlayers().size());
     }

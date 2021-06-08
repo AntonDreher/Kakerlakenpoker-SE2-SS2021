@@ -11,9 +11,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.R;
-import com.example.kakerlakenpoker.network.dto.Lobby;
-import com.example.kakerlakenpoker.network.game.GameClient;
+
+import com.example.server.dto.Lobby;
+import com.example.server.dto.clienttomainserver.ClientJoinedRequest;
+import com.example.server.network.NetworkUtils;
 
 import java.util.ArrayList;
 
@@ -73,12 +76,14 @@ public class LobbiesRecyclerViewAdapter extends RecyclerView.Adapter<LobbiesRecy
     }
 
     public void joinUp(ViewHolder viewHolder, int position) {
+        GameClient client = GameClient.getInstance();
+
         new Thread(() -> {
-            GameClient client = GameClient.getInstance();
             client.setCurrentLobby(lobbies.get(position));
             Intent intent = new Intent(viewHolder.context, ShowPlayersInLobbyActivity.class);
             viewHolder.context.startActivity(intent);
         }).start();
+
     }
     @Override
     public int getItemCount() {
