@@ -398,7 +398,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
             }
 
             //Turn wurde ausgeführt und me wurde als Enemy ausgewählt
-            if(GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getID() != me.getID()){
+            if(GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && !GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getID().equals(me.getID())){
                 Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
                 Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
                 Log.debug("You have to make a decission!");
