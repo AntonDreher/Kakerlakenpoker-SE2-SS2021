@@ -80,31 +80,20 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
         me = getLocalPlayer();
         me.getHandDeck().countAllCards();
+
         messageText = (TextView) findViewById(R.id.messageText);
 
         krötenView = (TextView) findViewById(R.id.krotenView);
-        krötenView.setText(me.getHandDeck().getKroete());
-
         spinnenView = findViewById(R.id.spinnenVIew);
-        spinnenView.setText(me.getHandDeck().getSpinne());
-
         fliegenView = findViewById(R.id.fliegeView);
-        fliegenView.setText(me.getHandDeck().getFliege());
-
         scorpionView = findViewById(R.id.skorpionView);
-        scorpionView.setText(me.getHandDeck().getScorpion());
-
         kakerlakeView = findViewById(R.id.kakerlakenView);
-        kakerlakeView.setText(me.getHandDeck().getKakerlake());
-
         ratteView = findViewById(R.id.rattenView);
-        ratteView.setText(me.getHandDeck().getRatte());
-
         fledermausView = findViewById(R.id.fledermausView);
-        fledermausView.setText(me.getHandDeck().getFledermaus());
-
         stinkwanzeView = findViewById(R.id.stinkwanzeView);
-        stinkwanzeView.setText(me.getHandDeck().getStinkwanze());
+
+        displayCardAmounts();
+        checkTurn();
 
 
         //init des popUp Fensters
@@ -150,24 +139,13 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         goBack.setOnClickListener((View view)-> setInvisible(popUp));
         sendChallange.setOnClickListener((View view)-> sendChallengeInputs());
 
-        //me ist nicht aktuell am Spiel beteiligt
-        if(me!= GameClient.getInstance().getGame().getCurrentPlayer() || me != GameClient.getInstance().getGame().getTurn().getSelectedEnemy()){
-            Log.debug("Not your turn!");
-            Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
-            Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
-            showDialogeWait();
-        }
 
-        //Turn wurde ausgeführt und me wurde als Enemy ausgewählt
-        if(GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && GameClient.getInstance().getGame().getTurn().getSelectedEnemy() == me){
-            Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
-            Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
-            Log.debug("You have to make a decission!");
-            showDialogeChallenge();
-
-        }
         //Observer, der bei Änderung des GameState die Activity neu ladet
-        stateListen.observe(this, Observer -> refreshView());
+        stateListen.setValue(GameClient.getInstance().getGame().getCurrentState());
+        stateListen.observe(this, Observer -> {
+            displayCardAmounts();
+            checkTurn();
+        });
 
 
     }
@@ -269,7 +247,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         }
     }
     /*
-    Refresh the current view
+    Refresh the current view (doesent work!)
      */
     public void refreshView(){
         Intent intent = getIntent();
@@ -341,6 +319,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     public void showDialogeChallenge(){
         Dialog dia = new Dialog(this);
         dia.setContentView(R.layout.decision_dialoge);
+        dia.setCanceledOnTouchOutside(false);
         TextView text = dia.findViewById(R.id.info);
         Button buttonTruth = dia.findViewById(R.id.truth);
         Button buttonLie = dia.findViewById(R.id.lie);
@@ -365,6 +344,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     public void showDialogeWait(){
         Dialog dia = new Dialog(this);
         dia.setContentView(R.layout.waiting_dialoge);
+        dia.setCanceledOnTouchOutside(false);
         TextView text = dia.findViewById(R.id.notYoutTurn);
         text.setText("Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName() + " turn!");
         dia.show();
@@ -395,6 +375,36 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         }
         messageText.setText(output);
         messageview.setVisibility(View.VISIBLE);
+        }
+
+        public void displayCardAmounts(){
+            krötenView.setText(me.getHandDeck().getKroete());
+            spinnenView.setText(me.getHandDeck().getSpinne());
+            fliegenView.setText(me.getHandDeck().getFliege());
+            scorpionView.setText(me.getHandDeck().getScorpion());
+            kakerlakeView.setText(me.getHandDeck().getKakerlake());
+            ratteView.setText(me.getHandDeck().getRatte());
+            fledermausView.setText(me.getHandDeck().getFledermaus());
+            stinkwanzeView.setText(me.getHandDeck().getStinkwanze());
+        }
+
+        public void checkTurn(){
+            //me ist nicht aktuell am Spiel beteiligt
+            if(!me.getID().equals(GameClient.getInstance().getGame().getCurrentPlayer().getID()) || !me.getID().equals(GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getID())){
+                Log.debug("Not your turn!");
+                Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
+                Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
+                showDialogeWait();
+            }
+
+            //Turn wurde ausgeführt und me wurde als Enemy ausgewählt
+            if(GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getID() != me.getID()){
+                Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
+                Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
+                Log.debug("You have to make a decission!");
+                showDialogeChallenge();
+
+            }
         }
     }
 
