@@ -1,12 +1,15 @@
 package com.example.kakerlakenpoker.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.esotericsoftware.minlog.Log;
+import com.example.kakerlakenpoker.PlayerIngameMainActivity;
 import com.example.kakerlakenpoker.R;
 import com.example.kakerlakenpoker.card.Card;
 import com.example.kakerlakenpoker.card.Type;
@@ -21,6 +24,7 @@ import java.util.Collections;
 public class TestClientServerConnection extends AppCompatActivity {
     private Button makeServer;
     private Button makeClient;
+    private Button startGame;
     private Button makeDecision;
     private TextView text;
     @Override
@@ -32,11 +36,16 @@ public class TestClientServerConnection extends AppCompatActivity {
         makeClient = findViewById(R.id.btnmakeClient);
         makeDecision = findViewById(R.id.btnmakeDecision);
         text = findViewById(R.id.playeridTextView);
-
+        startGame = findViewById(R.id.starttest);
 
         makeClient.setOnClickListener(v->makeClient());
         makeServer.setOnClickListener(v->makeTurn());
         makeDecision.setOnClickListener(v->makeDecision());
+
+        startGame.setOnClickListener(view -> {
+            Intent intent = new Intent(TestClientServerConnection.this, PlayerIngameMainActivity.class);
+            startActivity(intent);
+        });
     }
 
 
