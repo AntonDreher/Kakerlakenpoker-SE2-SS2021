@@ -329,6 +329,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     //Gibt das Player Object des spielenden Client zurück
     public Player getLocalPlayer() {
         for (Player p : GameClient.getInstance().getGame().getPlayers()) {
+            Log.info("This is the players id", String.valueOf(p.getId()));
+            Log.info("This is my id",String.valueOf(GameClient.getInstance().getClient().getClient().getID()) );
             if (p.getId() == GameClient.getInstance().getClient().getClient().getID()) {
                 return p;
             }
@@ -424,10 +426,10 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         }
 
         //Turn wurde ausgeführt und me wurde als Enemy ausgewählt
-        if (GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && !(GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId() == me.getId())) {
+        if (GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && (GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId() == me.getId())) {
             //TODO     Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
             //TODO    Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
-            Log.debug("You have to make a decission!");
+            Log.info("You have to make a decission!");
             showDialogeChallenge();
 
         }
