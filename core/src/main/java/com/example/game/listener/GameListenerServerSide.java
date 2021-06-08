@@ -25,7 +25,9 @@ public class GameListenerServerSide implements GameListener {
         if(gameUpdate.getState()==GameState.AWAITING_GO){
 
         }
-        else if(gameUpdate.getState()==GameState.GAME_OVER)sendToPlayers(new GameOver(gameUpdate.getCurrentPlayer()));
+        else if(gameUpdate.getState()==GameState.GAME_OVER){
+            sendToPlayers(new GameOver(gameUpdate.getCurrentPlayer()));
+        }
         else sendToPlayers(gameUpdate);
     }
 
