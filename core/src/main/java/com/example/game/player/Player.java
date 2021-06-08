@@ -16,7 +16,6 @@ public class Player {
     public Player(){
 
     }
-
     public Player(int id, HandDeck handDeck, CollectedDeck collectedDeck) {
         this.state = PlayerState.READY;
         this.id = id;

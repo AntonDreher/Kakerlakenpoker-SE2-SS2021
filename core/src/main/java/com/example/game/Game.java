@@ -49,7 +49,6 @@ public class Game {
     }
 
     public void makeTurn(Player player, Turn turn) {
-
         if (currentState == GameState.AWAITING_TURN && player.getId()==currentPlayer.getId()) {
             this.turn = turn;
             changeState(GameState.AWAITING_DECISION);
@@ -178,9 +177,14 @@ public class Game {
         }
     }
 
+    public Turn getTurn() {
+        return turn;
+    }
+
     /**
      * Getter + Setter
      */
+
 
     public List<Player> getPlayers() {
         return players;
@@ -218,5 +222,13 @@ public class Game {
         this.currentPlayer = gameUpdate.getCurrentPlayer();
         this.turn = gameUpdate.getTurn();
         this.currentState =gameUpdate.getState();
+    }
+
+    public GameState getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(GameState currentState) {
+        this.currentState = currentState;
     }
 }

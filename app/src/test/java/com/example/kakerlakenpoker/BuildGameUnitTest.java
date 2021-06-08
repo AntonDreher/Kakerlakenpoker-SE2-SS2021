@@ -26,10 +26,10 @@ public class BuildGameUnitTest {
     GameDeck gameDeck;
     @Before
     public void setUp(){
-        one = "one";
-        two = "two";
-        three = "three";
-        four = "four";
+        one = 1;
+        two = 2;
+        three = 3;
+        four = 4;
         buildGame = new BuildGame();
         list = new ArrayList<>();
         gameDeck = new GameDeck();
@@ -37,10 +37,6 @@ public class BuildGameUnitTest {
 
     @After
     public void tearDown() {
-        one = null;
-        two = null;
-        three = null;
-        four = null;
         buildGame = null;
         list = null;
         gameDeck = null;
@@ -49,6 +45,7 @@ public class BuildGameUnitTest {
     public void testAddServerPlayer(){
         buildGame.addServerPlayer(one);
         Assert.assertEquals("one",buildGame.getPlayers().get(0).getId());
+
         buildGame.addServerPlayer(three);
         buildGame.addServerPlayer(two);
         buildGame.addServerPlayer(four);
@@ -85,7 +82,7 @@ public class BuildGameUnitTest {
     }
     @Test
     public void testsetPlayer(){
-        list.add(new Player("testi",new HandDeck(),new CollectedDeck()));
+        list.add(new Player(1,new HandDeck(),new CollectedDeck()));
         buildGame.setPlayers(list);
         Assert.assertEquals(1,buildGame.getPlayers().size());
     }

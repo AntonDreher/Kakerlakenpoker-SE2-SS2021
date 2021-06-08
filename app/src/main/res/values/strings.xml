@@ -106,4 +106,6 @@
     <string name="title_activity_show_players_in_lobby">ScrollingActivity</string>
     <string name="karte">Karte</string>
     <string name="karte1">Karte</string>
+    <string name="truth">TRUTH</string>
+    <string name="lie">LIE</string>
 </resources>

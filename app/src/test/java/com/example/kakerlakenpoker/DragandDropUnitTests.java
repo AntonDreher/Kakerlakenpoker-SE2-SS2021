@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class DragandDropUnitTests {
 
 
-    //Test folgen, nachdem die visuelle Betrachtung der View passt und die Funktionalität bestätigt wurde.
+    //Test folgen, nachdem die visuelle Betrachtung der View passt (Nikita).
     HandDeck hand;
     ArrayList<Card> list = new ArrayList<>();
 
@@ -31,8 +31,6 @@ public class DragandDropUnitTests {
     @Test
     public void testremoveCardWithDragandDrop(){
 
-        this.hand.setDeck(list);
-
         this.hand.addCard(new Card(Type.FLIEGE));
         this.hand.addCard(new Card(Type.KROETE));
         this.hand.addCard(new Card(Type.FLIEGE));
@@ -40,7 +38,6 @@ public class DragandDropUnitTests {
         this.hand.addCard(new Card(Type.STINKWANZE));
         this.hand.addCard(new Card(Type.FLEDERMAUS));
 
-        hand.displayCard();
 
 
     }
