@@ -5,6 +5,7 @@ import com.esotericsoftware.minlog.Log;
 import com.example.game.card.Card;
 import com.example.game.card.Type;
 import com.example.game.listener.GameListener;
+import com.example.game.listener.StateListener;
 import com.example.server.network.dto.gameservertoclient.GameUpdate;
 import com.example.game.player.Player;
 import com.example.game.player.PlayerState;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.plaf.nimbus.State;
+
 public class Game {
     private List<Player> players;
     private Player currentPlayer;
@@ -22,6 +25,7 @@ public class Game {
     private Decision decision;
     private GameData gameData;
     private GameListener listener;
+    private StateListener stateListener;
 
     Card playcard;
 
@@ -43,6 +47,7 @@ public class Game {
         GameUpdate gameUpdate = new GameUpdate(players, currentPlayer, state, turn, decision);
         if(listener!=null)listener.notify(gameUpdate, this.currentState);
         this.currentState = state;
+        if(stateListener!=null)stateListener.stateChanged();
         Log.info("GameState changed to " + state.name() + " and current players name is: " + currentPlayer.getId());
         if(turn != null) Log.info("Current turn contains: Card: "+turn.getSelectedCard().getType()+", Type: "+ turn.getSelectedType()+", enemy: "+turn.getSelectedEnemy().getId());
 
@@ -222,10 +227,15 @@ public class Game {
         this.currentPlayer = gameUpdate.getCurrentPlayer();
         this.turn = gameUpdate.getTurn();
         this.currentState =gameUpdate.getState();
+        if(stateListener!=null)stateListener.stateChanged();
     }
 
     public GameState getCurrentState() {
         return currentState;
+    }
+
+    public void setStateListener(StateListener listener){
+        this.stateListener = listener;
     }
 
     public void setCurrentState(GameState currentState) {

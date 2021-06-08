@@ -24,6 +24,8 @@ import com.example.game.GameState;
 import com.example.game.Turn;
 import com.example.game.card.Card;
 import com.example.game.card.Type;
+import com.example.game.listener.GameListener;
+import com.example.game.listener.StateListener;
 import com.example.kakerlakenpoker.R;
 import com.example.game.Game;
 import com.example.game.player.Player;
@@ -102,7 +104,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
         //init des popUp Fensters
         messageview = (LinearLayout) findViewById(R.id.notificationView);
-        popUp = (LinearLayout)  findViewById(R.id.popupview);
+        popUp = (LinearLayout) findViewById(R.id.popupview);
         messageview.setVisibility(View.INVISIBLE);
         popUp.setVisibility(View.INVISIBLE);
 
@@ -140,57 +142,64 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         dropViewPlayer1.setOnDragListener(new DragListener());
 
         //Buttons werden mit funktionen belegt. Back- PopUp Fenster wird geschlossen
-        goBack.setOnClickListener((View view)-> setInvisible(popUp));
-        sendChallange.setOnClickListener((View view)-> sendChallengeInputs());
+        goBack.setOnClickListener((View view) -> setInvisible(popUp));
+        sendChallange.setOnClickListener((View view) -> sendChallengeInputs());
+
+        GameClient.getInstance().getGame().setStateListener(new StateListenerImpl());
 
 
         //Observer, der bei Änderung des GameState die Activity neu ladet
         stateListen.setValue(GameClient.getInstance().getGame().getCurrentState());
         stateListen.observe(this, Observer -> {
-            displayCardAmounts();
-            checkTurn();
+
         });
 
 
     }
 
-    class DragListener implements View.OnDragListener{
+    class DragListener implements View.OnDragListener {
 
         @Override
         public boolean onDrag(View v, DragEvent dragEvent) {
             switch (dragEvent.getAction()) {
 
-                case DragEvent.ACTION_DRAG_STARTED:{
+                case DragEvent.ACTION_DRAG_STARTED: {
                     View view = (View) dragEvent.getLocalState();
                     playedcard = String.valueOf(view.getTag());
-                    break;}
+                    break;
+                }
 
-                case DragEvent.ACTION_DRAG_ENTERED:{
-                    break;}
+                case DragEvent.ACTION_DRAG_ENTERED: {
+                    break;
+                }
 
-                case DragEvent.ACTION_DRAG_LOCATION:{
+                case DragEvent.ACTION_DRAG_LOCATION: {
 
-                    break;}
+                    break;
+                }
 
-                case DragEvent.ACTION_DRAG_EXITED:{
-                    break;}
+                case DragEvent.ACTION_DRAG_EXITED: {
+                    break;
+                }
 
                 case DragEvent.ACTION_DRAG_ENDED:
 
 
-                case DragEvent.ACTION_DROP:{
+                case DragEvent.ACTION_DROP: {
                     dropCorrect(dragEvent);
-                    return (true);}
+                    return (true);
+                }
 
-                default:{
-                    break;}
+                default: {
+                    break;
+                }
             }
             return true;
         }
 
-        }
+    }
 
-    class TouchListener implements View.OnTouchListener{
+    class TouchListener implements View.OnTouchListener {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -199,31 +208,34 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
                 view.startDrag(data, dragShadow, view, 0);
 
                 return true;
-            }else {return false;}
+            } else {
+                return false;
+            }
         }
     }
 
-    public void dropCorrect(DragEvent de){
+    public void dropCorrect(DragEvent de) {
 
-        if(de.getResult() == true){
+        if (de.getResult() == true) {
             popUp.setVisibility(View.VISIBLE);
+        } else {
+            popUp.setVisibility(View.INVISIBLE);
         }
-        else{ popUp.setVisibility(View.INVISIBLE);}
     }
 
-    public void setInvisible(LinearLayout linlayout){
+    public void setInvisible(LinearLayout linlayout) {
         linlayout.setVisibility(View.INVISIBLE);
     }
 
-    public void setTextforResult(String result){
+    public void setTextforResult(String result) {
         messageText.setText(result);
         messageview.setVisibility(View.VISIBLE);
     }
 
     //hollt sich alle Namen der anderen Spieler und fügt die Namen in den Spinner!
-    public void setUpSpinner(){
-        for (Player player : GameClient.getInstance().getGame().getPlayers()){
-            if(/*TODO !namesOfPlayer.contains(player.getName()) || */!(player.getId() == me.getId())){
+    public void setUpSpinner() {
+        for (Player player : GameClient.getInstance().getGame().getPlayers()) {
+            if (/*TODO !namesOfPlayer.contains(player.getName()) || */!(player.getId() == me.getId())) {
                 namesOfPlayer.add(String.valueOf(player.getId())); //TODO
             }
 
@@ -231,43 +243,45 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         ArrayAdapter chooser = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, namesOfPlayer);
         choosePlayer.setAdapter(chooser);
     }
+
     /*
     Hier wird ein Spielzug (TURN) gemacht
      */
-    public void sendChallengeInputs(){
+    public void sendChallengeInputs() {
         checkEditTextInput();
-        if(check){
+        if (check) {
             Turn turn;
             Type selectedType = Type.valueOf(guessText);
             Player enemy = null;
-            for(Player player: GameClient.getInstance().getGame().getPlayers()){
-                if(player.getId()  == Integer.parseInt(choosePlayer.getSelectedItem().toString()));
-                    enemy = player;
+            for (Player player : GameClient.getInstance().getGame().getPlayers()) {
+                if (player.getId() == Integer.parseInt(choosePlayer.getSelectedItem().toString())) ;
+                enemy = player;
             }
 
             Card selectedCard = me.getHandDeck().findCard(playedcard);
-            Log.info("selected things", selectedType+" "+selectedCard+" "+ enemy.getId());
-            turn = new Turn(selectedCard, selectedType,enemy);
-            GameClient.getInstance().getGame().makeTurn(me,turn);
-        this.popUp.setVisibility(View.INVISIBLE);
+            Log.info("selected things", selectedType + " " + selectedCard + " " + enemy.getId());
+            turn = new Turn(selectedCard, selectedType, enemy);
+            GameClient.getInstance().getGame().makeTurn(me, turn);
+            this.popUp.setVisibility(View.INVISIBLE);
         }
     }
+
     /*
     Refresh the current view (doesent work!)
      */
-    public void refreshView(){
+    public void refreshView() {
         Intent intent = getIntent();
         finish();
         startActivity(intent);
     }
 
     //Methode, die eine Decision (Truth/Lie) ausführt
-    public void decission(Decision decision){
-        GameClient.getInstance().getGame().makeDecision(me,decision);
+    public void decission(Decision decision) {
+        GameClient.getInstance().getGame().makeDecision(me, decision);
     }
 
 
-    public void checkEditTextInput(){
+    public void checkEditTextInput() {
 
         check = false;
         String input = writeCardText.getText().toString().toUpperCase();
@@ -305,10 +319,13 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
                 guessText = input;
                 check = true;
                 break;
-            default: writeCardText.setError("Falscher Type von Karte! Bitte gib eine richtige ein!"); break;
+            default:
+                writeCardText.setError("Falscher Type von Karte! Bitte gib eine richtige ein!");
+                break;
         }
 
     }
+
     //Gibt das Player Object des spielenden Client zurück
     public Player getLocalPlayer() {
         for (Player p : GameClient.getInstance().getGame().getPlayers()) {
@@ -322,7 +339,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     /*
     Öffnet einen Dialog, wenn man eine Decision machen muss
      */
-    public void showDialogeChallenge(){
+    public void showDialogeChallenge() {
         Dialog dia = new Dialog(this);
         dia.setContentView(R.layout.decision_dialoge);
         dia.setCanceledOnTouchOutside(false);
@@ -347,7 +364,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     /*
     Wird geöffnet, wenn man nicht an der Reihe ist
      */
-    public void showDialogeWait(){
+    public void showDialogeWait() {
         Dialog dia = new Dialog(this);
         dia.setContentView(R.layout.waiting_dialoge);
         dia.setCanceledOnTouchOutside(false);
@@ -356,63 +373,83 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         dia.show();
 
     }
-        //möchte man den Stand verändern (Display), ruft man diese Klasse auf.
-        public void updateTheCollectedCards () {
-            krötenView.setText(me.getCollectedDeck().getKroete());
-            spinnenView.setText(me.getCollectedDeck().getSpinne());
-            fliegenView.setText(me.getCollectedDeck().getFliege());
-            scorpionView.setText(me.getCollectedDeck().getScorpion());
-            kakerlakeView.setText(me.getCollectedDeck().getKakerlake());
-            ratteView.setText(me.getCollectedDeck().getRatte());
-            stinkwanzeView.setText(me.getCollectedDeck().getStinkwanze());
-            fledermausView.setText(me.getCollectedDeck().getFledermaus());
-        }
 
-        //zeigt die gesammelten Karten der Gegner
-        public void showEnemyCollectCards(){
+    //möchte man den Stand verändern (Display), ruft man diese Klasse auf.
+    public void updateTheCollectedCards() {
+        krötenView.setText(me.getCollectedDeck().getKroete());
+        spinnenView.setText(me.getCollectedDeck().getSpinne());
+        fliegenView.setText(me.getCollectedDeck().getFliege());
+        scorpionView.setText(me.getCollectedDeck().getScorpion());
+        kakerlakeView.setText(me.getCollectedDeck().getKakerlake());
+        ratteView.setText(me.getCollectedDeck().getRatte());
+        stinkwanzeView.setText(me.getCollectedDeck().getStinkwanze());
+        fledermausView.setText(me.getCollectedDeck().getFledermaus());
+    }
+
+    //zeigt die gesammelten Karten der Gegner
+    public void showEnemyCollectCards() {
         String output = "";
 
-        for(Player all : GameClient.getInstance().getGame().getPlayers()){
+        for (Player all : GameClient.getInstance().getGame().getPlayers()) {
 
             //hier soll die ausgaben meiner karten verhindert werden.
-            if(all == me){
+            if (all == me) {
+            } else {
+                output += all.getCollectedDeck().toString() + ("\n");
             }
-            else{ output += all.getCollectedDeck().toString() + ("\n");}
         }
         messageText.setText(output);
         messageview.setVisibility(View.VISIBLE);
-        }
+    }
 
-        public void displayCardAmounts(){
-            krötenView.setText(String.valueOf(me.getHandDeck().getKroete()));
-            spinnenView.setText(String.valueOf(me.getHandDeck().getSpinne()));
-            fliegenView.setText(String.valueOf(me.getHandDeck().getFliege()));
-            scorpionView.setText(String.valueOf(me.getHandDeck().getScorpion()));
-            kakerlakeView.setText(String.valueOf(me.getHandDeck().getKakerlake()));
-            ratteView.setText(String.valueOf(me.getHandDeck().getRatte()));
-            fledermausView.setText(String.valueOf(me.getHandDeck().getFledermaus()));
-            stinkwanzeView.setText(String.valueOf(me.getHandDeck().getStinkwanze()));
-        }
+    public void displayCardAmounts() {
+        krötenView.setText(String.valueOf(me.getHandDeck().getKroete()));
+        spinnenView.setText(String.valueOf(me.getHandDeck().getSpinne()));
+        fliegenView.setText(String.valueOf(me.getHandDeck().getFliege()));
+        scorpionView.setText(String.valueOf(me.getHandDeck().getScorpion()));
+        kakerlakeView.setText(String.valueOf(me.getHandDeck().getKakerlake()));
+        ratteView.setText(String.valueOf(me.getHandDeck().getRatte()));
+        fledermausView.setText(String.valueOf(me.getHandDeck().getFledermaus()));
+        stinkwanzeView.setText(String.valueOf(me.getHandDeck().getStinkwanze()));
+    }
 
-        public void checkTurn(){
-            //me ist nicht aktuell am Spiel beteiligt
-            if(!(me.getId() == (GameClient.getInstance().getGame().getCurrentPlayer().getId()) || GameClient.getInstance().getGame().getTurn()!=null&&!(me.getId() == GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId()))){
-                Log.debug("Not your turn!");
+    public void checkTurn() {
+        Log.info("The turn is checked here");
+        //me ist nicht aktuell am Spiel beteiligt
+        if (!(me.getId() == (GameClient.getInstance().getGame().getCurrentPlayer().getId()) || GameClient.getInstance().getGame().getTurn() != null && !(me.getId() == GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId()))) {
+            Log.debug("Not your turn!");
             //TODO    Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
             //TODO    Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
-                showDialogeWait();
-            }
+            showDialogeWait();
+        }
 
-            //Turn wurde ausgeführt und me wurde als Enemy ausgewählt
-            if(GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && !(GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId() == me.getId())){
+        //Turn wurde ausgeführt und me wurde als Enemy ausgewählt
+        if (GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && !(GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId() == me.getId())) {
             //TODO     Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
             //TODO    Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
-                Log.debug("You have to make a decission!");
-                showDialogeChallenge();
+            Log.debug("You have to make a decission!");
+            showDialogeChallenge();
 
-            }
         }
     }
+
+    class StateListenerImpl extends StateListener {
+
+        @Override
+        public void inform() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    displayCardAmounts();
+                    checkTurn();
+                }
+            });
+
+        }
+    }
+}
+
+
 
 
 
