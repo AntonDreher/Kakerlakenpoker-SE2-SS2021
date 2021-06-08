@@ -185,9 +185,7 @@ public class ServerListener extends Listener {
     @Override
     public void disconnected(Connection connection) {
         userNames.remove(connection.getRemoteAddressTCP());
-        for(Lobby lobby: server.getAllLobbies()){
-            if(lobby.getHostIP().equals(connection.getRemoteAddressTCP()))server.getAllLobbies().remove(lobby);
-        }
+        
         Log.info("Client disconnected: "+ connection.getRemoteAddressTCP());
     }
 }
