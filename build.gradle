@@ -18,8 +18,10 @@ plugins {
 
 sonarqube {
     properties {
-        property "sonar.projectKey", "Kakerlakenpoker-SE2-SS2021"
+
         property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.organization", "AntonDreher"
+        property "sonar.projectKey", "Kakerlakenpoker-SE2-SS2021"
         property "sonar.coverage.jacoco.xmlReportPaths", "${}/*/build/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
@@ -30,6 +32,18 @@ allprojects {
     }
 }
 
+subprojects {
+    apply plugin: 'org.sonarqube'
+    sonarqube {
+        properties {
+            property 'sonar.coverage.jacoco.xmlReportPaths', "${projectDir}/build/reports/jacoco/test/jacocoTestReport.xml"
+        }
+    }
+
+    tasks.withType(Test).configureEach {
+        useJUnitPlatform()
+    }
+}
 
 
 task clean(type: Delete) {
