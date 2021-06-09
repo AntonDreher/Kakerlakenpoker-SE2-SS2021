@@ -20,7 +20,7 @@ sonarqube {
     properties {
 
         property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.organization", "AntonDreher"
+        property "sonar.organization", "se2-gruppe1"
         property "sonar.projectKey", "Kakerlakenpoker-SE2-SS2021"
         property "sonar.coverage.jacoco.xmlReportPaths", "${}/*/build/reports/jacoco/test/jacocoTestReport.xml"
     }
