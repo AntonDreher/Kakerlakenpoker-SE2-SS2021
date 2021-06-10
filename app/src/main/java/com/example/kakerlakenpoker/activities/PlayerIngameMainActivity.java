@@ -476,10 +476,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         fliegenView.setText(String.valueOf(me.getHandDeck().getFliege()));
         scorpionView.setText(String.valueOf(me.getHandDeck().getScorpion()));
         kakerlakeView.setText(String.valueOf(me.getHandDeck().getKakerlake()));
-        kakerlakeView.invalidate();
         ratteView.setText(String.valueOf(me.getHandDeck().getRatte()));
-        ratteView.invalidate();
-        ratteView.requestLayout();
         fledermausView.setText(String.valueOf(me.getHandDeck().getFledermaus()));
         stinkwanzeView.setText(String.valueOf(me.getHandDeck().getStinkwanze()));
     }
@@ -488,8 +485,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         Log.info("The turn is checked here");
         //me ist nicht aktuell am Spiel beteiligt
         if (!(me.getId() == (GameClient.getInstance().getGame().getCurrentPlayer().getId()) || GameClient.getInstance().getGame().getTurn() != null && !(me.getId() == GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId()))) {
-            Log.debug("Not your turn!");
-              Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getId());
+            Log.info("Not your turn!");
+              Log.info("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getId());
             showDialogeWait();
         }
         Log.info("next if");
@@ -529,8 +526,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
                     if(GameClient.getInstance().getGame().checkRoundOver()){
                         GameClient.getInstance().getGame().resetPlayerStatus();
                     }
-                    diaDecision.dismiss();
-                    diaWait.dismiss();
+                    diaDecision.hide();
+                    diaWait.hide();
                     displayCardAmounts();
                     checkTurn();
                 }
