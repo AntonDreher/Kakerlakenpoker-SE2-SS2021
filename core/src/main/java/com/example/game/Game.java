@@ -11,6 +11,7 @@ import com.example.game.player.Player;
 import com.example.game.player.PlayerState;
 import com.example.server.network.game.GameData;
 
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -105,11 +106,10 @@ public class Game {
     }
 
     public void gameOver(Player player){
-        Log.info("gameover");
-        if(player !=null && player.getId()==(currentPlayer.getId())){
-            Log.info("gameover");
-            changeState(GameState.GAME_OVER);
-        }
+        currentPlayer = player;
+        this.currentState = GameState.GAME_OVER;
+        if(stateListener!=null)stateListener.stateChanged();
+
     }
 
     public boolean checkRoundOver() {
@@ -227,11 +227,23 @@ public class Game {
     }
 
     public void updateGame(GameUpdate gameUpdate) {
-        this.players = gameUpdate.getPlayers();
+        updatePlayers(gameUpdate.getPlayers());
         this.currentPlayer = gameUpdate.getCurrentPlayer();
         this.turn = gameUpdate.getTurn();
         this.currentState =gameUpdate.getState();
         if(stateListener!=null)stateListener.stateChanged();
+    }
+
+    public void updatePlayers(List<Player> players){
+        for(Player player: this.players){
+            for(Player newPlayer: players){
+                if(player.getId()== newPlayer.getId()){
+                    player.setHandDeck(newPlayer.getHandDeck());
+                    player.getHandDeck().countAllCards();
+                    player.setCollectedDeck(newPlayer.getCollectedDeck());
+                }
+            }
+        }
     }
 
     public GameState getCurrentState() {

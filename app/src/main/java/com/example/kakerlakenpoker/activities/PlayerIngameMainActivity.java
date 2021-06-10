@@ -259,9 +259,11 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
             Type selectedType = Type.valueOf(guessText);
             Player enemy = null;
             for (Player player : GameClient.getInstance().getGame().getPlayers()) {
-                if (player.getId() == Integer.parseInt(choosePlayer.getSelectedItem().toString())) ;
+                if (player.getId() == Integer.parseInt(choosePlayer.getSelectedItem().toString()))
                 enemy = player;
             }
+            assert enemy != null;
+            Log.info("This is the selected enemy: "+ enemy.getId());
 
             Card selectedCard = me.getHandDeck().findCard(playedcard);
             Log.info("selected things", selectedType + " " + selectedCard + " " + enemy.getId());
@@ -496,7 +498,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
                 showDialogeChallenge();
         }
         //Bei GameOver
+        Log.info("GAMESTATE: "+ GameClient.getInstance().getGame().getCurrentState());
         if (GameClient.getInstance().getGame().getCurrentState() == GameState.GAME_OVER){
+            Log.info("Game ist over!");
             showDialogeGameOver();
         }
     }
@@ -522,8 +526,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
                     if(GameClient.getInstance().getGame().checkRoundOver()){
                         GameClient.getInstance().getGame().resetPlayerStatus();
                     }
-                    diaDecision.hide();
-                    diaWait.hide();
+                    diaDecision.dismiss();
+                    diaWait.dismiss();
                     displayCardAmounts();
                     checkTurn();
                 }
