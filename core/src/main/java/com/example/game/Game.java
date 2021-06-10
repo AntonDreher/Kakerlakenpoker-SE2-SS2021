@@ -81,6 +81,10 @@ public class Game {
         changeState(GameState.AWAITING_TURN);
     }
 
+    public void handOver(){
+        changeState(GameState.AWAITING_TURN);
+    }
+
     public void reject(Player player) {
         currentPlayer = player;
         currentState = GameState.AWAITING_TURN;

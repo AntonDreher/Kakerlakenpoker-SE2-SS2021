@@ -108,4 +108,5 @@
     <string name="karte1">Karte</string>
     <string name="truth">TRUTH</string>
     <string name="lie">LIE</string>
+    <string name="hand_over">Hand Over</string>
 </resources>

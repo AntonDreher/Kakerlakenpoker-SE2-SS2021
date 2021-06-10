@@ -26,10 +26,12 @@ import com.example.game.Turn;
 import com.example.game.card.Card;
 import com.example.game.card.Type;
 import com.example.game.listener.StateListener;
+import com.example.game.player.PlayerState;
 import com.example.kakerlakenpoker.R;
 import com.example.game.player.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PlayerIngameMainActivity extends AppCompatActivity {
@@ -52,7 +54,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     Button goBack;
     EditText writeCardText;
     Spinner choosePlayer;
-
+    Spinner types;
+    ArrayList<Type> typeList;
     //TextViews für die ausgabe der vorläufigen zahlen oder Nachrichten
     TextView messageText;
 
@@ -86,6 +89,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         diaWait = new Dialog(this);
         me = getLocalPlayer();
         me.getHandDeck().countAllCards();
+        setUpTypesSpinner();
 
         messageText = (TextView) findViewById(R.id.messageText);
 
@@ -353,6 +357,17 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         TextView text = diaDecision.findViewById(R.id.info);
         Button buttonTruth = diaDecision.findViewById(R.id.truth);
         Button buttonLie = diaDecision.findViewById(R.id.lie);
+        Button buttonHandOver = diaDecision.findViewById(R.id.handOverButton);
+        Spinner spinner = findViewById(R.id.handOver);
+        ArrayList<String> list = new ArrayList<>();
+        for (Player player1 : GameClient.getInstance().getGame().getPlayers()) {
+            if (!(player1.getId() == me.getId()) && player1.getState() != PlayerState.PLAYED) {
+                list.add(String.valueOf(player1.getId()));
+            }
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinner.setAdapter(adapter);
         diaDecision.show();
         myToast.setDuration(Toast.LENGTH_LONG);
 
@@ -365,9 +380,29 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
         buttonLie.setOnClickListener(view -> {
             myToast.setText("Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said LIE");
+            myToast.show();
             decission(Decision.LIE);
             diaDecision.dismiss();
         });
+
+        buttonHandOver.setOnClickListener(view -> {
+            GameClient.getInstance().getGame().handOver();
+            Turn turn;
+            Type selectedType = Type.valueOf(types.getSelectedItem().toString());
+            Player ene = null;
+            for (Player p : GameClient.getInstance().getGame().getPlayers()) {
+                if (p.getId() == Integer.parseInt(spinner.getSelectedItem().toString())) ;
+                ene = p;
+            }
+            Card card = GameClient.getInstance().getGame().getTurn().getSelectedCard();
+            assert ene != null;
+            Log.info("selected things", selectedType + " " + card+ " " + ene.getId());
+            turn = new Turn(card, selectedType, ene);
+            GameClient.getInstance().getGame().makeTurn(me, turn);
+
+        });
+
+
         String myText = "Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getId() + " says " + GameClient.getInstance().getGame().getTurn().getSelectedType().toString();
         text.setText(myText);
     }
@@ -464,6 +499,14 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         }
     }
 
+    public void setUpTypesSpinner(){
+        typeList.addAll(Arrays.asList(Type.values()));
+        ArrayAdapter typAdapter = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, typeList);
+        types.setAdapter(typAdapter);
+    }
+
+
+
     class StateListenerImpl extends StateListener {
 
         @Override
@@ -471,6 +514,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    if(GameClient.getInstance().getGame().checkRoundOver()){
+                        GameClient.getInstance().getGame().resetPlayerStatus();
+                    }
                     diaDecision.hide();
                     diaWait.hide();
                     displayCardAmounts();
