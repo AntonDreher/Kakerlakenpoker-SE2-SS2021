@@ -55,6 +55,7 @@ public class Game {
     }
 
     public void makeTurn(Player player, Turn turn) {
+        if(turn==null||turn.getSelectedCard()==null||turn.getSelectedType()==null||turn.getSelectedEnemy()==null)return;
         if (currentState == GameState.AWAITING_TURN && player.getId()==currentPlayer.getId()) {
             this.turn = turn;
             changeState(GameState.AWAITING_DECISION);
@@ -64,6 +65,7 @@ public class Game {
     }
 
     public void makeDecision(Player player, Decision decision) {
+        if(decision==null)return;
         if (currentState == GameState.AWAITING_DECISION && player.getId()==(turn.getSelectedEnemy().getId())) {
             this.decision=decision;
             if ((turn.getSelectedCard().getType() != turn.getSelectedType() && decision == Decision.TRUTH) ||

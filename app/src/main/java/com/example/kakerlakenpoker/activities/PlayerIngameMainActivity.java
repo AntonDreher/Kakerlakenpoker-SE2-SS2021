@@ -476,7 +476,10 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         fliegenView.setText(String.valueOf(me.getHandDeck().getFliege()));
         scorpionView.setText(String.valueOf(me.getHandDeck().getScorpion()));
         kakerlakeView.setText(String.valueOf(me.getHandDeck().getKakerlake()));
+        kakerlakeView.invalidate();
         ratteView.setText(String.valueOf(me.getHandDeck().getRatte()));
+        ratteView.invalidate();
+        ratteView.requestLayout();
         fledermausView.setText(String.valueOf(me.getHandDeck().getFledermaus()));
         stinkwanzeView.setText(String.valueOf(me.getHandDeck().getStinkwanze()));
     }
