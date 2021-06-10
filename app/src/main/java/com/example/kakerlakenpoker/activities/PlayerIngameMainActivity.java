@@ -265,6 +265,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
             Card selectedCard = me.getHandDeck().findCard(playedcard);
             Log.info("selected things", selectedType + " " + selectedCard + " " + enemy.getId());
             turn = new Turn(selectedCard, selectedType, enemy);
+            GameClient.getInstance().getGame().getCurrentPlayer().getHandDeck().removeCard(selectedCard);
             GameClient.getInstance().getGame().makeTurn(me, turn);
             this.popUp.setVisibility(View.INVISIBLE);
         }

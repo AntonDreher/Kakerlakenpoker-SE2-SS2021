@@ -57,7 +57,7 @@ public class Game {
         if (currentState == GameState.AWAITING_TURN && player.getId()==currentPlayer.getId()) {
             this.turn = turn;
             changeState(GameState.AWAITING_DECISION);
-            currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
+
             currentPlayer.setState(PlayerState.PLAYED);
         } else  Log.info("not permitted to make a turn player: "+currentPlayer.getId());
     }
