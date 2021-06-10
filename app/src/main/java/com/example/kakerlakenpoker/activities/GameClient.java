@@ -25,6 +25,7 @@ public class GameClient {
     private Lobby currentLobby;
     private Activity activity;
     private IpListAdapter listAdapter;
+    private LobbyAdapter lobbyAdapter;
     private String userName;
     private Game game;
 
@@ -73,11 +74,15 @@ public class GameClient {
     }
 
     public void setCurrentLobby(Lobby lobby){
-            currentLobby = lobby;
+
+        currentLobby = lobby;
         }
 
     public void setOpenLobbies(ArrayList<Lobby> openLobbies) {
         this.openLobbies = openLobbies;
+        Log.info("That the size of the lobbies: "+openLobbies.size());
+        if(lobbyAdapter!=null)
+        this.lobbyAdapter.notifyAdapter();
     }
 
     public Game getGame() {
@@ -111,6 +116,10 @@ public class GameClient {
 
     public void setActivity(Activity activity) {
         this.activity = activity;
+    }
+
+    public void setLobbyAdapter(LobbyAdapter lobbyAdapter) {
+        this.lobbyAdapter = lobbyAdapter;
     }
 
     public void connectToNewServer(String ip, ClientListener listener){

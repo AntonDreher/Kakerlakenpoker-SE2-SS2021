@@ -99,10 +99,11 @@ public class ServerListener extends Listener {
     private void ExitLobbyHandler(Object object, Connection connection){
         String lobbyToExitName = ((ExitLobby) object).getLobbyToExitName();
         String ipAddress = connection.getRemoteAddressTCP().toString();
+        String id = String.valueOf(connection.getID());
 
         for(Lobby currentLobby : server.getAllLobbies()){
             if(currentLobby.getName().equals(lobbyToExitName)){
-                if(currentLobby.getHostId().equals(ipAddress)){
+                if(currentLobby.getHostId().equals(id)){
                     server.getAllLobbies().remove(currentLobby);
                     sendMessageToAllClientsInLobby(currentLobby, new DestroyLobby());
                 }else {
