@@ -182,6 +182,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         cheatbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Bitte Handy schütteln!!!", Toast.LENGTH_SHORT).show();
                 erlaubnis = true;
             }
         });
