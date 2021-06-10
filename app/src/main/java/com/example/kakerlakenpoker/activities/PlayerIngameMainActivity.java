@@ -89,7 +89,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         diaWait = new Dialog(this);
         me = getLocalPlayer();
         me.getHandDeck().countAllCards();
-        setUpTypesSpinner();
+
+
 
         messageText = (TextView) findViewById(R.id.messageText);
 
@@ -347,8 +348,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     Öffnet einen Dialog, wenn man eine Decision machen muss
      */
     public void showDialogeChallenge() {
-
-        diaDecision.setContentView(R.layout.decision_dialoge);
+        View view1 = getLayoutInflater().inflate(R.layout.decision_dialoge, null);
+        setUpTypesSpinner(view1);
+        diaDecision.setContentView(view1);
         diaDecision.setCanceledOnTouchOutside(false);
         Toast myToast = new Toast(this);
         String selectedCard = GameClient.getInstance().getGame().getTurn().getSelectedCard().getType().toString();
@@ -359,7 +361,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         Button buttonTruth = diaDecision.findViewById(R.id.truth);
         Button buttonLie = diaDecision.findViewById(R.id.lie);
         Button buttonHandOver = diaDecision.findViewById(R.id.handOverButton);
-        Spinner spinner = findViewById(R.id.handOver);
+        Spinner spinner = view1.findViewById(R.id.handOver);
         ArrayList<String> list = new ArrayList<>();
         for (Player player1 : GameClient.getInstance().getGame().getPlayers()) {
             if (!(player1.getId() == me.getId()) && player1.getState() != PlayerState.PLAYED) {
@@ -373,15 +375,15 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         myToast.setDuration(Toast.LENGTH_LONG);
 
         buttonTruth.setOnClickListener(view -> {
-            myToast.setText("Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said TRUTH");
-            myToast.show();
+            Toast toast= Toast.makeText(this,"Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said TRUTH", Toast.LENGTH_LONG);
+            toast.show();
             decission(Decision.TRUTH);
             diaDecision.dismiss();
         });
 
         buttonLie.setOnClickListener(view -> {
-            myToast.setText("Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said LIE");
-            myToast.show();
+            Toast toast= Toast.makeText(this,"Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said LIE", Toast.LENGTH_LONG);
+            toast.show();
             decission(Decision.LIE);
             diaDecision.dismiss();
         });
@@ -483,12 +485,11 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         if (!(me.getId() == (GameClient.getInstance().getGame().getCurrentPlayer().getId()) || GameClient.getInstance().getGame().getTurn() != null && !(me.getId() == GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId()))) {
             Log.debug("Not your turn!");
               Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getId());
-             Log.debug("Current Enemys: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId());
             showDialogeWait();
         }
-
+        Log.info("next if");
         //Turn wurde ausgeführt und me wurde als Enemy ausgewählt
-        if (GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && (GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId() == me.getId())) {
+        if (GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION &&GameClient.getInstance().getGame().getTurn() != null&& (GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId() == me.getId())) {
                 Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getId());
                 Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId());
                 Log.info("You have to make a decission!");
@@ -500,7 +501,10 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         }
     }
 
-    public void setUpTypesSpinner(){
+    public void setUpTypesSpinner(View view){
+
+        types = (Spinner)view.findViewById(R.id.spinnerType);
+        typeList = new ArrayList<>();
         typeList.addAll(Arrays.asList(Type.values()));
         ArrayAdapter typAdapter = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, typeList);
         types.setAdapter(typAdapter);
