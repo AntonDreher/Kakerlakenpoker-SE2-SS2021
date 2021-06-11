@@ -200,7 +200,7 @@
 
 
     <TextView
-        android:id="@+id/krotenView"
+        android:id="@+id/kakerlakenView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -212,7 +212,7 @@
         app:layout_constraintVertical_bias="0.283" />
 
     <TextView
-        android:id="@+id/kakerlakenView"
+        android:id="@+id/fledermausView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -224,7 +224,7 @@
         app:layout_constraintVertical_bias="0.283" />
 
     <TextView
-        android:id="@+id/spinnenVIew"
+        android:id="@+id/fliegeView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -236,7 +236,7 @@
         app:layout_constraintVertical_bias="0.283" />
 
     <TextView
-        android:id="@+id/stinkwanzeView"
+        android:id="@+id/kroeteView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -248,7 +248,7 @@
         app:layout_constraintVertical_bias="0.283" />
 
     <TextView
-        android:id="@+id/fliegeView"
+        android:id="@+id/ratteView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -260,7 +260,7 @@
         app:layout_constraintVertical_bias="0.283" />
 
     <TextView
-        android:id="@+id/fledermausView"
+        android:id="@+id/skorpionView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -272,7 +272,7 @@
         app:layout_constraintVertical_bias="0.283" />
 
     <TextView
-        android:id="@+id/rattenView"
+        android:id="@+id/spinnenVIew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -284,7 +284,7 @@
         app:layout_constraintVertical_bias="0.283" />
 
     <TextView
-        android:id="@+id/skorpionView"
+        android:id="@+id/stinkwaneView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
