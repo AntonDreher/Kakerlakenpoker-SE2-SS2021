@@ -525,15 +525,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         ratteView.setText(String.valueOf(me.getHandDeck().getRatte()));
         fledermausView.setText(String.valueOf(me.getHandDeck().getFledermaus()));
         stinkwanzeView.setText(String.valueOf(me.getHandDeck().getStinkwanze()));
-
-        krötenView.invalidate();
-        spinnenView.invalidate();
-        fliegenView.invalidate();
-        scorpionView.invalidate();
-        kakerlakeView.invalidate();
-        ratteView.invalidate();
-        fledermausView.invalidate();
-        stinkwanzeView.invalidate();
     }
 
     public void checkTurn() {

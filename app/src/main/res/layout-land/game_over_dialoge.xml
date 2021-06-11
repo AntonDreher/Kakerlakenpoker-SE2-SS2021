@@ -3,12 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#ff8800"
     android:layout_height="match_parent">
 
     <TextView
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
         android:id="@+id/textGameOver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/back2menu"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,8 +25,12 @@
 
     <Button
         android:id="@+id/back2menu"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:text="@string/back_to_menu"
         app:layout_constraintTop_toBottomOf="@id/textGameOver"
         app:layout_constraintBottom_toBottomOf="parent"
