@@ -117,16 +117,16 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
         messageText = (TextView) findViewById(R.id.messageText);
 
-        krötenView = (TextView) findViewById(R.id.kakerlakenView);
-        spinnenView = findViewById(R.id.fliegeView);
-        fliegenView = findViewById(R.id.rattenView);
-        scorpionView = findViewById(R.id.stinkwanzeView);
-        kakerlakeView = findViewById(R.id.fledermausView);
-        ratteView = findViewById(R.id.spinnenVIew);
-        fledermausView = findViewById(R.id.skorpionView);
-        stinkwanzeView = findViewById(R.id.krotenView);
+        krötenView = (TextView) findViewById(R.id.krotenView);
+        spinnenView = findViewById(R.id.spinnenVIew);
+        fliegenView = findViewById(R.id.fliegeView);
+        scorpionView = findViewById(R.id.skorpionView);
+        kakerlakeView = findViewById(R.id.kakerlakenView);
+        ratteView = findViewById(R.id.rattenView);
+        fledermausView = findViewById(R.id.fledermausView);
+        stinkwanzeView = findViewById(R.id.stinkwanzeView);
 
-        displayCardAmounts();
+
         initializeDialogs();
         checkTurn();
 
@@ -152,7 +152,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         dragViewSpider = (LinearLayout) findViewById(R.id.dragViewSpider);
         dragViewStink = (LinearLayout) findViewById(R.id.dragViewStink);
 
-
+        closeDragViewCards();
 
         dropViewPlayer1 = (LinearLayout) findViewById(R.id.Player1);
         choosePlayer = (Spinner) findViewById(R.id.spinnerPlayer);
@@ -160,7 +160,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
         setUpSpinnerForChallengeView();
 
-        closeDragViewCards();
 
         //Hier wird die View touchable
         dragViewStink.setOnTouchListener(new TouchListener());
