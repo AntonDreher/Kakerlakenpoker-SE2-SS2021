@@ -4,12 +4,17 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -26,15 +31,18 @@ import com.example.game.Turn;
 import com.example.game.card.Card;
 import com.example.game.card.Type;
 import com.example.game.listener.StateListener;
+import com.example.game.player.CollectedDeck;
 import com.example.game.player.PlayerState;
 import com.example.kakerlakenpoker.R;
 import com.example.game.player.Player;
 
+import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public class PlayerIngameMainActivity extends AppCompatActivity {
+public class PlayerIngameMainActivity extends AppCompatActivity implements SensorEventListener{
 
 
     LinearLayout dragViewKakerlake;
@@ -78,6 +86,15 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     Boolean check;
     MutableLiveData<GameState> stateListen = new MutableLiveData<GameState>();
     Player me = null;
+
+    //Werte für den Handy-Shake
+    private CheckBox cheatbox;
+    private Sensor accelerometer;
+    private SensorManager ShakeSensorManager;
+    private float wert1;
+    private float wert2;
+    private float wert3;
+    Boolean erlaubnis = false;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -152,6 +169,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
         GameClient.getInstance().getGame().setStateListener(new StateListenerImpl());
 
+        //Init SensorManger
+        ShakeSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         //Observer, der bei Änderung des GameState die Activity neu ladet
         stateListen.setValue(GameClient.getInstance().getGame().getCurrentState());
@@ -159,6 +178,24 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
         });
 
+        //Handling und init für den Cheat
+        cheatbox = (CheckBox) findViewById(R.id.checkBox);
+        ShakeSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accelerometer = ShakeSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        cheatbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Bitte Handy schütteln!!!", Toast.LENGTH_SHORT).show();
+                erlaubnis = true;
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 
@@ -534,6 +571,96 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
             });
 
         }
+    }
+
+    //Methoden für das Verwenden des Shakes und des Cheats
+    public void CheckboxClicked(View v) {
+        while(true) {
+            if (((CheckBox) v).isChecked()) {
+                ShakeSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+                accelerometer = ShakeSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            }
+        }
+    }
+    //Methode für das finden eines Shakes!
+    @Override
+    public void onSensorChanged(SensorEvent e) {
+
+        List changer = new ArrayList();
+
+
+        float x,y,z;
+        x = e.values[0];
+        y = e.values[1];
+        z = e.values[2];
+
+        float Xextract = Math.abs(wert1 - x );
+        float Yextract = Math.abs(wert2 - y );
+        float Zextract = Math.abs(wert3 - z );
+
+        if (Xextract < (float) 0.8) {
+            Xextract = (float) 0.0;
+        }
+
+        if (Yextract < (float) 0.8) {
+            Yextract = (float) 0.0;
+        }
+
+        if (Zextract < (float) 0.8) {
+            Zextract = (float) 0.0;
+        }
+
+        //Zwischenspeicher
+        wert1 = x;
+        wert2 = y;
+        wert3 = z;
+
+        if (Xextract > Yextract) {
+            if(erlaubnis == true){
+                ChangePlayersCollectedDecks();
+            }
+        }
+
+    }
+
+    //tauscht die Collected Karten unter den Spielern
+    public void ChangePlayersCollectedDecks(){
+
+        List changer = new ArrayList();
+
+        Toast.makeText(getApplicationContext(), "Cheat wird ausgeführt!!!", Toast.LENGTH_SHORT).show();
+
+        for (Player player : GameClient.getInstance().getGame().getPlayers()) {
+            changer.add(player.getCollectedDeck().getDeck());
+        }
+
+        Collections.reverse(changer);
+
+        for (Player player : GameClient.getInstance().getGame().getPlayers()) {
+            player.getCollectedDeck().setDeck(changer);
+            changer.remove(0);
+        }
+
+        erlaubnis = false;
+        cheatbox.setVisibility(View.INVISIBLE);
+    }
+
+    //Default methode fürs Handling
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+    //Sollte wieder geschüttelt werden, akitivert sich der Listener
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ShakeSensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    //Sollte nicht geschüttelt werden, wird der Listerner abgeschalten.
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ShakeSensorManager.unregisterListener(this);
     }
 }
 
