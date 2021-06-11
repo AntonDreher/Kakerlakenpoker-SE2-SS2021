@@ -175,7 +175,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         });
 
         //Handling und init für den Cheat
-        cheatbox = (CheckBox) findViewById(R.id.cheatbox);
+        cheatbox = (CheckBox) findViewById(R.id.checkBox);
         ShakeSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = ShakeSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
