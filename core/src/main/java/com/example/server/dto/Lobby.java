@@ -1,21 +1,18 @@
 package com.example.server.dto;
 
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Lobby extends BaseMessage{
     private String name;
-    private String hostIP;
+    private String hostId;
     private HashMap<String, String> playersIp = new HashMap<>();
 
     public Lobby(String name){
         this.name = name;
     }
 
-    public void setHostIP(String hostIP){
-        this.hostIP = hostIP;
+    public void setHostId(String hostId){
+        this.hostId = hostId;
     }
 
 
@@ -24,8 +21,8 @@ public class Lobby extends BaseMessage{
         return name;
     }
 
-    public String getHostIP() {
-        return hostIP;
+    public String getHostId() {
+        return hostId;
     }
 
     public HashMap<String, String> getPlayersIpList() {
@@ -36,7 +33,7 @@ public class Lobby extends BaseMessage{
     public String toString() {
         return "Lobby{" +
                 "name='" + name + '\'' +
-                ", HostIP='" + hostIP + '\'' +
+                ", HostIP='" + hostId + '\'' +
                 ", playersIpList=" + playersIp +
                 '}';
     }

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
@@ -24,10 +25,9 @@ import com.example.game.GameState;
 import com.example.game.Turn;
 import com.example.game.card.Card;
 import com.example.game.card.Type;
-import com.example.game.listener.GameListener;
 import com.example.game.listener.StateListener;
+import com.example.game.player.PlayerState;
 import com.example.kakerlakenpoker.R;
-import com.example.game.Game;
 import com.example.game.player.Player;
 
 import java.util.ArrayList;
@@ -54,7 +54,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     Button goBack;
     EditText writeCardText;
     Spinner choosePlayer;
-
+    Spinner types;
+    ArrayList<Type> typeList;
     //TextViews für die ausgabe der vorläufigen zahlen oder Nachrichten
     TextView messageText;
 
@@ -70,7 +71,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
 
     private String playedcard;
     private String guessText;
-
+    Dialog diaWait;
+    Dialog diaDecision;
 
     List<String> namesOfPlayer = new ArrayList<String>();
     Boolean check;
@@ -83,9 +85,12 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_ingameview);
-
+        diaDecision = new Dialog(this);
+        diaWait = new Dialog(this);
         me = getLocalPlayer();
         me.getHandDeck().countAllCards();
+
+
 
         messageText = (TextView) findViewById(R.id.messageText);
 
@@ -235,8 +240,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     //hollt sich alle Namen der anderen Spieler und fügt die Namen in den Spinner!
     public void setUpSpinner() {
         for (Player player : GameClient.getInstance().getGame().getPlayers()) {
-            if (/*TODO !namesOfPlayer.contains(player.getName()) || */!(player.getId() == me.getId())) {
-                namesOfPlayer.add(String.valueOf(player.getId())); //TODO
+            if (!(player.getId() == me.getId())) {
+                namesOfPlayer.add(String.valueOf(player.getId()));
             }
 
         }
@@ -254,13 +259,16 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
             Type selectedType = Type.valueOf(guessText);
             Player enemy = null;
             for (Player player : GameClient.getInstance().getGame().getPlayers()) {
-                if (player.getId() == Integer.parseInt(choosePlayer.getSelectedItem().toString())) ;
+                if (player.getId() == Integer.parseInt(choosePlayer.getSelectedItem().toString()))
                 enemy = player;
             }
+            assert enemy != null;
+            Log.info("This is the selected enemy: "+ enemy.getId());
 
             Card selectedCard = me.getHandDeck().findCard(playedcard);
             Log.info("selected things", selectedType + " " + selectedCard + " " + enemy.getId());
             turn = new Turn(selectedCard, selectedType, enemy);
+            GameClient.getInstance().getGame().getCurrentPlayer().getHandDeck().removeCard(selectedCard);
             GameClient.getInstance().getGame().makeTurn(me, turn);
             this.popUp.setVisibility(View.INVISIBLE);
         }
@@ -342,38 +350,96 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
     Öffnet einen Dialog, wenn man eine Decision machen muss
      */
     public void showDialogeChallenge() {
-        Dialog dia = new Dialog(this);
-        dia.setContentView(R.layout.decision_dialoge);
-        dia.setCanceledOnTouchOutside(false);
-        TextView text = dia.findViewById(R.id.info);
-        Button buttonTruth = dia.findViewById(R.id.truth);
-        Button buttonLie = dia.findViewById(R.id.lie);
-        dia.show();
+        View view1 = getLayoutInflater().inflate(R.layout.decision_dialoge, null);
+        setUpTypesSpinner(view1);
+        diaDecision.setContentView(view1);
+        diaDecision.setCanceledOnTouchOutside(false);
+        Toast myToast = new Toast(this);
+        String selectedCard = GameClient.getInstance().getGame().getTurn().getSelectedCard().getType().toString();
+        String chosenTyp = GameClient.getInstance().getGame().getTurn().getSelectedType().toString();
+        int player = GameClient.getInstance().getGame().getCurrentPlayer().getId();
+        int enemy = GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId();
+        TextView text = diaDecision.findViewById(R.id.info);
+        Button buttonTruth = diaDecision.findViewById(R.id.truth);
+        Button buttonLie = diaDecision.findViewById(R.id.lie);
+        Button buttonHandOver = diaDecision.findViewById(R.id.handOverButton);
+        Spinner spinner = view1.findViewById(R.id.handOver);
+        ArrayList<String> list = new ArrayList<>();
+        for (Player player1 : GameClient.getInstance().getGame().getPlayers()) {
+            if (!(player1.getId() == me.getId()) && player1.getState() != PlayerState.PLAYED) {
+                list.add(String.valueOf(player1.getId()));
+            }
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinner.setAdapter(adapter);
+        diaDecision.show();
+        myToast.setDuration(Toast.LENGTH_LONG);
+
         buttonTruth.setOnClickListener(view -> {
+            Toast toast= Toast.makeText(this,"Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said TRUTH", Toast.LENGTH_LONG);
+            toast.show();
             decission(Decision.TRUTH);
-            dia.dismiss();
+            diaDecision.dismiss();
         });
 
         buttonLie.setOnClickListener(view -> {
+            Toast toast= Toast.makeText(this,"Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said LIE", Toast.LENGTH_LONG);
+            toast.show();
             decission(Decision.LIE);
-            dia.dismiss();
+            diaDecision.dismiss();
         });
 
-        text.setText("Player: " + /* TODO GameClient.getInstance().getGame().getCurrentPlayer().getName()*/  " played: " + GameClient.getInstance().getGame().getTurn().getSelectedType().toString());
+        buttonHandOver.setOnClickListener(view -> {
+            GameClient.getInstance().getGame().handOver();
+            Turn turn;
+            Type selectedType = Type.valueOf(types.getSelectedItem().toString());
+            Player ene = null;
+            for (Player p : GameClient.getInstance().getGame().getPlayers()) {
+                if (p.getId() == Integer.parseInt(spinner.getSelectedItem().toString())) ;
+                ene = p;
+            }
+            Card card = GameClient.getInstance().getGame().getTurn().getSelectedCard();
+            assert ene != null;
+            Log.info("selected things", selectedType + " " + card+ " " + ene.getId());
+            turn = new Turn(card, selectedType, ene);
+            GameClient.getInstance().getGame().makeTurn(me, turn);
 
+        });
+
+
+        String myText = "Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getId() + " says " + GameClient.getInstance().getGame().getTurn().getSelectedType().toString();
+        text.setText(myText);
     }
 
     /*
     Wird geöffnet, wenn man nicht an der Reihe ist
      */
     public void showDialogeWait() {
+        diaWait.setContentView(R.layout.waiting_dialoge);
+        diaWait.setCanceledOnTouchOutside(false);
+        TextView text = diaWait.findViewById(R.id.notYoutTurn);
+        String myString = "Players: " + GameClient.getInstance().getGame().getCurrentPlayer().getId() + " turn!";
+        text.setText(myString);
+        diaWait.show();
+    }
+    /*
+    Wird geöffnet, wenn das Spiel vorbei ist
+     */
+    public void showDialogeGameOver(){
         Dialog dia = new Dialog(this);
-        dia.setContentView(R.layout.waiting_dialoge);
+        dia.setContentView(R.layout.game_over_dialoge);
         dia.setCanceledOnTouchOutside(false);
-        TextView text = dia.findViewById(R.id.notYoutTurn);
-        text.setText("Player: " + /*GameClient.getInstance().getGame().getCurrentPlayer().getName() TODO*/  " turn!");
+        TextView text = dia.findViewById(R.id.textGameOver);
+        int lostPlayer = GameClient.getInstance().getGame().getCurrentPlayer().getId();
+        if(me.getId() == lostPlayer){
+            String lost = "You lost the game!";
+            text.setText(lost);
+        }else {
+            String won = "You won the game and player: " + lostPlayer + " lost!";
+            text.setText(won);
+        }
         dia.show();
-
     }
 
     //möchte man den Stand verändern (Display), ruft man diese Klasse auf.
@@ -419,21 +485,36 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
         Log.info("The turn is checked here");
         //me ist nicht aktuell am Spiel beteiligt
         if (!(me.getId() == (GameClient.getInstance().getGame().getCurrentPlayer().getId()) || GameClient.getInstance().getGame().getTurn() != null && !(me.getId() == GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId()))) {
-            Log.debug("Not your turn!");
-            //TODO    Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
-            //TODO    Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
+            Log.info("Not your turn!");
+              Log.info("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getId());
             showDialogeWait();
         }
-
+        Log.info("next if");
         //Turn wurde ausgeführt und me wurde als Enemy ausgewählt
-        if (GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION && (GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId() == me.getId())) {
-            //TODO     Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName());
-            //TODO    Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName());
-            Log.info("You have to make a decission!");
-            showDialogeChallenge();
-
+        if (GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION &&GameClient.getInstance().getGame().getTurn() != null&& (GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId() == me.getId())) {
+                Log.debug("Current Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getId());
+                Log.debug("Current Enems: " + GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId());
+                Log.info("You have to make a decission!");
+                showDialogeChallenge();
+        }
+        //Bei GameOver
+        Log.info("GAMESTATE: "+ GameClient.getInstance().getGame().getCurrentState());
+        if (GameClient.getInstance().getGame().getCurrentState() == GameState.GAME_OVER){
+            Log.info("Game ist over!");
+            showDialogeGameOver();
         }
     }
+
+    public void setUpTypesSpinner(View view){
+
+        types = (Spinner)view.findViewById(R.id.spinnerType);
+        typeList = new ArrayList<>();
+        typeList.addAll(Arrays.asList(Type.values()));
+        ArrayAdapter typAdapter = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, typeList);
+        types.setAdapter(typAdapter);
+    }
+
+
 
     class StateListenerImpl extends StateListener {
 
@@ -442,6 +523,11 @@ public class PlayerIngameMainActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    if(GameClient.getInstance().getGame().checkRoundOver()){
+                        GameClient.getInstance().getGame().resetPlayerStatus();
+                    }
+                    diaDecision.hide();
+                    diaWait.hide();
                     displayCardAmounts();
                     checkTurn();
                 }

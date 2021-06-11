@@ -21,23 +21,21 @@ import com.example.server.dto.Lobby;
 import com.example.server.dto.clienttomainserver.OpenLobby;
 import com.example.server.dto.clienttomainserver.GetOpenLobbies;
 import com.example.server.dto.mainservertoclient.SendOpenLobbies;
-import com.example.server.dto.mainservertoclient.StartUpGameServer;
-import com.example.server.network.dto.PlayerReady;
 import com.example.server.network.dto.clienttogameserver.MakeDecision;
 import com.example.server.network.dto.clienttogameserver.MakeTurn;
 import com.example.server.network.dto.gameservertoclient.GameOver;
 import com.example.server.network.dto.gameservertoclient.InitGame;
 import com.example.server.network.game.GameData;
 
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 public class ServerListener extends Listener {
     private final MainServer server;
-    private HashMap<InetSocketAddress, String> userNames;
+    private HashMap<Connection, String> userNames;
     private ArrayList<GameData> gameDatas;
 
     public ServerListener(MainServer server){
@@ -58,7 +56,7 @@ public class ServerListener extends Listener {
             connection.sendTCP(new SendOpenLobbies(server.getAllLobbies()));
         } else if (object instanceof OpenLobby){
             Lobby lobbyToAdd = ((OpenLobby) object).getLobby();
-            lobbyToAdd.setHostIP(connection.getRemoteAddressTCP().toString());
+            lobbyToAdd.setHostId(String.valueOf(connection.getID()));
             server.addLobby(lobbyToAdd);
         }else if(object instanceof ClientJoinedRequest){
             ClientJoinedResponseHandler(object, connection);
@@ -68,7 +66,7 @@ public class ServerListener extends Listener {
             Lobby lobby = findLobbyByHostId(connection.getRemoteAddressTCP().toString());
             sendMessageToAllClientsInLobby(lobby, new ClientsToJoinGameServer(connection.getRemoteAddressTCP().getAddress().toString()));
         } else if (object instanceof ClientName){
-            userNames.put(connection.getRemoteAddressTCP(), ((ClientName) object).getClientsName());
+            userNames.put(connection, ((ClientName) object).getClientsName());
         } else if(object instanceof MakeTurn||object instanceof MakeDecision||object instanceof GameOver)  {
 
             ///
@@ -101,10 +99,11 @@ public class ServerListener extends Listener {
     private void ExitLobbyHandler(Object object, Connection connection){
         String lobbyToExitName = ((ExitLobby) object).getLobbyToExitName();
         String ipAddress = connection.getRemoteAddressTCP().toString();
+        String id = String.valueOf(connection.getID());
 
         for(Lobby currentLobby : server.getAllLobbies()){
             if(currentLobby.getName().equals(lobbyToExitName)){
-                if(currentLobby.getHostIP().equals(ipAddress)){
+                if(currentLobby.getHostId().equals(id)){
                     server.getAllLobbies().remove(currentLobby);
                     sendMessageToAllClientsInLobby(currentLobby, new DestroyLobby());
                 }else {
@@ -119,7 +118,7 @@ public class ServerListener extends Listener {
     private void ClientJoinedResponseHandler(Object object, Connection connection){
         String lobbyToJoinName = ((ClientJoinedRequest) object).getLobbyName();
         String ipAddress   = connection.getRemoteAddressTCP().toString();
-        String userName = userNames.get(connection.getRemoteAddressTCP());
+        String userName = userNames.get(connection);
 
 
         for(Lobby openLobby : server.getAllLobbies()){
@@ -170,12 +169,12 @@ public class ServerListener extends Listener {
 
     private void sendMessageToHostFromLobby(Lobby lobby, BaseMessage message){
         Log.info("Send Message to Host from Lobby");
-        server.getServer().sendToTCP(server.getConnectionFromIpAddress(lobby.getHostIP()).getID(), message);
+        server.getServer().sendToTCP(server.getConnectionFromIpAddress(lobby.getHostId()).getID(), message);
     }
 
     private Lobby findLobbyByHostId(String ipAddress){
         for(Lobby currentLobby : server.getAllLobbies()){
-            if(currentLobby.getHostIP().equals(ipAddress)){
+            if(currentLobby.getHostId().equals(ipAddress)){
                 return currentLobby;
             }
         }
@@ -184,8 +183,14 @@ public class ServerListener extends Listener {
 
     @Override
     public void disconnected(Connection connection) {
-        userNames.remove(connection.getRemoteAddressTCP());
-        
-        Log.info("Client disconnected: "+ connection.getRemoteAddressTCP());
+        Log.info("Client disconnected: "+connection);
+        for (Iterator<Lobby> iterator = server.getAllLobbies().iterator(); iterator.hasNext();) {
+            Lobby lobbyToRemove = iterator.next();
+            if(lobbyToRemove.getHostId().equals(String.valueOf(connection.getID()))) {
+                iterator.remove();
+            }
+        }
+
+        userNames.remove(connection);
     }
 }

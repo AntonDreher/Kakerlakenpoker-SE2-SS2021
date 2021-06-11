@@ -70,9 +70,11 @@ public class LobbiesRecyclerViewAdapter extends RecyclerView.Adapter<LobbiesRecy
     public void onBindViewHolder(ViewHolder viewholder, final int position) {
         viewholder.getPlayerCount().setText(String.valueOf(lobbies.get(position).getPlayersIpList().size()));
         viewholder.getLobbyID().setText(lobbies.get(position).getName());
+
         viewholder.getJoinUp().setOnClickListener((View view) -> {
             joinUp(viewholder, position);
         });
+
     }
 
     public void joinUp(ViewHolder viewHolder, int position) {

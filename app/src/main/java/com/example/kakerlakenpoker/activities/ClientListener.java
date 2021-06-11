@@ -52,7 +52,7 @@ public class ClientListener extends Listener {
         }else if (object instanceof GameUpdate){
             gameClient.getGame().updateGame((GameUpdate)object);
         } else if(object instanceof GameOver){
-
+            gameClient.getGame().gameOver(((GameOver) object).getLoser());
         } else if(object instanceof ClientJoinedResponse) {
             ClientJoinedResponseHandler(object);
         }else if (object instanceof ExitLobbyResponse){

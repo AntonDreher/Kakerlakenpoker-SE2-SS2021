@@ -1,5 +1,6 @@
 package com.example.kakerlakenpoker.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,7 @@ public class SearchLobbyActivity extends AppCompatActivity {
 
         floatingActionButton = findViewById(R.id.floatingActionButtonSearchLobbyView);
         floatingActionButton.setOnClickListener((View view)->goBack());
+        GameClient.getInstance().setLobbyAdapter(new LobbyAdapter(this));
         Thread thread = new Thread(){
             @Override
             public void run() {
@@ -35,12 +37,6 @@ public class SearchLobbyActivity extends AppCompatActivity {
         };
 
         thread.start();
-
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
         initRecyclerView();
 
     }
@@ -51,11 +47,20 @@ public class SearchLobbyActivity extends AppCompatActivity {
     }
 
     public void initRecyclerView(){
-        recyclerView = findViewById(R.id.lobbiesRecyclerView);
-        Log.e("LobbyCount: ", String.valueOf(GameClient.getInstance().getOpenLobbies().size()));
-        LobbiesRecyclerViewAdapter adapter = new LobbiesRecyclerViewAdapter(GameClient.getInstance().getOpenLobbies());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Context context = this;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView = findViewById(R.id.lobbiesRecyclerView);
+                Log.e("LobbyCount: ", String.valueOf(GameClient.getInstance().getOpenLobbies().size()));
+                LobbiesRecyclerViewAdapter adapter = new LobbiesRecyclerViewAdapter(GameClient.getInstance().getOpenLobbies());
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            }
+        });
+
+
+
     }
 
 

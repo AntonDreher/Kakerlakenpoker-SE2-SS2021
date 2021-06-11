@@ -20,6 +20,6 @@ public class GameListenerClientSide implements GameListener {
         gameClient.getClient().sendMessage(new MakeTurn(gameUpdate.getTurn()));
         else if(previousState==GameState.AWAITING_DECISION && gameUpdate.getState()==GameState.AWAITING_TURN)
             gameClient.getClient().sendMessage(new MakeDecision(gameUpdate.getDecision()));
-        else if(gameUpdate.getState() ==GameState.GAME_OVER)gameClient.getClient().sendMessage(new GameOver());
+        else if(gameUpdate.getState() ==GameState.GAME_OVER)gameClient.getClient().sendMessage(new MakeDecision(gameUpdate.getDecision()));
     }
 }
