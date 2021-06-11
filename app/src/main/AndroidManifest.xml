@@ -31,11 +31,12 @@
             android:name=".activities.ShowPlayersInLobbyActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activities.SearchLobbyActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".activities.PlayerIngameMainActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".activities.SearchLobbyActivity"
+            android:screenOrientation="landscape" />
+
         <activity
             android:name=".activities.MainMenuActivity"
             android:screenOrientation="landscape" />
