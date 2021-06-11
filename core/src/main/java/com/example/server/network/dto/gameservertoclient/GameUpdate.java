@@ -22,6 +22,8 @@ public class GameUpdate extends BaseMessage {
         this.turn= turn;
         this.decision = decision;
     }
+
+
     public GameUpdate(){}
 
     public List<Player> getPlayers() {
