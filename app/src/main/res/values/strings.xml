@@ -109,4 +109,5 @@
     <string name="truth">TRUTH</string>
     <string name="lie">LIE</string>
     <string name="hand_over">Hand Over</string>
+    <string name="back_to_menu">Back to menu</string>
 </resources>

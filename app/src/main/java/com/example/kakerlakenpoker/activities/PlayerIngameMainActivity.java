@@ -470,6 +470,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         Dialog dia = new Dialog(this);
         dia.setContentView(R.layout.game_over_dialoge);
         dia.setCanceledOnTouchOutside(false);
+        Button button = dia.findViewById(R.id.back2menu);
         TextView text = dia.findViewById(R.id.textGameOver);
         int lostPlayer = GameClient.getInstance().getGame().getCurrentPlayer().getId();
         if (me.getId() == lostPlayer) {
@@ -480,6 +481,10 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             text.setText(won);
         }
         dia.show();
+        button.setOnClickListener(view -> {
+            Intent intent = new Intent(PlayerIngameMainActivity.this,MainMenuActivity.class);
+            startActivity(intent);
+        });
     }
 
     //möchte man den Stand verändern (Display), ruft man diese Klasse auf.
@@ -591,6 +596,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     }
 
     public void initializeGameOverDialog(){
+
 
     }
 
