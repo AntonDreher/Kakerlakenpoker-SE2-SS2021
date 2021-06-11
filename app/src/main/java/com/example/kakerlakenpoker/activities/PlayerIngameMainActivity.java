@@ -116,12 +116,12 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
         krötenView = (TextView) findViewById(R.id.kakerlakenView);
         spinnenView = findViewById(R.id.fliegeView);
-        fliegenView = findViewById(R.id.ratteView);
-        scorpionView = findViewById(R.id.stinkwaneView);
+        fliegenView = findViewById(R.id.rattenView);
+        scorpionView = findViewById(R.id.stinkwanzeView);
         kakerlakeView = findViewById(R.id.fledermausView);
         ratteView = findViewById(R.id.spinnenVIew);
         fledermausView = findViewById(R.id.skorpionView);
-        stinkwanzeView = findViewById(R.id.kroeteView);
+        stinkwanzeView = findViewById(R.id.krotenView);
 
         displayCardAmounts();
         initializeDialogs();
