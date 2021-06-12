@@ -11,18 +11,16 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+
 plugins {
-    id "org.sonarqube" version "3.0"
+    id "org.sonarqube" version "3.2.0"
 }
 
 sonarqube {
     properties {
+        property "sonar.projectKey", "Kakerlakenpoker-SE2-SS2021"
+        property "sonar.organization", "se2-gruppe1"
         property "sonar.host.url", "https://sonarcloud.io"
-
-        property "sonar.organization", "Kakerlakenpoker-SE2-SS2021"
-        property "sonar.projectKey", "se2-gruppe1"
-
-        property "sonar.coverage.jacoco.xmlReportPaths", "${}/*/build/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
 
