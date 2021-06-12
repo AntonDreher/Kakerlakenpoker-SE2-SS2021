@@ -36,6 +36,7 @@ import com.example.game.player.CollectedDeck;
 import com.example.game.player.PlayerState;
 import com.example.kakerlakenpoker.R;
 import com.example.game.player.Player;
+import com.example.server.network.dto.clienttogameserver.HandOver;
 
 import java.text.CollationElementIterator;
 import java.util.ArrayList;
@@ -433,9 +434,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         });
 
         buttonHandOver.setOnClickListener(view -> {
-            GameClient.getInstance().getGame().handOver();
-            Turn turn;
-            Type selectedType = Type.valueOf(types.getSelectedItem().toString());
+
             Player ene = null;
             for (Player p : GameClient.getInstance().getGame().getPlayers()) {
                 if (p.getId() == Integer.parseInt(spinner.getSelectedItem().toString())){
@@ -444,9 +443,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             }
             Card card = GameClient.getInstance().getGame().getTurn().getSelectedCard();
             assert ene != null;
-            Log.info("selected things", selectedType + " " + card + " " + ene.getId());
-            turn = new Turn(card, selectedType, ene);
-            GameClient.getInstance().getGame().makeTurn(me, turn);
+            Log.info("selected things", selectedCard + " " + card + " " + ene.getId());
+            GameClient.getInstance().getGame().handOver(me, new HandOver(ene,Decision.TRUTH));
 
         });
 

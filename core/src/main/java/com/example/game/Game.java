@@ -6,6 +6,7 @@ import com.example.game.card.Card;
 import com.example.game.card.Type;
 import com.example.game.listener.GameListener;
 import com.example.game.listener.StateListener;
+import com.example.server.network.dto.clienttogameserver.HandOver;
 import com.example.server.network.dto.gameservertoclient.GameUpdate;
 import com.example.game.player.Player;
 import com.example.game.player.PlayerState;
@@ -67,6 +68,7 @@ public class Game {
     public void makeDecision(Player player, Decision decision) {
         if(decision==null)return;
         if (currentState == GameState.AWAITING_DECISION && player.getId()==(turn.getSelectedEnemy().getId())) {
+            currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
             this.decision=decision;
             if ((turn.getSelectedCard().getType() != turn.getSelectedType() && decision == Decision.TRUTH) ||
                     (turn.getSelectedCard().getType() == turn.getSelectedType() && decision == Decision.LIE)) {
@@ -75,6 +77,7 @@ public class Game {
             currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
             if(currentPlayer.getCollectedDeck().hasLost())changeState(GameState.GAME_OVER);
             else changeState(GameState.AWAITING_TURN);
+            resetPlayerStatus();
         } else  Log.info("not permitted to make a decision player: "+player.getId());
         Log.info("the decision is: "+ decision.name());
 
@@ -84,8 +87,15 @@ public class Game {
         changeState(GameState.AWAITING_TURN);
     }
 
-    public void handOver(){
-        changeState(GameState.AWAITING_TURN);
+    public void handOver(Player player, HandOver handOver){
+        if(currentState!=GameState.AWAITING_DECISION || handOver.getDecision()==null||handOver.getEnemy()==null||handOver.getEnemy().getState()==PlayerState.PLAYED)return;
+        currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
+        decision=handOver.getDecision();
+        currentPlayer = player;
+        currentPlayer.getHandDeck().addCard(turn.getSelectedCard());
+        currentPlayer.setState(PlayerState.PLAYED);
+        decision=handOver.getDecision();
+        changeState(GameState.AWAITING_DECISION);
     }
 
     public void reject(Player player) {
