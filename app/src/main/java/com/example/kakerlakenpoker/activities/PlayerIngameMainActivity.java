@@ -437,8 +437,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
             Player ene = null;
             for (Player p : GameClient.getInstance().getGame().getPlayers()) {
-                if (p.getId() == Integer.parseInt(spinner.getSelectedItem().toString())) ;
-                ene = p;
+                if (p.getId() == Integer.parseInt(spinner.getSelectedItem().toString())){
+                    ene = p;
+                };
             }
             Card card = GameClient.getInstance().getGame().getTurn().getSelectedCard();
             assert ene != null;
@@ -468,6 +469,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         Dialog dia = new Dialog(this);
         dia.setContentView(R.layout.game_over_dialoge);
         dia.setCanceledOnTouchOutside(false);
+        Button button = dia.findViewById(R.id.back2menu);
         TextView text = dia.findViewById(R.id.textGameOver);
         int lostPlayer = GameClient.getInstance().getGame().getCurrentPlayer().getId();
         if (me.getId() == lostPlayer) {
@@ -478,6 +480,10 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             text.setText(won);
         }
         dia.show();
+        button.setOnClickListener(view -> {
+            Intent intent = new Intent(PlayerIngameMainActivity.this,MainMenuActivity.class);
+            startActivity(intent);
+        });
     }
 
     //möchte man den Stand verändern (Display), ruft man diese Klasse auf.
@@ -517,15 +523,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         ratteView.setText(String.valueOf(me.getHandDeck().getRatte()));
         fledermausView.setText(String.valueOf(me.getHandDeck().getFledermaus()));
         stinkwanzeView.setText(String.valueOf(me.getHandDeck().getStinkwanze()));
-
-        krötenView.invalidate();
-        spinnenView.invalidate();
-        fliegenView.invalidate();
-        scorpionView.invalidate();
-        kakerlakeView.invalidate();
-        ratteView.invalidate();
-        fledermausView.invalidate();
-        stinkwanzeView.invalidate();
     }
 
     public void checkTurn() {
@@ -589,6 +586,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     }
 
     public void initializeGameOverDialog(){
+
 
     }
 
