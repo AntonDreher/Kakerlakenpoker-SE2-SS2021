@@ -3,7 +3,6 @@ plugins {
     id 'jacoco'
 }
 
-
 android {
     compileSdkVersion 29
 
@@ -27,9 +26,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
 }
-
 
 dependencies {
 //    implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -50,3 +47,4 @@ dependencies {
     // https://mvnrepository.com/artifact/com.esotericsoftware/kryonet
     implementation 'com.esotericsoftware:kryonet:2.22.0-RC1'
 }
+
