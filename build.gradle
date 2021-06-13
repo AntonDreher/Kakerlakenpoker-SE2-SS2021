@@ -31,6 +31,20 @@ allprojects {
         jcenter()
     }
 }
+
+subprojects {
+    apply plugin: 'org.sonarqube'
+    sonarqube {
+        properties {
+            property 'sonar.coverage.jacoco.xmlReportPaths', "${projectDir}/build/reports/jacoco/test/jacocoTestReport.xml"
+        }
+    }
+
+    tasks.withType(Test).configureEach {
+        useJUnitPlatform()
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
