@@ -29,7 +29,7 @@
             android:background="#ffffff"
             android:gravity="center_horizontal"
             android:rotation="0"
-            android:text="6"
+            android:text="0"
             android:textColor="#000"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -69,7 +69,7 @@
             android:background="#ffffff"
             android:gravity="center_horizontal"
             android:rotation="0"
-            android:text="6"
+            android:text="0"
             android:textColor="#000"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -109,7 +109,7 @@
             android:background="#ffffff"
             android:gravity="center_horizontal"
             android:rotation="0"
-            android:text="6"
+            android:text="0"
             android:textColor="#000"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -149,7 +149,7 @@
             android:background="#ffffff"
             android:gravity="center_horizontal"
             android:rotation="0"
-            android:text="6"
+            android:text="0"
             android:textColor="#000"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -189,7 +189,7 @@
             android:background="#ffffff"
             android:gravity="center_horizontal"
             android:rotation="0"
-            android:text="6"
+            android:text="0"
             android:textColor="#000"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -229,7 +229,7 @@
             android:background="#ffffff"
             android:gravity="center_horizontal"
             android:rotation="0"
-            android:text="6"
+            android:text="0"
             android:textColor="#000"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -269,7 +269,7 @@
             android:background="#ffffff"
             android:gravity="center_horizontal"
             android:rotation="0"
-            android:text="6"
+            android:text="0"
             android:textColor="#000"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -310,7 +310,7 @@
             android:background="#ffffff"
             android:gravity="center_horizontal"
             android:rotation="0"
-            android:text="6"
+            android:text="0"
             android:textColor="#000"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -507,8 +507,8 @@
 
     <LinearLayout
         android:id="@+id/Player1"
-        android:layout_width="690dp"
-        android:layout_height="54dp"
+        android:layout_width="696dp"
+        android:layout_height="42dp"
         android:background="@color/colorPrimary"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -549,20 +549,17 @@
 
         <Spinner
             android:id="@+id/spinnerPlayer"
-            android:layout_width="match_parent"
+            android:layout_width="480dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <EditText
-            android:id="@+id/guessText"
-            android:layout_width="332dp"
+        <Spinner
+            android:id="@+id/spinnerTypeOfCard"
+            android:layout_width="480dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="Name der Karte"
-            android:inputType="textPersonName"
-            android:visibility="visible" />
+            android:ellipsize="marquee" />
+
 
         <Button
             android:id="@+id/sendButton"
@@ -588,8 +585,8 @@
 
     <LinearLayout
         android:id="@+id/notificationView"
-        android:layout_width="499dp"
-        android:layout_height="224dp"
+        android:layout_width="680dp"
+        android:layout_height="280dp"
         android:background="@color/colorOrange"
         android:gravity="center"
         android:orientation="vertical"
@@ -610,6 +607,16 @@
             android:textColor="#000000"
             android:textSize="16sp" />
 
+        <Button
+            android:id="@+id/exitButton2"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Back"
+            android:visibility="visible" />
+
+
 
     </LinearLayout>
 
@@ -621,6 +628,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97" />
+
+    <Button
+        android:id="@+id/enemyCollectedCards"
+        android:layout_width="110dp"
+        android:layout_height="34dp"
+        android:text="Gegner"
+        android:background="#7a67ee"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.94"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.97" />
