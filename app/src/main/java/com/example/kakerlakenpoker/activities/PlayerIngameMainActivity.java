@@ -62,8 +62,11 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
     Button sendChallange;
     Button goBack;
+    Button goBack2;
+    Button enemyCollectedCards;
     EditText writeCardText;
     Spinner choosePlayer;
+    Spinner chooseTypesOfCard;
     Spinner types;
     ArrayList<Type> typeList;
     //TextViews für die ausgabe der vorläufigen zahlen oder Nachrichten
@@ -114,20 +117,18 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
         messageText = (TextView) findViewById(R.id.messageText);
 
-        krötenView = (TextView) findViewById(R.id.kakerlakenView);
-        spinnenView = findViewById(R.id.fliegeView);
-        fliegenView = findViewById(R.id.rattenView);
-        scorpionView = findViewById(R.id.stinkwanzeView);
-        kakerlakeView = findViewById(R.id.fledermausView);
-        ratteView = findViewById(R.id.spinnenVIew);
-        fledermausView = findViewById(R.id.skorpionView);
-        stinkwanzeView = findViewById(R.id.krotenView);
+        krötenView = (TextView) findViewById(R.id.krotenView);
+        spinnenView = findViewById(R.id.spinnenVIew);
+        fliegenView = findViewById(R.id.fliegeView);
+        scorpionView = findViewById(R.id.skorpionView);
+        kakerlakeView = findViewById(R.id.kakerlakenView);
+        ratteView = findViewById(R.id.rattenView);
+        fledermausView = findViewById(R.id.fledermausView);
+        stinkwanzeView = findViewById(R.id.stinkwanzeView);
 
-        displayCardAmounts();
+
         initializeDialogs();
         checkTurn();
-
-
 
         //init des popUp Fensters
         messageview = (LinearLayout) findViewById(R.id.notificationView);
@@ -135,10 +136,11 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         messageview.setVisibility(View.INVISIBLE);
         popUp.setVisibility(View.INVISIBLE);
 
-        //init der Buttons und Edit Text
+        //init der Buttons
         sendChallange = (Button) findViewById(R.id.sendButton);
         goBack = (Button) findViewById(R.id.exitButton);
-        writeCardText = (EditText) findViewById(R.id.guessText);
+        goBack2 = (Button) findViewById(R.id.exitButton2);
+        //writeCardText = (EditText) findViewById(R.id.guessText);
 
         //init der KartenLayouts, Spinner(Wahl des Spielers) und der PlayerViews
         dragViewKakerlake = (LinearLayout) findViewById(R.id.dragViewKakerlake);
@@ -150,12 +152,17 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         dragViewSpider = (LinearLayout) findViewById(R.id.dragViewSpider);
         dragViewStink = (LinearLayout) findViewById(R.id.dragViewStink);
 
+        closeDragViewCards();
+
         dropViewPlayer1 = (LinearLayout) findViewById(R.id.Player1);
         choosePlayer = (Spinner) findViewById(R.id.spinnerPlayer);
+        chooseTypesOfCard = (Spinner) findViewById(R.id.spinnerTypeOfCard);
 
-        setUpSpinner();
+        setUpSpinnerForChallengeView();
+
 
         //Hier wird die View touchable
+        dragViewStink.setOnTouchListener(new TouchListener());
         dragViewKakerlake.setOnTouchListener(new TouchListener());
         dragViewBat.setOnTouchListener(new TouchListener());
         dragViewFly.setOnTouchListener(new TouchListener());
@@ -163,13 +170,14 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         dragViewRat.setOnTouchListener(new TouchListener());
         dragViewScorpion.setOnTouchListener(new TouchListener());
         dragViewSpider.setOnTouchListener(new TouchListener());
-        dragViewStink.setOnTouchListener(new TouchListener());
+
 
         //Hier wird die Fläche, wo ein Object hineingezogen wird, aktiviert!
         dropViewPlayer1.setOnDragListener(new DragListener());
 
         //Buttons werden mit funktionen belegt. Back- PopUp Fenster wird geschlossen
         goBack.setOnClickListener((View view) -> setInvisible(popUp));
+        goBack2.setOnClickListener((View view) -> setInvisible(messageview));
         sendChallange.setOnClickListener((View view) -> sendChallengeInputs());
 
         GameClient.getInstance().getGame().setStateListener(new StateListenerImpl());
@@ -179,9 +187,18 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
         //Observer, der bei Änderung des GameState die Activity neu ladet
         stateListen.setValue(GameClient.getInstance().getGame().getCurrentState());
-        stateListen.observe(this, Observer -> {
+        stateListen.observe(this, Observer -> { });
 
+        //Öffnen des Displays für die Ersichtung der gegenerischen Karten (Collected Cards9
+
+        enemyCollectedCards = (Button) findViewById(R.id.enemyCollectedCards);
+        enemyCollectedCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEnemyCollectCards();
+            }
         });
+
 
         //Handling und init für den Cheat
         cheatbox = (CheckBox) findViewById(R.id.checkBox);
@@ -199,6 +216,35 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
     }
 
+
+    public void closeDragViewCards() {
+
+    if(me.getHandDeck().getStinkwanze() == 0){
+        dragViewStink.setVisibility(View.GONE);
+    }
+    if (me.getHandDeck().getSpinne() == 0){
+        dragViewSpider.setVisibility(View.GONE);
+    }
+    if (me.getHandDeck().getKroete() == 0){
+        dragViewFrog.setVisibility(View.GONE);
+    }
+    if (me.getHandDeck().getKakerlake() == 0){
+        dragViewKakerlake.setVisibility(View.GONE);
+    }
+    if (me.getHandDeck().getScorpion() == 0){
+        dragViewScorpion.setVisibility(View.GONE);
+    }
+    if (me.getHandDeck().getRatte() == 0){
+        dragViewRat.setVisibility(View.GONE);
+    }
+    if (me.getHandDeck().getFliege() == 0){
+        dragViewFly.setVisibility(View.GONE);
+    }
+    if (me.getHandDeck().getFledermaus() == 0){
+        dragViewBat.setVisibility(View.GONE);
+    }
+    }
+
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
@@ -213,6 +259,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
                 case DragEvent.ACTION_DRAG_STARTED: {
                     View view = (View) dragEvent.getLocalState();
                     playedcard = String.valueOf(view.getTag());
+                    Toast.makeText(getApplicationContext(), "Anzahl der Karten= " + checkTextInput(playedcard) , Toast.LENGTH_SHORT).show();
                     break;
                 }
 
@@ -279,8 +326,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         messageview.setVisibility(View.VISIBLE);
     }
 
-    //hollt sich alle Namen der anderen Spieler und fügt die Namen in den Spinner!
-    public void setUpSpinner() {
+    //hollt sich alle Namen der anderen Spieler und fügt die Namen in den Spinner! + SpinnerTypes
+    public void setUpSpinnerForChallengeView() {
         for (Player player : GameClient.getInstance().getGame().getPlayers()) {
             if (!(player.getId() == me.getId())) {
                 namesOfPlayer.add(String.valueOf(player.getId()));
@@ -289,16 +336,20 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         }
         ArrayAdapter chooser = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, namesOfPlayer);
         choosePlayer.setAdapter(chooser);
+
+        typeList = new ArrayList<>();
+        typeList.addAll(Arrays.asList(Type.values()));
+        ArrayAdapter typAdapter = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, typeList);
+        chooseTypesOfCard.setAdapter(typAdapter);
     }
 
     /*
     Hier wird ein Spielzug (TURN) gemacht
      */
     public void sendChallengeInputs() {
-        checkEditTextInput();
-        if (check) {
+
             Turn turn;
-            Type selectedType = Type.valueOf(guessText);
+            Type selectedType = Type.valueOf(chooseTypesOfCard.getSelectedItem().toString());
             Player enemy = null;
             for (Player player : GameClient.getInstance().getGame().getPlayers()) {
                 if (player.getId() == Integer.parseInt(choosePlayer.getSelectedItem().toString()))
@@ -313,7 +364,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             GameClient.getInstance().getGame().getCurrentPlayer().getHandDeck().removeCard(selectedCard);
             GameClient.getInstance().getGame().makeTurn(me, turn);
             this.popUp.setVisibility(View.INVISIBLE);
-        }
+
     }
 
     /*
@@ -331,47 +382,27 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     }
 
 
-    public void checkEditTextInput() {
-
-        check = false;
-        String input = writeCardText.getText().toString().toUpperCase();
+    //Ccheck den String und gibt die Anzahl zurück des Types
+    public int checkTextInput(String input) {
 
         switch (input) {
             case "FLEDERMAUS":
-                guessText = input;
-                check = true;
-                break;
+                return me.getHandDeck().getFledermaus();
             case "FLIEGE":
-                guessText = input;
-                check = true;
-                break;
+                return me.getHandDeck().getFliege();
             case "RATTE":
-                guessText = input;
-                check = true;
-                break;
+                return me.getHandDeck().getRatte();
             case "SCORPION":
-                guessText = input;
-                check = true;
-                break;
+                return me.getHandDeck().getScorpion();
             case "KAKERLAKE":
-                guessText = input;
-                check = true;
-                break;
+                return me.getHandDeck().getKakerlake();
             case "KROETE":
-                guessText = input;
-                check = true;
-                break;
+                return me.getHandDeck().getKroete();
             case "SPINNE":
-                guessText = input;
-                check = true;
-                break;
+                return me.getHandDeck().getSpinne();
             case "STINKWANZE":
-                guessText = input;
-                check = true;
-                break;
-            default:
-                writeCardText.setError("Falscher Type von Karte! Bitte gib eine richtige ein!");
-                break;
+                return me.getHandDeck().getStinkwanze();
+            default: return 0;
         }
 
     }
@@ -488,14 +519,32 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
     //möchte man den Stand verändern (Display), ruft man diese Klasse auf.
     public void updateTheCollectedCards() {
-        krötenView.setText(me.getCollectedDeck().getKroete());
-        spinnenView.setText(me.getCollectedDeck().getSpinne());
-        fliegenView.setText(me.getCollectedDeck().getFliege());
-        scorpionView.setText(me.getCollectedDeck().getScorpion());
-        kakerlakeView.setText(me.getCollectedDeck().getKakerlake());
-        ratteView.setText(me.getCollectedDeck().getRatte());
-        stinkwanzeView.setText(me.getCollectedDeck().getStinkwanze());
-        fledermausView.setText(me.getCollectedDeck().getFledermaus());
+
+        for (Player p : GameClient.getInstance().getGame().getPlayers()) {
+
+            if (p == me) {
+                p.getCollectedDeck().countAllCards();
+                krötenView.setText(String.valueOf(p.getCollectedDeck().getKroete()));
+                spinnenView.setText(String.valueOf(p.getCollectedDeck().getSpinne()));
+                fliegenView.setText(String.valueOf(p.getCollectedDeck().getFliege()));
+                scorpionView.setText(String.valueOf(p.getCollectedDeck().getScorpion()));
+                kakerlakeView.setText(String.valueOf(p.getCollectedDeck().getKakerlake()));
+                ratteView.setText(String.valueOf(p.getCollectedDeck().getRatte()));
+                fledermausView.setText(String.valueOf(p.getCollectedDeck().getFledermaus()));
+                stinkwanzeView.setText(String.valueOf(p.getCollectedDeck().getStinkwanze()));
+            }
+
+            krötenView.invalidate();
+            spinnenView.invalidate();
+            fliegenView.invalidate();
+            scorpionView.invalidate();
+            kakerlakeView.invalidate();
+            ratteView.invalidate();
+            fledermausView.invalidate();
+            stinkwanzeView.invalidate();
+
+        }
+
     }
 
     //zeigt die gesammelten Karten der Gegner
@@ -503,11 +552,19 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         String output = "";
 
         for (Player all : GameClient.getInstance().getGame().getPlayers()) {
-
             //hier soll die ausgaben meiner karten verhindert werden.
             if (all == me) {
-            } else {
-                output += all.getCollectedDeck().toString() + ("\n");
+            }
+            else {
+                output += "Player " + all.getId() + ("\n") +
+                        "Kakerlake= " + all.getCollectedDeck().getKakerlake() + "| " +
+                        "Fledermaus= " + all.getCollectedDeck().getFledermaus() + "| " +
+                        "Fliege= " + all.getCollectedDeck().getFledermaus() + "| " +
+                        "Ratte= " + all.getCollectedDeck().getRatte() + "| " +
+                        "Scorpion= " + all.getCollectedDeck().getScorpion() + "| " +
+                        "Kroete= " + all.getCollectedDeck().getKroete() + "| " +
+                        "Spinne= " + all.getCollectedDeck().getSpinne() + "| " +
+                        "Stinkwanze= " + all.getCollectedDeck().getStinkwanze() + ("\n");
             }
         }
         messageText.setText(output);
@@ -596,6 +653,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         @Override
         public void inform() {
             runOnUiThread(new Runnable() {
+
+
                 @Override
                 public void run() {
                     if (GameClient.getInstance().getGame().checkRoundOver()) {
@@ -606,7 +665,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
                     //diaWait.dismiss();
                     if(alertDialog !=null)alertDialog.hide();
 
-                    displayCardAmounts();
+
+                    closeDragViewCards();
+                    updateTheCollectedCards();
                     checkTurn();
 
                 }
@@ -668,19 +729,10 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     //tauscht die Collected Karten unter den Spielern
     public void ChangePlayersCollectedDecks(){
 
-        List changer = new ArrayList();
-
         Toast.makeText(getApplicationContext(), "Cheat wird ausgeführt!!!", Toast.LENGTH_SHORT).show();
 
-        for (Player player : GameClient.getInstance().getGame().getPlayers()) {
-            changer.add(player.getCollectedDeck().getDeck());
-        }
-
-        Collections.reverse(changer);
-
-        for (Player player : GameClient.getInstance().getGame().getPlayers()) {
-            player.getCollectedDeck().setDeck(changer);
-            changer.remove(0);
+        if(me.getCollectedDeck().getKakerlake() != 0){
+            me.getCollectedDeck().setKakerlake(me.getCollectedDeck().getKakerlake() -1);
         }
 
         erlaubnis = false;
