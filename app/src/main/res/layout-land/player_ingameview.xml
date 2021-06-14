@@ -509,7 +509,7 @@
         android:id="@+id/Player1"
         android:layout_width="696dp"
         android:layout_height="42dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorOrange"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -563,6 +563,9 @@
 
         <Button
             android:id="@+id/sendButton"
+            android:background="@drawable/roundstylebutton"
+            android:backgroundTint="@color/btn_color_white"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="80dp"
             android:layout_height="10dp"
             android:layout_gravity="center"
@@ -573,6 +576,11 @@
 
         <Button
             android:id="@+id/exitButton"
+            android:background="@drawable/roundstylebutton"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:backgroundTint="@color/btn_color_white"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="80dp"
             android:layout_height="10dp"
             android:layout_gravity="center"
@@ -609,6 +617,9 @@
 
         <Button
             android:id="@+id/exitButton2"
+            android:background="@drawable/roundstylebutton"
+            android:backgroundTint="@color/btn_color_white"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -637,7 +648,9 @@
         android:layout_width="110dp"
         android:layout_height="34dp"
         android:text="Gegner"
-        android:background="#7a67ee"
+        android:background="@drawable/roundstylebutton"
+        android:backgroundTint="@color/btn_color_white"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.94"

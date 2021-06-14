@@ -10,6 +10,7 @@ import com.example.server.network.kryo.RegisterHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MainServer {
     private final Server server;
@@ -47,4 +48,16 @@ public class MainServer {
         }
         return null;
     }
+
+    public void removeLobby(Lobby lobby){
+        for (Iterator<Lobby> iterator = allLobbies.iterator(); iterator.hasNext();) {
+            Lobby lobbyToRemove = iterator.next();
+            Log.info(lobbyToRemove.getHostId()+"   /   "+lobby.getHostId());
+            if(lobbyToRemove.getHostId().equals(String.valueOf(lobby.getHostId()))) {
+                iterator.remove();
+            }
+        }
+    }
+
+
 }

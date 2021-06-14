@@ -51,6 +51,7 @@ public class ServerListener extends Listener {
 
     @Override
     public void received(Connection connection, Object object) {
+        Log.info(String.valueOf(server.getAllLobbies().size()));
         Log.info("ReceivedObject "+ object.getClass());
         if(object instanceof GetOpenLobbies){
             connection.sendTCP(new SendOpenLobbies(server.getAllLobbies()));
@@ -64,7 +65,10 @@ public class ServerListener extends Listener {
             ExitLobbyHandler(object, connection);
         }else if (object instanceof GameServerReadyToConnect){
             Lobby lobby = findLobbyByHostId(connection.getRemoteAddressTCP().toString());
+            assert lobby != null;
             sendMessageToAllClientsInLobby(lobby, new ClientsToJoinGameServer(connection.getRemoteAddressTCP().getAddress().toString()));
+
+
         } else if (object instanceof ClientName){
             userNames.put(connection, ((ClientName) object).getClientsName());
         } else if(object instanceof MakeTurn||object instanceof MakeDecision||object instanceof GameOver)  {
@@ -129,6 +133,7 @@ public class ServerListener extends Listener {
 
                 if(openLobby.getPlayersIpList().size() == GameConstants.NEEDED_PLAYERS_TO_PLAY){
                     createGameData(openLobby);
+                    server.removeLobby(openLobby);
                     //sendMessageToHostFromLobby(openLobby, new StartUpGameServer());
                 }
                 break;
