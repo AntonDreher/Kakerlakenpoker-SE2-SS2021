@@ -51,7 +51,7 @@ public class Game {
         this.currentState = state;
         if(stateListener!=null)stateListener.stateChanged();
         Log.info("GameState changed to " + state.name() + " and current players name is: " + currentPlayer.getId());
-        if(turn != null) Log.info("Current turn contains: Card: "+turn.getSelectedCard().getType()+", Type: "+ turn.getSelectedType()+", enemy: "+turn.getSelectedEnemy().getId());
+        if(turn != null) Log.info("Current turn contains: Card: "+turn.getSelectedCard().getType()+", Type: "+ turn.getSelectedType()+", enemy: "+turn.getSelectedEnemy().getId()+" name of currentplayer:" +currentPlayer.getName());
 
     }
 
@@ -88,14 +88,24 @@ public class Game {
     }
 
     public void handOver(Player player, HandOver handOver){
-        if(currentState!=GameState.AWAITING_DECISION || handOver.getDecision()==null||handOver.getEnemy()==null||handOver.getEnemy().getState()==PlayerState.PLAYED)return;
+        if(currentState!=GameState.AWAITING_DECISION || handOver.getDecision()==null||handOver.getEnemy()==null||handOver.getEnemy().getState()==PlayerState.PLAYED||getPlayer(handOver.getEnemy())==null)return;
         currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
         decision=handOver.getDecision();
         currentPlayer = player;
         currentPlayer.getHandDeck().addCard(turn.getSelectedCard());
         currentPlayer.setState(PlayerState.PLAYED);
         decision=handOver.getDecision();
+        turn.setSelectedEnemy(getPlayer(handOver.getEnemy()));
         changeState(GameState.AWAITING_DECISION);
+    }
+
+    public Player getPlayer(Player player){
+        for(Player player1: players){
+            Log.info(player.getId()+" / "+player1.getId());
+            if(player.getId()==player1.getId())return player1;
+        }
+
+        return null;
     }
 
     public void reject(Player player) {

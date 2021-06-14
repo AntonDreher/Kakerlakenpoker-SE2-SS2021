@@ -21,6 +21,7 @@ import com.example.server.dto.Lobby;
 import com.example.server.dto.clienttomainserver.OpenLobby;
 import com.example.server.dto.clienttomainserver.GetOpenLobbies;
 import com.example.server.dto.mainservertoclient.SendOpenLobbies;
+import com.example.server.network.dto.clienttogameserver.HandOver;
 import com.example.server.network.dto.clienttogameserver.MakeDecision;
 import com.example.server.network.dto.clienttogameserver.MakeTurn;
 import com.example.server.network.dto.gameservertoclient.GameOver;
@@ -71,7 +72,7 @@ public class ServerListener extends Listener {
 
         } else if (object instanceof ClientName){
             userNames.put(connection, ((ClientName) object).getClientsName());
-        } else if(object instanceof MakeTurn||object instanceof MakeDecision||object instanceof GameOver)  {
+        } else if(object instanceof MakeTurn||object instanceof MakeDecision|| object instanceof HandOver ||object instanceof GameOver)  {
 
             ///
             GameData gameData = null;
@@ -94,8 +95,10 @@ public class ServerListener extends Listener {
                 gameData.getGame().makeTurn(currentPlayer, ((MakeTurn) object).getTurn());
             } else if (object instanceof MakeDecision) {
                 gameData.getGame().makeDecision(currentPlayer, ((MakeDecision) object).getDecision());
-            } else {
+            } else if (object instanceof GameOver){
                 gameData.getGame().gameOver(currentPlayer);
+            } else {
+                gameData.getGame().handOver(currentPlayer, (HandOver) object);
             }
         }
     }
@@ -147,7 +150,7 @@ public class ServerListener extends Listener {
         ArrayList<Player> players = new ArrayList<>();
         Set<String> keySet = lobby.getPlayersIpList().keySet();
         for(Map.Entry<String , String> set: lobby.getPlayersIpList().entrySet()){
-            players.add(new Player(server.getConnectionFromIpAddress(set.getKey().toString()).getID(),null, null));
+            players.add(new Player(server.getConnectionFromIpAddress(set.getKey().toString()).getID(),userNames.get(server.getConnectionFromIpAddress(set.getKey())),null, null));
         }
         BuildGame buildGame = new BuildGame();
         buildGame.setPlayers(players);

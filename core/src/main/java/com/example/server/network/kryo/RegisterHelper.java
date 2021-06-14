@@ -18,6 +18,7 @@ import com.example.server.dto.mainservertoclient.ClientsToJoinGameServer;
 import com.example.server.dto.mainservertoclient.DestroyLobby;
 import com.example.server.dto.clienttomainserver.ExitLobby;
 import com.example.server.dto.mainservertoclient.ExitLobbyResponse;
+import com.example.server.network.dto.clienttogameserver.HandOver;
 import com.example.server.network.dto.gameservertoclient.GameOver;
 import com.example.server.network.dto.gameservertoclient.GameUpdate;
 import com.example.server.network.dto.gameservertoclient.InitGame;
@@ -54,6 +55,7 @@ public class RegisterHelper {
         kryo.register(GetOpenLobbies.class);
         kryo.register(OpenLobby.class);
         kryo.register(GameDeck.class);
+        kryo.register(HandOver.class);
         kryo.register(GameData.class);
         kryo.register(SendOpenLobbies.class);
         kryo.register(PlayerReady.class);

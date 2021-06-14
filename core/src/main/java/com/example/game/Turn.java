@@ -18,6 +18,10 @@ public class Turn {
 
     public Turn(){}
 
+    public void setSelectedEnemy(Player selectedEnemy) {
+        this.selectedEnemy = selectedEnemy;
+    }
+
     public Card getSelectedCard() {
         return selectedCard;
     }

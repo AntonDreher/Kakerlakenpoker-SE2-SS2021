@@ -24,7 +24,7 @@ public class BuildGame {
      * @param name Name, der in der Lobby eingetragen wurde
      */
     public void addServerPlayer(int name) {
-        players.add(new Player(name, new HandDeck(), new CollectedDeck()));
+        players.add(new Player(name,null, new HandDeck(), new CollectedDeck()));
     }
 
     /**
