@@ -39,6 +39,7 @@
         android:id="@+id/lie"
         android:layout_width="100dp"
         android:textSize="18sp"
+        android:layout_marginTop="5sp"
         android:layout_height="wrap_content"
         android:background="@drawable/roundstylebutton"
         android:backgroundTint="@color/btn_color_white"
@@ -63,7 +64,7 @@
     <Button
         android:id="@+id/handOverButton"
         android:layout_marginBottom="15dp"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
         android:textSize="18sp"

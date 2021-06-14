@@ -593,6 +593,7 @@
 
     <LinearLayout
         android:id="@+id/notificationView"
+        android:layout_marginTop="5sp"
         android:layout_width="680dp"
         android:layout_height="280dp"
         android:background="@color/colorOrange"
