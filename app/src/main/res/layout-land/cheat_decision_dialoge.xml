@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#ff8800"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/cheatDecisionInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+       android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:text="@string/calculate_the_right_number"
+        app:layout_constraintBottom_toTopOf="@id/cheatDecisionTimer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cheatDecisionTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/decisionCheatButtonSubmit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cheatDecisionInfo" />
+
+    <TextView
+        android:id="@+id/cheatDecisionToCalc"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="TextView"
+        app:layout_constraintEnd_toStartOf="@id/cheatDecisionInput"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cheatDecisionTimer" />
+
+    <Button
+        android:id="@+id/decisionCheatButtonSubmit"
+        android:layout_width="wrap_content"
+        android:textSize="18sp"
+        android:background="@drawable/roundstylebutton"
+        android:backgroundTint="@color/btn_color_white"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:text="Check"
+       app:layout_constraintStart_toEndOf="@id/cheatDecisionInput"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cheatDecisionTimer" />
+
+    <EditText
+        android:id="@+id/cheatDecisionInput"
+        android:layout_width="100dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="Input"
+        android:textColor="@color/colorPrimaryDark"
+
+        android:ems="10"
+        android:inputType="number"
+        android:text="1234"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/decisionCheatButtonSubmit"
+        app:layout_constraintStart_toEndOf="@+id/cheatDecisionToCalc"
+        app:layout_constraintTop_toBottomOf="@+id/cheatDecisionTimer" />
+</androidx.constraintlayout.widget.ConstraintLayout>
