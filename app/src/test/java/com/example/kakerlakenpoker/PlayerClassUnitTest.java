@@ -18,7 +18,7 @@ public class PlayerClassUnitTest {
     public void setUp(){
        this.handDeck = new HandDeck();
         this.collectedDeck = new CollectedDeck();
-        this.player = new Player(1,this.handDeck,this.collectedDeck);
+        this.player = new Player(1,null,this.handDeck,this.collectedDeck);
     }
     @After
     public void tearDown(){

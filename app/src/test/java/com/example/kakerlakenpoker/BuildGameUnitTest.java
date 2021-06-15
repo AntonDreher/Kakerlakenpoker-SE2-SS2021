@@ -82,7 +82,7 @@ public class BuildGameUnitTest {
     }
     @Test
     public void testsetPlayer(){
-        list.add(new Player(1,new HandDeck(),new CollectedDeck()));
+        list.add(new Player(1,null,new HandDeck(),new CollectedDeck()));
         buildGame.setPlayers(list);
         Assert.assertEquals(1,buildGame.getPlayers().size());
     }

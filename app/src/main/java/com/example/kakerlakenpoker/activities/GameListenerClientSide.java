@@ -2,6 +2,7 @@ package com.example.kakerlakenpoker.activities;
 
 import com.example.game.GameState;
 import com.example.game.listener.GameListener;
+import com.example.server.network.dto.clienttogameserver.HandOver;
 import com.example.server.network.dto.gameservertoclient.GameOver;
 import com.example.server.network.dto.gameservertoclient.GameUpdate;
 import com.example.server.network.dto.clienttogameserver.MakeDecision;
@@ -21,5 +22,7 @@ public class GameListenerClientSide implements GameListener {
         else if(previousState==GameState.AWAITING_DECISION && gameUpdate.getState()==GameState.AWAITING_TURN)
             gameClient.getClient().sendMessage(new MakeDecision(gameUpdate.getDecision()));
         else if(gameUpdate.getState() ==GameState.GAME_OVER)gameClient.getClient().sendMessage(new MakeDecision(gameUpdate.getDecision()));
+        else if(previousState==GameState.AWAITING_DECISION && gameUpdate.getState()==GameState.AWAITING_DECISION&&gameUpdate.getTurn()!=null)
+        gameClient.getClient().sendMessage(new HandOver(gameUpdate.getTurn().getSelectedEnemy(),gameUpdate.getDecision()));
     }
 }

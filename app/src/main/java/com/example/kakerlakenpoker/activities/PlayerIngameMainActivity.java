@@ -448,17 +448,17 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         ArrayAdapter adapter = new ArrayAdapter(PlayerIngameMainActivity.this, android.R.layout.simple_spinner_dropdown_item, list);
         spinner.setAdapter(adapter);
         diaDecision.show();
-        myToast.setDuration(Toast.LENGTH_LONG);
+        myToast.setDuration(Toast.LENGTH_SHORT);
 
         buttonTruth.setOnClickListener(view -> {
-            Toast toast = Toast.makeText(this, "Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said TRUTH", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, "Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said TRUTH", Toast.LENGTH_SHORT);
             toast.show();
             decission(Decision.TRUTH);
             diaDecision.dismiss();
         });
 
         buttonLie.setOnClickListener(view -> {
-            Toast toast = Toast.makeText(this, "Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said LIE", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, "Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said LIE", Toast.LENGTH_SHORT);
             toast.show();
             decission(Decision.LIE);
             diaDecision.dismiss();
@@ -483,6 +483,10 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         String myText = "Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getId() + " says " + GameClient.getInstance().getGame().getTurn().getSelectedType().toString();
         text.setText(myText);
     }
+
+
+
+
 
     /*
     Wird geöffnet, wenn man nicht an der Reihe ist
@@ -584,12 +588,12 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
     public void checkTurn() {
         Log.info("The turn is checked here");
-        Toast toast = Toast.makeText(this, "!!!", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(this, "!!!", Toast.LENGTH_SHORT);
 
 
         if(GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_TURN){
             if(me.getId()==GameClient.getInstance().getGame().getCurrentPlayer().getId()){
-               toast = Toast.makeText(this, "Your Turn!", Toast.LENGTH_LONG);
+               toast = Toast.makeText(this, "Your Turn!", Toast.LENGTH_SHORT);
             } else {
                 showDialogeWait();
                 toast = Toast.makeText(this, "Player is making a turn!", Toast.LENGTH_LONG);
@@ -599,16 +603,16 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
                 toast = Toast.makeText(this, "Waiting for a decision!", Toast.LENGTH_LONG);
                 showDialogeWait();
             } else if(me.getId()==GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId()){
-                toast = Toast.makeText(this, "Make a decision!", Toast.LENGTH_LONG);
+                toast = Toast.makeText(this, "Make a decision!", Toast.LENGTH_SHORT);
                 showDialogeChallenge();
             }
         } else if (GameClient.getInstance().getGame().getCurrentState() == GameState.GAME_OVER) {
             Log.info("Game ist over!");
-            toast = Toast.makeText(this, "Game is over!", Toast.LENGTH_LONG);
+            toast = Toast.makeText(this, "Game is over!", Toast.LENGTH_SHORT);
             showDialogeGameOver();
 
 
-        } else  toast = Toast.makeText(this, "unclear state!", Toast.LENGTH_LONG);
+        } else  toast = Toast.makeText(this, "unclear state!", Toast.LENGTH_SHORT);
 
         toast.show();
 

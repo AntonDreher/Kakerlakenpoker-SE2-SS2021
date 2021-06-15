@@ -6,6 +6,7 @@ package com.example.game.player;
  */
 public class Player {
     private PlayerState state;
+    private String name;
     private int id;
     private HandDeck handDeck;
     private CollectedDeck collectedDeck;
@@ -16,8 +17,9 @@ public class Player {
     public Player(){
 
     }
-    public Player(int id, HandDeck handDeck, CollectedDeck collectedDeck) {
+    public Player(int id,String name, HandDeck handDeck, CollectedDeck collectedDeck) {
         this.state = PlayerState.READY;
+        this.name = name;
         this.id = id;
         this.handDeck = handDeck;
         this.collectedDeck = collectedDeck;
@@ -73,6 +75,10 @@ public class Player {
 
     public PlayerState getState() {
         return state;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setState(PlayerState state) {
