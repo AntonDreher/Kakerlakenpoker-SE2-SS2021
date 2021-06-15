@@ -2,8 +2,6 @@ package com.example.server;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
-import com.esotericsoftware.minlog.Log;
-
 import com.example.server.dto.Lobby;
 import com.example.server.network.kryo.RegisterHelper;
 
@@ -52,7 +50,6 @@ public class MainServer {
     public void removeLobby(Lobby lobby){
         for (Iterator<Lobby> iterator = allLobbies.iterator(); iterator.hasNext();) {
             Lobby lobbyToRemove = iterator.next();
-            Log.info(lobbyToRemove.getHostId()+"   /   "+lobby.getHostId());
             if(lobbyToRemove.getHostId().equals(String.valueOf(lobby.getHostId()))) {
                 iterator.remove();
             }

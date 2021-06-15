@@ -176,7 +176,6 @@ public abstract class CardDeck {
                 default: break;
             }
         }
-        Log.info(fledermaus+" "+spinne+" "+scorpion+" "+kakerlake+" "+stinkwanze+" "+kroete+" "+fliege+" "+ratte+" ");
     }
     public List<Type> showAllCards(){
         List<Type> list = new ArrayList();

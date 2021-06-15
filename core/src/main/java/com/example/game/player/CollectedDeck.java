@@ -7,7 +7,7 @@ import com.example.game.card.CardDeck;
  */
 public class CollectedDeck extends CardDeck {
 
-    /**
+    /**f
      * Die Methode überprüft die abgelegten Karten auf 4 gleiche Karten des selben Typs oder ob jeder Typ einmal vorkommt.
      */
 
