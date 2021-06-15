@@ -11,6 +11,8 @@ import com.example.server.network.game.GameData;
 
 import java.net.InetSocketAddress;
 
+import jdk.internal.jline.internal.Log;
+
 public class GameListenerServerSide implements GameListener {
     private MainServer server;
     private GameData gameData;
@@ -28,7 +30,8 @@ public class GameListenerServerSide implements GameListener {
             sendToPlayers(new GameOver(gameData
                     .getGame().getCurrentPlayer()));
 
-        } else sendToPlayers(gameUpdate);
+        } else {
+            sendToPlayers(gameUpdate);}
     }
 
     public void sendToPlayers(BaseMessage message) {

@@ -59,10 +59,11 @@ public class Game {
         if(turn==null||turn.getSelectedCard()==null||turn.getSelectedType()==null||turn.getSelectedEnemy()==null)return;
         if (currentState == GameState.AWAITING_TURN && player.getId()==currentPlayer.getId()) {
             this.turn = turn;
+            currentPlayer.setState(PlayerState.PLAYED);
             changeState(GameState.AWAITING_DECISION);
 
-            currentPlayer.setState(PlayerState.PLAYED);
-        } else  Log.info("not permitted to make a turn player: "+currentPlayer.getId());
+
+        }
     }
 
     public void makeDecision(Player player, Decision decision) {
@@ -72,14 +73,15 @@ public class Game {
             this.decision=decision;
             if ((turn.getSelectedCard().getType() != turn.getSelectedType() && decision == Decision.TRUTH) ||
                     (turn.getSelectedCard().getType() == turn.getSelectedType() && decision == Decision.LIE)) {
-                currentPlayer = turn.getSelectedEnemy();
+                currentPlayer = getPlayer(turn.getSelectedEnemy());
             }
             currentPlayer.getCollectedDeck().addCard(turn.getSelectedCard());
             if(currentPlayer.getCollectedDeck().hasLost())changeState(GameState.GAME_OVER);
-            else changeState(GameState.AWAITING_TURN);
-            resetPlayerStatus();
+            else {
+                resetPlayerStatus();
+                changeState(GameState.AWAITING_TURN);
+            }
         } else  Log.info("not permitted to make a decision player: "+player.getId());
-        Log.info("the decision is: "+ decision.name());
 
     }
 
@@ -101,7 +103,6 @@ public class Game {
 
     public Player getPlayer(Player player){
         for(Player player1: players){
-            Log.info(player.getId()+" / "+player1.getId());
             if(player.getId()==player1.getId())return player1;
         }
 

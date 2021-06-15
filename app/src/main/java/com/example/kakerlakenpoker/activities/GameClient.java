@@ -80,7 +80,6 @@ public class GameClient {
 
     public void setOpenLobbies(ArrayList<Lobby> openLobbies) {
         this.openLobbies = openLobbies;
-        Log.info("That the size of the lobbies: "+openLobbies.size());
         if(lobbyAdapter!=null)
         this.lobbyAdapter.notifyAdapter();
     }

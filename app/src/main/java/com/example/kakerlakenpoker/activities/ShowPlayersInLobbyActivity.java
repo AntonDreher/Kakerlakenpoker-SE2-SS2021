@@ -25,7 +25,6 @@ public class ShowPlayersInLobbyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.info("ShowPlayersInLobby started");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_players_in_lobby);
         exitLobbyBtn = findViewById(R.id.exitLobbyBtn);
