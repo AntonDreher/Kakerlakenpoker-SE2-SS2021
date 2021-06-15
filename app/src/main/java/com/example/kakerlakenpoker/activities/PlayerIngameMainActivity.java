@@ -10,6 +10,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +28,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.esotericsoftware.minlog.Log;
 import com.example.game.Decision;
+import com.example.game.DecisionCheat;
 import com.example.game.GameState;
 import com.example.game.Turn;
 import com.example.game.card.Card;
@@ -88,6 +90,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     Dialog diaDecision;
     private AlertDialog alertDialog;
     private TextView waitingDialogTextView;
+    boolean decisionCheat = false;
 
     List<String> namesOfPlayer = new ArrayList<String>();
     Boolean check;
@@ -438,6 +441,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         Button buttonLie = diaDecision.findViewById(R.id.lie);
         Button buttonHandOver = diaDecision.findViewById(R.id.handOverButton);
         Spinner spinner = view1.findViewById(R.id.handOver);
+        Button buttonCheat = diaDecision.findViewById(R.id.cheatDecisionButton);
         ArrayList<String> list = new ArrayList<>();
         for (Player player1 : GameClient.getInstance().getGame().getPlayers()) {
             if (!(player1.getId() == me.getId()) && player1.getState() != PlayerState.PLAYED) {
@@ -476,6 +480,60 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             assert ene != null;
             Log.info("selected things", selectedCard + " " + card + " " + ene.getId());
             GameClient.getInstance().getGame().handOver(me, new HandOver(ene,Decision.TRUTH));
+
+        });
+
+        buttonCheat.setOnClickListener(view -> {
+            if(decisionCheat){
+                Toast toast = Toast.makeText(this,"You have already cheated!",Toast.LENGTH_SHORT);
+                toast.show();
+            }else {
+                Dialog cheatDia = new Dialog(this);
+                cheatDia.setContentView(R.layout.cheat_decision_dialoge);
+                cheatDia.setCanceledOnTouchOutside(true);
+                DecisionCheat cheat = new DecisionCheat();
+                cheat.createCalc();
+                TextView timer = cheatDia.findViewById(R.id.cheatDecisionTimer);
+
+                TextView toCalc = cheatDia.findViewById(R.id.cheatDecisionToCalc);
+                EditText editText = cheatDia.findViewById(R.id.cheatDecisionInput);
+                int first = cheat.getFirst();
+                int sec = cheat.getSecond();
+                String calc = Integer.toString(first)  +" + " + Integer.toString(sec);
+                toCalc.setText(calc);
+                decisionCheat = true;
+                cheatDia.show();
+
+                new CountDownTimer(10000,1000){
+                    int counter = 10;
+                    @Override
+                    public void onTick(long l) {
+                        timer.setText(String.valueOf(counter));
+                        counter--;
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        Toast toast = Toast.makeText(cheatDia.getContext(),"To slow!",Toast.LENGTH_SHORT);
+                        toast.show();
+                        cheatDia.dismiss();
+                    }
+                }.start();
+
+                Button checkButton = cheatDia.findViewById(R.id.decisionCheatButtonSubmit);
+                checkButton.setOnClickListener(view2 -> {
+                    int playerCalc = Integer.parseInt(editText.getText().toString());
+                    if(cheat.checkCalc(playerCalc)){
+                        Toast toast = Toast.makeText(this,"Right answer! Player: " + player + " played: " + selectedCard,Toast.LENGTH_LONG);
+                        toast.show();
+                        cheatDia.dismiss();
+                    }else{
+                        Toast toast = Toast.makeText(this,"!!!Wrong answer!!!",Toast.LENGTH_SHORT);
+                        toast.show();
+                        cheatDia.dismiss();
+                    }
+                });
+            }
 
         });
 

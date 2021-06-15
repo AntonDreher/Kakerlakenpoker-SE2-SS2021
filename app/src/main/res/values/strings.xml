@@ -111,4 +111,6 @@
     <string name="hand_over">Hand Over</string>
     <string name="back_to_menu">Back to menu</string>
     <string name="you_have_to_decide"><u>You have to decide!</u></string>
+    <string name="textview">TextView</string>
+    <string name="calculate_the_right_number">Calculate the right number</string>
 </resources>
