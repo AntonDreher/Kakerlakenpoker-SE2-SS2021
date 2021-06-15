@@ -356,7 +356,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
                     enemy = player;
             }
             assert enemy != null;
-          
+
 
             Card selectedCard = me.getHandDeck().findCard(playedcard);
             Log.info("selected things", selectedType + " " + selectedCard + " " + enemy.getId());

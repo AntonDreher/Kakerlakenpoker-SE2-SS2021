@@ -11,7 +11,6 @@ import com.example.server.network.game.GameData;
 
 import java.net.InetSocketAddress;
 
-import jdk.internal.jline.internal.Log;
 
 public class GameListenerServerSide implements GameListener {
     private MainServer server;
