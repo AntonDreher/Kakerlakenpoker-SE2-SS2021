@@ -6,6 +6,6 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({BuildGameUnitTest.class, CardClassUnitTest.class, CardDeckUnitTest.class, CollectedDeckUnitTest.class,
-        GameDeckUnitTest.class, HandDeckUnitTest.class, PlayerClassUnitTest.class})
+        GameDeckUnitTest.class, HandDeckUnitTest.class, PlayerClassUnitTest.class, DecisionCheatUnitTest.class})
 public final class AllUnitTests {
 }
