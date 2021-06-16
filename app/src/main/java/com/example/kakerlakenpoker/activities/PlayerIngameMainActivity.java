@@ -427,6 +427,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         for (Player p : GameClient.getInstance().getGame().getPlayers()) {
             Log.info("This is my id", String.valueOf(GameClient.getInstance().getClient().getClient().getID()));
             if (p.getId() == GameClient.getInstance().getClient().getClient().getID()) {
+                for(Card card: p.getHandDeck().getDeck()){
+                    Log.info("Card: ",card.getType().toString());
+                }
                 return p;
             }
         }

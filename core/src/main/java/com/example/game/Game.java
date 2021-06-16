@@ -57,8 +57,9 @@ public class Game {
 
     public void makeTurn(Player player, Turn turn) {
         Log.info("making a turn");
-        if(turn==null||turn.getSelectedCard()==null||turn.getSelectedType()==null||turn.getSelectedEnemy()==null)return;
-        if (currentState == GameState.AWAITING_TURN && player.getId()==currentPlayer.getId() && currentPlayer.getHandDeck().findCard(turn.getSelectedType().toString())!=null) {
+        if(turn==null||turn.getSelectedCard()==null||turn.getSelectedType()==null||turn.getSelectedEnemy()==null||currentPlayer.getHandDeck().findCard(turn.getSelectedType().toString())==null)return;
+        if (currentState == GameState.AWAITING_TURN && player.getId()==currentPlayer.getId()) {
+            currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
             this.turn = turn;
             currentPlayer.setState(PlayerState.PLAYED);
             changeState(GameState.AWAITING_DECISION);
@@ -70,7 +71,6 @@ public class Game {
     public void makeDecision(Player player, Decision decision) {
         if(decision==null)return;
         if (currentState == GameState.AWAITING_DECISION && player.getId()==(turn.getSelectedEnemy().getId())) {
-            currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
             this.decision=decision;
             if ((turn.getSelectedCard().getType() != turn.getSelectedType() && decision == Decision.TRUTH) ||
                     (turn.getSelectedCard().getType() == turn.getSelectedType() && decision == Decision.LIE)) {
