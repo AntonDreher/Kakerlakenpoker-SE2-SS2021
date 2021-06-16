@@ -101,7 +101,7 @@ public abstract class CardDeck {
      */
 
     public void removeCard(Card card){
-        deck.remove(card);
+        deck.remove(findCard(card.getType().toString()));
     }
 
     /**

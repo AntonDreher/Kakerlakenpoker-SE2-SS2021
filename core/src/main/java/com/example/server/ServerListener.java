@@ -147,8 +147,14 @@ public class ServerListener extends Listener {
         GameData gameData;
         ArrayList<Player> players = new ArrayList<>();
         Set<String> keySet = lobby.getPlayersIpList().keySet();
+        int counterDuplicatedNames = 0;
         for(Map.Entry<String , String> set: lobby.getPlayersIpList().entrySet()){
-            players.add(new Player(server.getConnectionFromIpAddress(set.getKey().toString()).getID(),userNames.get(server.getConnectionFromIpAddress(set.getKey())),null, null));
+            boolean playersNameExists = false;
+            for(Player checkNamePlayer: players){
+                if(checkNamePlayer.getName().equals(userNames.get(server.getConnectionFromIpAddress(set.getKey()))))playersNameExists=true;
+            }
+            if(!playersNameExists) players.add(new Player(server.getConnectionFromIpAddress(set.getKey().toString()).getID(),userNames.get(server.getConnectionFromIpAddress(set.getKey())),null, null));
+            else players.add(new Player(server.getConnectionFromIpAddress(set.getKey().toString()).getID(),userNames.get(server.getConnectionFromIpAddress(set.getKey()))+(++counterDuplicatedNames),null, null));
         }
         BuildGame buildGame = new BuildGame();
         buildGame.setPlayers(players);

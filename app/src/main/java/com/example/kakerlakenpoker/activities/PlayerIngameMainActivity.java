@@ -44,11 +44,13 @@ import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class PlayerIngameMainActivity extends AppCompatActivity implements SensorEventListener{
 
 
+    private HashMap<String,Integer> userNameToID;
     LinearLayout dragViewKakerlake;
     LinearLayout dragViewBat;
     LinearLayout dragViewFly;
@@ -112,6 +114,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_ingameview);
+        userNameToID = new HashMap<>();
+        initHashMap();
         diaDecision = new Dialog(this);
         diaWait = new Dialog(this);
         me = getLocalPlayer();
@@ -219,6 +223,12 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
     }
 
+    public void initHashMap(){
+        for(Player player: GameClient.getInstance().getGame().getPlayers()){
+            userNameToID.put(player.getName(),player.getId());
+        }
+    }
+
 
     public void closeDragViewCards() {
 
@@ -262,7 +272,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
                 case DragEvent.ACTION_DRAG_STARTED: {
                     View view = (View) dragEvent.getLocalState();
                     playedcard = String.valueOf(view.getTag());
-                    Toast.makeText(getApplicationContext(), "Anzahl der Karten= " + checkTextInput(playedcard) , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anzahl der Karten: " + checkTextInput(playedcard) , Toast.LENGTH_SHORT).show();
                     break;
                 }
 
@@ -333,7 +343,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     public void setUpSpinnerForChallengeView() {
         for (Player player : GameClient.getInstance().getGame().getPlayers()) {
             if (!(player.getId() == me.getId())) {
-                namesOfPlayer.add(String.valueOf(player.getId()));
+                namesOfPlayer.add(player.getName());
             }
 
         }
@@ -355,14 +365,16 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             Type selectedType = Type.valueOf(chooseTypesOfCard.getSelectedItem().toString());
             Player enemy = null;
             for (Player player : GameClient.getInstance().getGame().getPlayers()) {
-                if (player.getId() == Integer.parseInt(choosePlayer.getSelectedItem().toString()))
+                if (player.getId() == userNameToID.get(choosePlayer.getSelectedItem().toString())){
                     enemy = player;
+                }
+
             }
-            assert enemy != null;
+            if(enemy==null)return;
 
 
             Card selectedCard = me.getHandDeck().findCard(playedcard);
-            Log.info("selected things", selectedType + " " + selectedCard + " " + enemy.getId());
+            Log.info("selected things", selectedType + " " + selectedCard + " " + enemy.getName());
             turn = new Turn(selectedCard, selectedType, enemy);
             GameClient.getInstance().getGame().getCurrentPlayer().getHandDeck().removeCard(selectedCard);
             GameClient.getInstance().getGame().makeTurn(me, turn);
@@ -413,9 +425,11 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     //Gibt das Player Object des spielenden Client zurück
     public Player getLocalPlayer() {
         for (Player p : GameClient.getInstance().getGame().getPlayers()) {
-            Log.info("This is the players id", String.valueOf(p.getId()));
             Log.info("This is my id", String.valueOf(GameClient.getInstance().getClient().getClient().getID()));
             if (p.getId() == GameClient.getInstance().getClient().getClient().getID()) {
+                for(Card card: p.getHandDeck().getDeck()){
+                    Log.info("Card: ",card.getType().toString());
+                }
                 return p;
             }
         }
@@ -445,7 +459,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         ArrayList<String> list = new ArrayList<>();
         for (Player player1 : GameClient.getInstance().getGame().getPlayers()) {
             if (!(player1.getId() == me.getId()) && player1.getState() != PlayerState.PLAYED) {
-                list.add(String.valueOf(player1.getId()));
+                list.add(String.valueOf(player1.getName()));
             }
         }
 
@@ -455,14 +469,14 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         myToast.setDuration(Toast.LENGTH_SHORT);
 
         buttonTruth.setOnClickListener(view -> {
-            Toast toast = Toast.makeText(this, "Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said TRUTH", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this,  player + " has played" + selectedCard + ",said " + chosenTyp + " and you said TRUTH", Toast.LENGTH_SHORT);
             toast.show();
             decission(Decision.TRUTH);
             diaDecision.dismiss();
         });
 
         buttonLie.setOnClickListener(view -> {
-            Toast toast = Toast.makeText(this, "Player: " + player + " played: " + selectedCard + " and said: " + chosenTyp + "and you said LIE", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, player + " has played " + selectedCard + ",said " + chosenTyp + " and you said LIE", Toast.LENGTH_SHORT);
             toast.show();
             decission(Decision.LIE);
             diaDecision.dismiss();
@@ -472,7 +486,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
             Player ene = null;
             for (Player p : GameClient.getInstance().getGame().getPlayers()) {
-                if (p.getId() == Integer.parseInt(spinner.getSelectedItem().toString())){
+                if (p.getId() == userNameToID.get(spinner.getSelectedItem().toString())){
                     ene = p;
                 };
             }
@@ -514,7 +528,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
                     @Override
                     public void onFinish() {
-                        Toast toast = Toast.makeText(cheatDia.getContext(),"To slow!",Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(cheatDia.getContext(),"Too slow!",Toast.LENGTH_SHORT);
                         toast.show();
                         cheatDia.dismiss();
                     }
@@ -524,7 +538,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
                 checkButton.setOnClickListener(view2 -> {
                     int playerCalc = Integer.parseInt(editText.getText().toString());
                     if(cheat.checkCalc(playerCalc)){
-                        Toast toast = Toast.makeText(this,"Right answer! Player: " + player + " played: " + selectedCard,Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(this,"Right answer! "+player + " played " + selectedCard,Toast.LENGTH_LONG);
                         toast.show();
                         cheatDia.dismiss();
                     }else{
@@ -538,7 +552,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         });
 
 
-        String myText = "Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getId() + " says " + GameClient.getInstance().getGame().getTurn().getSelectedType().toString();
+        String myText = "Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName() + " says " + GameClient.getInstance().getGame().getTurn().getSelectedType().toString();
         text.setText(myText);
     }
 
@@ -549,9 +563,9 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     /*
     Wird geöffnet, wenn man nicht an der Reihe ist
      */
-    public void showDialogeWait() {
-        String myString = "Players: " + GameClient.getInstance().getGame().getCurrentPlayer().getId() + " turn!";
-        waitingDialogTextView.setText(myString);
+    public void showDialogeWait(String message) {
+        String myString = GameClient.getInstance().getGame().getCurrentPlayer().getName() + " has to play a card!";
+        waitingDialogTextView.setText(message);
         alertDialog.show();
     }
 
@@ -564,12 +578,12 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         dia.setCanceledOnTouchOutside(false);
         Button button = dia.findViewById(R.id.back2menu);
         TextView text = dia.findViewById(R.id.textGameOver);
-        int lostPlayer = GameClient.getInstance().getGame().getCurrentPlayer().getId();
-        if (me.getId() == lostPlayer) {
+        String lostPlayer = GameClient.getInstance().getGame().getCurrentPlayer().getName();
+        if (me.getId() == userNameToID.get(lostPlayer)) {
             String lost = "You lost the game!";
             text.setText(lost);
         } else {
-            String won = "You won the game and player: " + lostPlayer + " lost!";
+            String won = "Game is over. "+lostPlayer+ " has lost!";
             text.setText(won);
         }
         dia.show();
@@ -646,34 +660,28 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
     public void checkTurn() {
         Log.info("The turn is checked here");
-        Toast toast = Toast.makeText(this, "!!!", Toast.LENGTH_SHORT);
+        Toast toast = null;
 
 
         if(GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_TURN){
             if(me.getId()==GameClient.getInstance().getGame().getCurrentPlayer().getId()){
                toast = Toast.makeText(this, "Your Turn!", Toast.LENGTH_SHORT);
+               toast.show();
             } else {
-                showDialogeWait();
-                toast = Toast.makeText(this, "Player is making a turn!", Toast.LENGTH_LONG);
+                showDialogeWait(GameClient.getInstance().getGame().getCurrentPlayer().getName() + " has to play a card!");
             }
         } else if(GameClient.getInstance().getGame().getCurrentState() == GameState.AWAITING_DECISION){
             if(me.getId()!=GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId()){
-                toast = Toast.makeText(this, "Waiting for a decision!", Toast.LENGTH_LONG);
-                showDialogeWait();
+                showDialogeWait(GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getName() + " has to make a decision!");
             } else if(me.getId()==GameClient.getInstance().getGame().getTurn().getSelectedEnemy().getId()){
                 toast = Toast.makeText(this, "Make a decision!", Toast.LENGTH_SHORT);
+                toast.show();
                 showDialogeChallenge();
             }
         } else if (GameClient.getInstance().getGame().getCurrentState() == GameState.GAME_OVER) {
             Log.info("Game ist over!");
-            toast = Toast.makeText(this, "Game is over!", Toast.LENGTH_SHORT);
             showDialogeGameOver();
-
-
-        } else  toast = Toast.makeText(this, "unclear state!", Toast.LENGTH_SHORT);
-
-        toast.show();
-
+        }
     }
 
     public void setUpTypesSpinner(View view) {
@@ -719,9 +727,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
                 @Override
                 public void run() {
-                    if (GameClient.getInstance().getGame().checkRoundOver()) {
-                        GameClient.getInstance().getGame().resetPlayerStatus();
-                    }
 
                     diaDecision.dismiss();
                     //diaWait.dismiss();
