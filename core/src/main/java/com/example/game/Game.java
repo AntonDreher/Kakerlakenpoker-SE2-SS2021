@@ -56,14 +56,15 @@ public class Game {
     }
 
     public void makeTurn(Player player, Turn turn) {
+        Log.info("making a turn");
         if(turn==null||turn.getSelectedCard()==null||turn.getSelectedType()==null||turn.getSelectedEnemy()==null)return;
-        if (currentState == GameState.AWAITING_TURN && player.getId()==currentPlayer.getId()) {
+        if (currentState == GameState.AWAITING_TURN && player.getId()==currentPlayer.getId() && currentPlayer.getHandDeck().findCard(turn.getSelectedType().toString())!=null) {
             this.turn = turn;
             currentPlayer.setState(PlayerState.PLAYED);
             changeState(GameState.AWAITING_DECISION);
 
-
         }
+        Log.info("making a turn");
     }
 
     public void makeDecision(Player player, Decision decision) {
@@ -93,7 +94,7 @@ public class Game {
         if(currentState!=GameState.AWAITING_DECISION || handOver.getDecision()==null||handOver.getEnemy()==null||handOver.getEnemy().getState()==PlayerState.PLAYED||getPlayer(handOver.getEnemy())==null)return;
         currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
         decision=handOver.getDecision();
-        currentPlayer = player;
+        currentPlayer = getPlayer(player);
         currentPlayer.getHandDeck().addCard(turn.getSelectedCard());
         currentPlayer.setState(PlayerState.PLAYED);
         decision=handOver.getDecision();
@@ -264,6 +265,7 @@ public class Game {
                     player.setHandDeck(newPlayer.getHandDeck());
                     player.getHandDeck().countAllCards();
                     player.setCollectedDeck(newPlayer.getCollectedDeck());
+                    player.setState(newPlayer.getState());
                 }
             }
         }
