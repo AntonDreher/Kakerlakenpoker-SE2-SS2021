@@ -632,7 +632,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             if (all == me) {
             }
             else {
-                output += "Player " + all.getId() + ("\n") +
+                output += "Player " + all.getName() + ("\n") +
                         "Kakerlake= " + all.getCollectedDeck().getKakerlake() + "| " +
                         "Fledermaus= " + all.getCollectedDeck().getFledermaus() + "| " +
                         "Fliege= " + all.getCollectedDeck().getFledermaus() + "| " +
@@ -732,13 +732,11 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
                     //diaWait.dismiss();
                     if(alertDialog !=null){alertDialog.hide();}
 
-
-                    closeDragViewCards();
-                    updateTheCollectedCards();
-
                     if(erlaubnis == true){
                         ChangePlayersCollectedDecks();
                     }
+
+                    closeDragViewCards();
                     updateTheCollectedCards();
                     checkTurn();
 
@@ -807,6 +805,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             if (p.getId() == me.getId()) {
                 if (p.getCollectedDeck().getKakerlake() > 0) {
                     p.getCollectedDeck().removeCard(new Card(Type.valueOf("KAKERLAKE")));
+                    p.getCollectedDeck().setKakerlake(p.getCollectedDeck().getKakerlake()-1);
                 }
             }
             }
