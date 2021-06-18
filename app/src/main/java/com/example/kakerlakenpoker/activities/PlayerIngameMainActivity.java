@@ -106,6 +106,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     private float wert1;
     private float wert2;
     private float wert3;
+    Boolean activate = false;
     Boolean erlaubnis = false;
 
 
@@ -216,7 +217,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Bitte Handy schütteln!!!", Toast.LENGTH_SHORT).show();
-                erlaubnis = true;
+                activate = true;
             }
         });
 
@@ -597,7 +598,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     public void updateTheCollectedCards() {
 
         for (Player p : GameClient.getInstance().getGame().getPlayers()) {
-
             if (p == me) {
                 p.getCollectedDeck().countAllCards();
                 krötenView.setText(String.valueOf(p.getCollectedDeck().getKroete()));
@@ -730,10 +730,15 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
                     diaDecision.dismiss();
                     //diaWait.dismiss();
-                    if(alertDialog !=null)alertDialog.hide();
+                    if(alertDialog !=null){alertDialog.hide();}
 
 
                     closeDragViewCards();
+                    updateTheCollectedCards();
+
+                    if(erlaubnis == true){
+                        ChangePlayersCollectedDecks();
+                    }
                     updateTheCollectedCards();
                     checkTurn();
 
@@ -755,9 +760,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     //Methode für das finden eines Shakes!
     @Override
     public void onSensorChanged(SensorEvent e) {
-
-        List changer = new ArrayList();
-
 
         float x,y,z;
         x = e.values[0];
@@ -786,8 +788,11 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         wert3 = z;
 
         if (Xextract > Yextract) {
-            if(erlaubnis == true){
-                ChangePlayersCollectedDecks();
+            if(activate == true){
+                Toast.makeText(getApplicationContext(), "Cheat wird ausgeführt!!!", Toast.LENGTH_SHORT).show();
+                erlaubnis = true;
+                activate = false;
+                cheatbox.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -796,15 +801,17 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     //tauscht die Collected Karten unter den Spielern
     public void ChangePlayersCollectedDecks(){
 
-        Toast.makeText(getApplicationContext(), "Cheat wird ausgeführt!!!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Cheaten!!!", Toast.LENGTH_SHORT).show();
 
-        if(me.getCollectedDeck().getKakerlake() != 0){
-            me.getCollectedDeck().setKakerlake(me.getCollectedDeck().getKakerlake() -1);
+        for (Player p : GameClient.getInstance().getGame().getPlayers()) {
+            if (p.getId() == me.getId()) {
+                if (p.getCollectedDeck().getKakerlake() > 0) {
+                    p.getCollectedDeck().removeCard(new Card(Type.valueOf("KAKERLAKE")));
+                }
+            }
+            }
         }
 
-        erlaubnis = false;
-        cheatbox.setVisibility(View.INVISIBLE);
-    }
 
     //Default methode fürs Handling
     @Override
