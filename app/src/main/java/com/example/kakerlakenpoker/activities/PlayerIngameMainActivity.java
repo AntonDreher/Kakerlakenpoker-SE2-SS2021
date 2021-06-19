@@ -46,6 +46,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class PlayerIngameMainActivity extends AppCompatActivity implements SensorEventListener{
 
@@ -373,15 +374,55 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             }
             if(enemy==null)return;
 
+                Card selectedCard = me.getHandDeck().findCard(playedcard);
+                Log.info("selected things", selectedType + " " + selectedCard + " " + enemy.getName());
+                turn = new Turn(selectedCard, selectedType, enemy);
+                GameClient.getInstance().getGame().getCurrentPlayer().getHandDeck().removeCard(selectedCard);
+                GameClient.getInstance().getGame().makeTurn(me, turn);
+                this.popUp.setVisibility(View.INVISIBLE);
+    }
 
-            Card selectedCard = me.getHandDeck().findCard(playedcard);
-            Log.info("selected things", selectedType + " " + selectedCard + " " + enemy.getName());
-            turn = new Turn(selectedCard, selectedType, enemy);
-            GameClient.getInstance().getGame().getCurrentPlayer().getHandDeck().removeCard(selectedCard);
-            GameClient.getInstance().getGame().makeTurn(me, turn);
-            this.popUp.setVisibility(View.INVISIBLE);
+    public void SendRandomChallenge(){
+        Turn turn;
+        Player gegner = null;
+        Card sendCard;
+        Type sendType;
+        List<Player> enemyPlayer = new ArrayList<Player>();
+        List<Type> typeList = new ArrayList<>();
+        Random number = new Random();
+
+
+        for (Player player : GameClient.getInstance().getGame().getPlayers()) {
+            if (player.getId() == me.getId()) {
+            } else {
+                enemyPlayer.add(player);
+            }
+        }
+        int randomPlayerValue = number.nextInt(enemyPlayer.size() + 0) + 0;
+        gegner = enemyPlayer.get(randomPlayerValue);
+
+        Log.error(gegner.getName());
+        for (Type t : Type.values()) {
+            typeList.add(t);
+        }
+
+        int randomTypeValue = number.nextInt(typeList.size() + 0) + 0;
+        sendType = typeList.get(randomTypeValue);
+
+        Log.error(sendType.toString());
+
+        int randomCardValue = number.nextInt(typeList.size() + 0) + 1;
+        sendCard = new Card(typeList.get(randomCardValue));
+
+        Log.error(sendCard.getType().toString());
+
+        turn = new Turn(sendCard, sendType, gegner);
+        GameClient.getInstance().getGame().makeTurn(me, turn);
+
+
 
     }
+
 
     /*
     Refresh the current view (doesent work!)
@@ -732,9 +773,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
                     //diaWait.dismiss();
                     if(alertDialog !=null){alertDialog.hide();}
 
-                    if(erlaubnis == true){
-                        ChangePlayersCollectedDecks();
-                    }
 
                     closeDragViewCards();
                     updateTheCollectedCards();
@@ -788,6 +826,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         if (Xextract > Yextract) {
             if(activate == true){
                 Toast.makeText(getApplicationContext(), "Cheat wird ausgeführt!!!", Toast.LENGTH_SHORT).show();
+                SendRandomChallenge();
                 erlaubnis = true;
                 activate = false;
                 cheatbox.setVisibility(View.INVISIBLE);
@@ -796,11 +835,12 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
     }
 
-    //tauscht die Collected Karten unter den Spielern
-    public void ChangePlayersCollectedDecks(){
+    //Setzt den Wert eines Types (Kakerlake) auf einen bestimmten Wert herunter.
+    public void ChangePlayersCollectedDecks() {
 
         Toast.makeText(getApplicationContext(), "Cheaten!!!", Toast.LENGTH_SHORT).show();
 
+        /*
         for (Player p : GameClient.getInstance().getGame().getPlayers()) {
             if (p.getId() == me.getId()) {
                 if (p.getCollectedDeck().getKakerlake() > 0) {
@@ -809,7 +849,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
                 }
             }
             }
-        }
+        }*/
+    }
 
 
     //Default methode fürs Handling
