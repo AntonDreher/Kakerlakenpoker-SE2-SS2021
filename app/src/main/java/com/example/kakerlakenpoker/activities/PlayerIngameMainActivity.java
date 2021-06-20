@@ -389,7 +389,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         Type sendType;
         List<Player> enemyPlayer = new ArrayList<Player>();
         List<Type> typeList = new ArrayList<>();
-        Random number = new Random();
 
 
         for (Player player : GameClient.getInstance().getGame().getPlayers()) {
@@ -398,6 +397,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
                 enemyPlayer.add(player);
             }
         }
+
+        Random number = new Random();
         int randomPlayerValue = number.nextInt(enemyPlayer.size() + 0) + 0;
         gegner = enemyPlayer.get(randomPlayerValue);
 
@@ -406,12 +407,14 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             typeList.add(t);
         }
 
-        int randomTypeValue = number.nextInt(typeList.size() + 0) + 0;
+        Random number2 = new Random();
+        int randomTypeValue = number2.nextInt(typeList.size() + 0) + 0;
         sendType = typeList.get(randomTypeValue);
 
         Log.error(sendType.toString());
 
-        int randomCardValue = number.nextInt(typeList.size() + 0) + 1;
+        Random number3 = new Random();
+        int randomCardValue = number3.nextInt(typeList.size() + 0) + 1;
         sendCard = new Card(typeList.get(randomCardValue));
 
         Log.error(sendCard.getType().toString());
