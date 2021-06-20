@@ -46,6 +46,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class PlayerIngameMainActivity extends AppCompatActivity implements SensorEventListener{
 
@@ -106,6 +107,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     private float wert1;
     private float wert2;
     private float wert3;
+    Boolean activate = false;
     Boolean erlaubnis = false;
 
 
@@ -216,7 +218,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Bitte Handy schütteln!!!", Toast.LENGTH_SHORT).show();
-                erlaubnis = true;
+                activate = true;
             }
         });
 
@@ -372,15 +374,58 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             }
             if(enemy==null)return;
 
+                Card selectedCard = me.getHandDeck().findCard(playedcard);
+                Log.info("selected things", selectedType + " " + selectedCard + " " + enemy.getName());
+                turn = new Turn(selectedCard, selectedType, enemy);
+                GameClient.getInstance().getGame().getCurrentPlayer().getHandDeck().removeCard(selectedCard);
+                GameClient.getInstance().getGame().makeTurn(me, turn);
+                this.popUp.setVisibility(View.INVISIBLE);
+    }
 
-            Card selectedCard = me.getHandDeck().findCard(playedcard);
-            Log.info("selected things", selectedType + " " + selectedCard + " " + enemy.getName());
-            turn = new Turn(selectedCard, selectedType, enemy);
-            GameClient.getInstance().getGame().getCurrentPlayer().getHandDeck().removeCard(selectedCard);
-            GameClient.getInstance().getGame().makeTurn(me, turn);
-            this.popUp.setVisibility(View.INVISIBLE);
+    public void SendRandomChallenge(){
+        Turn turn;
+        Player gegner = null;
+        Card sendCard;
+        Type sendType;
+        List<Player> enemyPlayer = new ArrayList<Player>();
+        List<Type> typeList = new ArrayList<>();
+
+
+        for (Player player : GameClient.getInstance().getGame().getPlayers()) {
+            if (player.getId() == me.getId()) {
+            } else {
+                enemyPlayer.add(player);
+            }
+        }
+
+        Random number = new Random();
+        int randomPlayerValue = number.nextInt(enemyPlayer.size() + 0) + 0;
+        gegner = enemyPlayer.get(randomPlayerValue);
+
+        Log.error(gegner.getName());
+        for (Type t : Type.values()) {
+            typeList.add(t);
+        }
+
+        Random number2 = new Random();
+        int randomTypeValue = number2.nextInt(typeList.size() + 0) + 0;
+        sendType = typeList.get(randomTypeValue);
+
+        Log.error(sendType.toString());
+
+        Random number3 = new Random();
+        int randomCardValue = number3.nextInt(typeList.size() + 0) + 1;
+        sendCard = new Card(typeList.get(randomCardValue));
+
+        Log.error(sendCard.getType().toString());
+
+        turn = new Turn(sendCard, sendType, gegner);
+        GameClient.getInstance().getGame().makeTurn(me, turn);
+
+
 
     }
+
 
     /*
     Refresh the current view (doesent work!)
@@ -597,7 +642,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     public void updateTheCollectedCards() {
 
         for (Player p : GameClient.getInstance().getGame().getPlayers()) {
-
             if (p == me) {
                 p.getCollectedDeck().countAllCards();
                 krötenView.setText(String.valueOf(p.getCollectedDeck().getKroete()));
@@ -632,7 +676,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
             if (all == me) {
             }
             else {
-                output += "Player " + all.getId() + ("\n") +
+                output += "Player " + all.getName() + ("\n") +
                         "Kakerlake= " + all.getCollectedDeck().getKakerlake() + "| " +
                         "Fledermaus= " + all.getCollectedDeck().getFledermaus() + "| " +
                         "Fliege= " + all.getCollectedDeck().getFledermaus() + "| " +
@@ -730,7 +774,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
                     diaDecision.dismiss();
                     //diaWait.dismiss();
-                    if(alertDialog !=null)alertDialog.hide();
+                    if(alertDialog !=null){alertDialog.hide();}
 
 
                     closeDragViewCards();
@@ -755,9 +799,6 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
     //Methode für das finden eines Shakes!
     @Override
     public void onSensorChanged(SensorEvent e) {
-
-        List changer = new ArrayList();
-
 
         float x,y,z;
         x = e.values[0];
@@ -786,25 +827,34 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         wert3 = z;
 
         if (Xextract > Yextract) {
-            if(erlaubnis == true){
-                ChangePlayersCollectedDecks();
+            if(activate == true){
+                Toast.makeText(getApplicationContext(), "Cheat wird ausgeführt!!!", Toast.LENGTH_SHORT).show();
+                SendRandomChallenge();
+                erlaubnis = true;
+                activate = false;
+                cheatbox.setVisibility(View.INVISIBLE);
             }
         }
 
     }
 
-    //tauscht die Collected Karten unter den Spielern
-    public void ChangePlayersCollectedDecks(){
+    //Setzt den Wert eines Types (Kakerlake) auf einen bestimmten Wert herunter.
+    public void ChangePlayersCollectedDecks() {
 
-        Toast.makeText(getApplicationContext(), "Cheat wird ausgeführt!!!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Cheaten!!!", Toast.LENGTH_SHORT).show();
 
-        if(me.getCollectedDeck().getKakerlake() != 0){
-            me.getCollectedDeck().setKakerlake(me.getCollectedDeck().getKakerlake() -1);
-        }
-
-        erlaubnis = false;
-        cheatbox.setVisibility(View.INVISIBLE);
+        /*
+        for (Player p : GameClient.getInstance().getGame().getPlayers()) {
+            if (p.getId() == me.getId()) {
+                if (p.getCollectedDeck().getKakerlake() > 0) {
+                    p.getCollectedDeck().removeCard(new Card(Type.valueOf("KAKERLAKE")));
+                    p.getCollectedDeck().setKakerlake(p.getCollectedDeck().getKakerlake()-1);
+                }
+            }
+            }
+        }*/
     }
+
 
     //Default methode fürs Handling
     @Override
