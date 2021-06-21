@@ -57,7 +57,7 @@ public class Game {
 
     public void makeTurn(Player player, Turn turn) {
         Log.info("making a turn");
-        if(turn==null||turn.getSelectedCard()==null||turn.getSelectedType()==null||turn.getSelectedEnemy()==null||currentPlayer.getHandDeck().findCard(turn.getSelectedType().toString())==null)return;
+        if(turn==null||turn.getSelectedCard()==null||turn.getSelectedType()==null||turn.getSelectedEnemy()==null)return;
         if (currentState == GameState.AWAITING_TURN && player.getId()==currentPlayer.getId()) {
             currentPlayer.getHandDeck().removeCard(turn.getSelectedCard());
             this.turn = turn;

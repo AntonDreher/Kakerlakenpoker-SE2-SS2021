@@ -84,12 +84,11 @@
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:hint="Input"
         android:textColor="@color/colorPrimaryDark"
-
+        android:hint="result"
         android:ems="10"
         android:inputType="number"
-        android:text="1234"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/decisionCheatButtonSubmit"
         app:layout_constraintStart_toEndOf="@+id/cheatDecisionToCalc"

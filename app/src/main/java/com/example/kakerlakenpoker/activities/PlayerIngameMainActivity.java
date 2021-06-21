@@ -573,8 +573,8 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
 
                     @Override
                     public void onFinish() {
-                        Toast toast = Toast.makeText(cheatDia.getContext(),"Too slow!",Toast.LENGTH_SHORT);
-                        toast.show();
+                        /*Toast toast = Toast.makeText(cheatDia.getContext(),"Too slow!",Toast.LENGTH_SHORT);
+                        toast.show();*/
                         cheatDia.dismiss();
                     }
                 }.start();
@@ -597,7 +597,7 @@ public class PlayerIngameMainActivity extends AppCompatActivity implements Senso
         });
 
 
-        String myText = "Player: " + GameClient.getInstance().getGame().getCurrentPlayer().getName() + " says " + GameClient.getInstance().getGame().getTurn().getSelectedType().toString();
+        String myText = GameClient.getInstance().getGame().getCurrentPlayer().getName() + " says " + GameClient.getInstance().getGame().getTurn().getSelectedType().toString();
         text.setText(myText);
     }
 
