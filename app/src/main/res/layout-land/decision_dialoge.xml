@@ -109,6 +109,7 @@
         android:id="@+id/cheatDecisionButton"
         android:layout_width="63dp"
         android:layout_height="33dp"
+        android:layout_marginTop="5sp"
         android:text="Cheat"
         android:background="@drawable/roundstylebutton"
         android:textSize="10sp"
