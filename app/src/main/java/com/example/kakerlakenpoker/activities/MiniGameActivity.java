@@ -33,7 +33,7 @@ public class MiniGameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("RockPaperScissors", "onCreate call");
+        Log.d("R.P.S.L.S.", "onCreate call");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -66,7 +66,7 @@ public class MiniGameActivity extends AppCompatActivity {
     }
     // execute game for all hand options
     public void executeGame() {
-        Log.d("RockPaperScissors", "set text method");
+        Log.d("R.P.S.L.S.", "set text method");
         gameResult.setText(Html.fromHtml(game.game(counter)));
         winCounter.setText("Your Wins: " + counter.getWinCounter());
         lossCounter.setText("Computer Wins: " + counter.getLossCounter());
@@ -75,41 +75,41 @@ public class MiniGameActivity extends AppCompatActivity {
 
     // onClickListener method Rock
     public void onRockButtonClick() {
-        Log.d("RockPaperScissors", "Rock button clicked");
+        Log.d("R.P.S.L.S.", "Rock button clicked");
         game = new MiniGame(hand = new Hand("Rock"));
-        Log.d("RockPaperScissors", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
+        Log.d("R.P.S.L.S.", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
         executeGame();
     }
 
     // onClickListener method Paper
     public void onPaperButtonClick() {
-        Log.d("RockPaperScissors", "Paper button clicked");
+        Log.d("R.P.S.L.S.", "Paper button clicked");
         game = new MiniGame(hand = new Hand("Paper"));
-        Log.d("RockPaperScissors", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
+        Log.d("R.P.S.L.S.", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
         executeGame();
     }
 
     // onClickListener method Scissors
     public void onScissorsButtonClick() {
-        Log.d("RockPaperScissors", "Scissors button clicked");
+        Log.d("R.P.S.L.S.", "Scissors button clicked");
         game = new MiniGame(hand = new Hand("Scissors"));
-        Log.d("RockPaperScissors", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
+        Log.d("R.P.S.L.S.", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
         executeGame();
     }
 
     // onClickListener method Lizard
     public void onLizardButtonClick() {
-        Log.d("RockPaperScissors", "Lizard button clicked");
+        Log.d("R.P.S.L.S.", "Lizard button clicked");
         game = new MiniGame(hand = new Hand("Lizard"));
-        Log.d("RockPaperScissors", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
+        Log.d("R.P.S.L.S.", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
         executeGame();
     }
 
     // onClickListener method Spock
     public void onSpockButtonClick() {
-        Log.d("RockPaperScissors", "Spock button clicked");
+        Log.d("R.P.S.L.S.", "Spock button clicked");
         game = new MiniGame(hand = new Hand("Spock"));
-        Log.d("RockPaperScissors", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
+        Log.d("R.P.S.L.S.", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
         executeGame();
     }
 }

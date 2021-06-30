@@ -25,15 +25,15 @@
         android:layout_height="62dp"
         android:background="@drawable/roundstylebutton"
         android:backgroundTint="@color/btn_color_white"
-        android:textSize="19sp"
         android:text="@string/startbutton"
         android:textColor="@color/colorPrimaryDark"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.212"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.369" />
+        app:layout_constraintVertical_bias="0.243" />
 
     <Button
         android:id="@+id/create_lobby_button"
@@ -41,13 +41,30 @@
         android:layout_height="62dp"
         android:background="@drawable/roundstylebutton"
         android:backgroundTint="@color/btn_color_white"
-        android:textSize="19sp"
         android:text="@string/quitbutton"
         android:textColor="@color/colorPrimaryDark"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.212"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.679" />
+        app:layout_constraintVertical_bias="0.53" />
+
+    <Button
+        android:id="@+id/minigame_button"
+        android:layout_width="128dp"
+        android:layout_height="62dp"
+        android:background="@drawable/roundstylebutton"
+        android:backgroundTint="@color/btn_color_white"
+        android:text="@string/minigame"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.212"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.805" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
