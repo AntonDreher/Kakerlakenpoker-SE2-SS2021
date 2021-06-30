@@ -2,6 +2,7 @@ package com.example.kakerlakenpoker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -18,7 +19,6 @@ public class MiniGameActivity extends AppCompatActivity {
     Hand hand;
     MiniGame game;
     Counter counter;
-    Intent intent;
 
     TextView gameResult;
     TextView winCounter;
@@ -30,7 +30,6 @@ public class MiniGameActivity extends AppCompatActivity {
     ImageButton scissorButton;
     ImageButton spockButton;
     ImageButton lizardButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,26 +64,52 @@ public class MiniGameActivity extends AppCompatActivity {
         spockButton = (ImageButton) findViewById(R.id.spock_imagebutton);
         spockButton.setOnClickListener((View view) -> onSpockButtonClick());
     }
-
-    public void onRockButtonClick(){
-
+    // execute game for all hand options
+    public void executeGame() {
+        Log.d("RockPaperScissors", "set text method");
+        gameResult.setText(Html.fromHtml(game.game(counter)));
+        winCounter.setText("Your Wins: " + counter.getWinCounter());
+        lossCounter.setText("Computer Wins: " + counter.getLossCounter());
+        drawCounter.setText("Draws: " + counter.getDrawCounter());
     }
 
-    public void onPaperButtonClick(){
-
+    // onClickListener method Rock
+    public void onRockButtonClick() {
+        Log.d("RockPaperScissors", "Rock button clicked");
+        game = new MiniGame(hand = new Hand("Rock"));
+        Log.d("RockPaperScissors", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
+        executeGame();
     }
 
-    public void onScissorsButtonClick(){
-
+    // onClickListener method Paper
+    public void onPaperButtonClick() {
+        Log.d("RockPaperScissors", "Paper button clicked");
+        game = new MiniGame(hand = new Hand("Paper"));
+        Log.d("RockPaperScissors", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
+        executeGame();
     }
 
-    public void onLizardButtonClick(){
-
+    // onClickListener method Scissors
+    public void onScissorsButtonClick() {
+        Log.d("RockPaperScissors", "Scissors button clicked");
+        game = new MiniGame(hand = new Hand("Scissors"));
+        Log.d("RockPaperScissors", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
+        executeGame();
     }
 
-    public void onSpockButtonClick(){
-
+    // onClickListener method Lizard
+    public void onLizardButtonClick() {
+        Log.d("RockPaperScissors", "Lizard button clicked");
+        game = new MiniGame(hand = new Hand("Lizard"));
+        Log.d("RockPaperScissors", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
+        executeGame();
     }
 
-
+    // onClickListener method Spock
+    public void onSpockButtonClick() {
+        Log.d("RockPaperScissors", "Spock button clicked");
+        game = new MiniGame(hand = new Hand("Spock"));
+        Log.d("RockPaperScissors", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
+        executeGame();
+    }
 }
