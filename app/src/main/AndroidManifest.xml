@@ -42,6 +42,9 @@
         <activity
             android:name=".activities.CreateLobbyActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".activities.MiniGameActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 

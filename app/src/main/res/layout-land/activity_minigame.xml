@@ -5,24 +5,22 @@
     android:layout_height="match_parent"
     android:background="@color/colorOrange">
 
+
     <TextView
         android:id="@+id/game_result_text"
-        android:layout_width="286dp"
-        android:layout_height="88dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
+        android:layout_width="266dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginBottom="50dp"
         android:text="@string/textview_pickhand"
         android:textColor="@android:color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/rock_imagebutton"
-        app:layout_constraintEnd_toStartOf="@+id/win_counter_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.142" />
 
     <ImageButton
         android:id="@+id/rock_imagebutton"
@@ -30,16 +28,17 @@
         android:layout_height="86dp"
         android:layout_marginStart="216dp"
         android:layout_marginLeft="216dp"
+        android:layout_marginTop="176dp"
         android:layout_marginEnd="46dp"
         android:layout_marginRight="46dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="39dp"
         android:background="@drawable/mg_rock"
         android:contentDescription="@string/imagebutton_rock"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/lizard_imagebutton"
         app:layout_constraintEnd_toStartOf="@+id/paper_imagebutton"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.981" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/paper_imagebutton"
@@ -53,9 +52,10 @@
         android:contentDescription="@string/imagebutton_paper"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/scissors_imagebutton"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498" />
+        app:layout_constraintVertical_bias="0.55" />
 
     <ImageButton
         android:id="@+id/scissors_imagebutton"
@@ -69,28 +69,24 @@
         android:contentDescription="@string/imagebutton_scissors"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498" />
+        app:layout_constraintVertical_bias="0.55" />
 
     <ImageButton
         android:id="@+id/lizard_imagebutton"
         android:layout_width="86dp"
         android:layout_height="86dp"
-        android:layout_marginStart="252dp"
-        android:layout_marginLeft="252dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="46dp"
-        android:layout_marginRight="46dp"
-        android:layout_marginBottom="42dp"
+        android:layout_marginStart="292dp"
+        android:layout_marginLeft="292dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/mg_lizard"
         android:contentDescription="@string/imagebutton_lizard"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/spock_imagebutton"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rock_imagebutton"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/paper_imagebutton" />
 
     <ImageButton
         android:id="@+id/spock_imagebutton"
@@ -108,23 +104,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/lizard_imagebutton"
         app:layout_constraintTop_toBottomOf="@+id/paper_imagebutton"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/win_counter_text"
         android:layout_width="156dp"
         android:layout_height="40dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginRight="29dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginStart="46dp"
+        android:layout_marginLeft="46dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="19dp"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/loss_counter_text"
-        app:layout_constraintEnd_toStartOf="@+id/draw_counter_text"
         app:layout_constraintStart_toEndOf="@+id/game_result_text"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -134,31 +127,29 @@
         android:layout_height="40dp"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="200dp"
         android:layout_marginRight="200dp"
-        android:layout_marginBottom="34dp"
+        android:layout_marginBottom="56dp"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/scissors_imagebutton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/game_result_text"
-        app:layout_constraintTop_toBottomOf="@+id/win_counter_text" />
+        app:layout_constraintHorizontal_bias="0.372"
+        app:layout_constraintStart_toEndOf="@+id/game_result_text" />
 
     <TextView
         android:id="@+id/draw_counter_text"
         android:layout_width="156dp"
         android:layout_height="40dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="23dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginBottom="345dp"
+        android:layout_marginBottom="116dp"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/scissors_imagebutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/win_counter_text"
         app:layout_constraintTop_toTopOf="parent" />

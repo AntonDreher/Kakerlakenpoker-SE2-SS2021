@@ -35,6 +35,7 @@ public class MainMenuActivity extends AppCompatActivity {
         //Minigame Button
         minigameButton = (Button) findViewById(R.id.minigame_button);
         minigameButton.setOnClickListener((View view) -> onMiniGameButtonClick());
+        minigameButton.setVisibility(View.INVISIBLE);
     }
 
     public void searchLobby() {

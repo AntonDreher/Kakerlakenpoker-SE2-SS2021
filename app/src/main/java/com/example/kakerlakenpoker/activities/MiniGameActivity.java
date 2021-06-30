@@ -35,7 +35,7 @@ public class MiniGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("R.P.S.L.S.", "onCreate call");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_minigame);
 
         // TextViews
         gameResult = (TextView) findViewById(R.id.game_result_text);
