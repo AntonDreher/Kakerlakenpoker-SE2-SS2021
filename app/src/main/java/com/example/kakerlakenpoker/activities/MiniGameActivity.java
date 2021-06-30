@@ -1,6 +1,8 @@
 package com.example.kakerlakenpoker.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -8,8 +10,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
+import com.example.minigame.Counter;
+import com.example.minigame.Hand;
+import com.example.minigame.MiniGame;
 
 public class MiniGameActivity extends AppCompatActivity {
+    Hand hand;
+    MiniGame game;
+    Counter counter;
+    Intent intent;
+
     TextView gameResult;
     TextView winCounter;
     TextView lossCounter;
@@ -24,30 +34,36 @@ public class MiniGameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("RockPaperScissors", "onCreate call");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_minigame);
+        setContentView(R.layout.activity_main);
 
-        gameResult = findViewById(R.id.game_result);
+        // TextViews
+        gameResult = (TextView) findViewById(R.id.game_result_text);
+        winCounter = (TextView) findViewById(R.id.win_counter_text);
+        lossCounter = (TextView) findViewById(R.id.loss_counter_text);
+        drawCounter = (TextView) findViewById(R.id.draw_counter_text);
+        counter = new Counter();
 
-        rockButton = findViewById(R.id.rock);
-        rockButton.setOnClickListener((View view)-> onRockButtonClick());
+        // Button Rock
+        rockButton = (ImageButton) findViewById(R.id.rock_imagebutton);
+        rockButton.setOnClickListener((View view) -> onRockButtonClick());
 
-        paperButton = findViewById(R.id.paper);
-        paperButton.setOnClickListener((View view)-> onPaperButtonClick());
+        //Button Paper
+        paperButton = (ImageButton) findViewById(R.id.paper_imagebutton);
+        paperButton.setOnClickListener((View view) -> onPaperButtonClick());
 
-        scissorButton = findViewById(R.id.scissors);
-        scissorButton.setOnClickListener((View view)-> onScissorsButtonClick());
+        // Button Scissors
+        scissorButton = (ImageButton) findViewById(R.id.scissors_imagebutton);
+        scissorButton.setOnClickListener((View view) -> onScissorsButtonClick());
 
-        spockButton = findViewById(R.id.spock);
-        spockButton.setOnClickListener((View view)-> onSpockButtonClick());
+        //Button Lizard
+        lizardButton = (ImageButton) findViewById(R.id.lizard_imagebutton);
+        lizardButton.setOnClickListener((View view) -> onLizardButtonClick());
 
-        lizardButton = findViewById(R.id.lizard);
-        lizardButton.setOnClickListener((View view)-> onLizardButtonClick());
-
-        winCounter = findViewById(R.id.win_counter);
-        lossCounter = findViewById(R.id.loss_counter);
-        drawCounter = findViewById(R.id.draw_counter);
-
+        //Button Spock
+        spockButton = (ImageButton) findViewById(R.id.spock_imagebutton);
+        spockButton.setOnClickListener((View view) -> onSpockButtonClick());
     }
 
     public void onRockButtonClick(){
