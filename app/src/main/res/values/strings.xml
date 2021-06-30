@@ -113,4 +113,10 @@
     <string name="you_have_to_decide"><u>You have to decide!</u></string>
     <string name="textview">TextView</string>
     <string name="calculate_the_right_number">Calculate the right number</string>
+    <string name="imagebutton_rock">Rock</string>
+    <string name="imagebutton_paper">Paper</string>
+    <string name="imagebutton_scissors">Scissors</string>
+    <string name="imagebutton_lizard">Lizard</string>
+    <string name="imagebutton_spock">Spock</string>
+    <string name="textview_pickhand">Pick a hand to start</string>
 </resources>
