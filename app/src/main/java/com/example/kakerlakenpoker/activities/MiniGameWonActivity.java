@@ -61,7 +61,7 @@ public class MiniGameWonActivity extends AppCompatActivity {
         // Button Main Menu
         mainmenuButtonWON = (Button) findViewById(R.id.mainmenu_win_button);
         mainmenuButtonWON.setOnClickListener((View view) -> onMainMenuWONClick());
-        mainmenuButtonWON.setVisibility(View.INVISIBLE);
+        // mainmenuButtonWON.setVisibility(View.INVISIBLE);
     }
 
     // onClickListener method MinigameButtonWON

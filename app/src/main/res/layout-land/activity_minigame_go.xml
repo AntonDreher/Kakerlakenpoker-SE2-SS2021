@@ -56,7 +56,7 @@
         android:layout_height="63dp"
         android:background="@drawable/mg_button_shape"
         android:text="@string/minigame"
-        android:textColor="@android:color/black"
+        android:textColor="@color/black"
         android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

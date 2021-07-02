@@ -56,7 +56,7 @@ public class MiniGameLostActivity extends AppCompatActivity {
         // Button Main Menu
         mainmenuButtonGO = (Button) findViewById(R.id.mainmenu_go_button);
         mainmenuButtonGO.setOnClickListener((View view) -> onMainMenuGOClick());
-        mainmenuButtonGO.setVisibility(View.INVISIBLE);
+        // mainmenuButtonGO.setVisibility(View.INVISIBLE);
     }
 
     // onClickListener method MinigameButtonGo
