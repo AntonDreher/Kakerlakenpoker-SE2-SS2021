@@ -12,7 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.kakerlakenpoker.R;
 
 public class MiniGameLostActivity extends AppCompatActivity {
+    //variables from mini game activity
+    int counterWon;
+    int counterLoss;
+    int counterDraw;
+
     Intent intent;
+    Intent getIntent;
 
     TextView winCounterGO;
     TextView lossCounterGO;
@@ -27,10 +33,21 @@ public class MiniGameLostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_minigame_go);
 
+        // get counters from mini game activity
+        getIntent = getIntent();
+        counterWon = getIntent.getIntExtra(MiniGameActivity.WON_COUNTER,0);
+        counterLoss = getIntent.getIntExtra(MiniGameActivity.LOSS_COUNTER, 0);
+        counterDraw = getIntent.getIntExtra(MiniGameActivity.DRAW_COUNTER, 0);
+
         // TextViews
         winCounterGO = (TextView) findViewById(R.id.win_counter_go);
         lossCounterGO = (TextView) findViewById(R.id.loss_counter_go);
         drawCounterGO = (TextView) findViewById(R.id.draw_counter_go);
+
+        // set TextViews
+        winCounterGO.setText("Your Wins: " + counterWon);
+        lossCounterGO.setText("Computer Wins: " + counterLoss);
+        drawCounterGO.setText("Draws: " + counterDraw);
 
         // Button MiniGame
         minigameButtonGO = (Button) findViewById(R.id.minigame_go_button);

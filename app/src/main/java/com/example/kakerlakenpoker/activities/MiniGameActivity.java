@@ -16,9 +16,20 @@ import com.example.minigame.Hand;
 import com.example.minigame.MiniGame;
 
 public class MiniGameActivity extends AppCompatActivity {
+    //values for won and lost activity
+    public static final String WON_COUNTER = "WON_COUNTER";
+    public static final String LOSS_COUNTER = "LOSS_COUNTER";
+    public static final String DRAW_COUNTER = "DRAW_COUNTER";
+    public static final String WINOUTOF5_COUNTER = "WINOUTOF5_COUNTER";
+    int counterWon;
+    int counterLoss;
+    int counterDraw;
+    int counterWinOutOf5;
+
     Hand hand;
     MiniGame game;
     Counter counter;
+    Intent intent;
 
     TextView gameResult;
     TextView winCounter;
@@ -33,7 +44,7 @@ public class MiniGameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("R.P.S.L.S.", "onCreate call");
+        Log.d("R.P.S.L.S.", "onCreate call MiniGame Activity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_minigame);
 
@@ -66,11 +77,38 @@ public class MiniGameActivity extends AppCompatActivity {
     }
     // execute game for all hand options
     public void executeGame() {
-        Log.d("R.P.S.L.S.", "set text method");
+        // set text view values
         gameResult.setText(Html.fromHtml(game.game(counter)));
         winCounter.setText("Your Wins: " + counter.getWinCounter());
         lossCounter.setText("Computer Wins: " + counter.getLossCounter());
         drawCounter.setText("Draws: " + counter.getDrawCounter());
+        Log.d("R.P.S.L.S.", "set text method, " + "WinCounter" + counter.getRoundCounter());
+
+
+        // set variables for activity intent
+        counterWon = counter.getWinCounter();
+        counterLoss = counter.getLossCounter();
+        counterDraw = counter.getDrawCounter();
+        counterWinOutOf5 = counter.getWinOutOf5Counter();
+        Log.d("R.P.S.L.S.", "winCounter set, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counterWon);
+
+        // switch to won or loss activity
+        if (counter.getRoundCounter() == 5 && counter.getWinCounter() > 2) {
+            Log.d("R.P.S.L.S.", "intent win activity, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counter.getWinCounter());
+            intent = new Intent(this, MiniGameWonActivity.class);
+            intent.putExtra(WON_COUNTER, counterWon);
+            intent.putExtra(LOSS_COUNTER, counterLoss);
+            intent.putExtra(DRAW_COUNTER, counterDraw);
+            intent.putExtra(WINOUTOF5_COUNTER, counterWinOutOf5);
+            startActivity(intent);
+        } else if (counter.getRoundCounter() == 5 && counter.getWinCounter() < 3) {
+            Log.d("R.P.S.L.S.", "intent loss activity, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counter.getWinCounter());
+            intent = new Intent(this, MiniGameLostActivity.class);
+            intent.putExtra(WON_COUNTER, counterWon);
+            intent.putExtra(LOSS_COUNTER, counterLoss);
+            intent.putExtra(DRAW_COUNTER, counterDraw);
+            startActivity(intent);
+        }
     }
 
     // onClickListener method Rock

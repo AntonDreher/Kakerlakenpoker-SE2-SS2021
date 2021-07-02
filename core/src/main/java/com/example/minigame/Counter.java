@@ -4,14 +4,15 @@ public class Counter {
     int winCounter;
     int lossCounter;
     int drawCounter;
-    int winOutOf5;
+    int roundCounter;
+    int winOutOf5Counter;
 
     // holds all counts of turns
     public Counter() {
         this.winCounter = 0;
         this.lossCounter = 0;
         this.drawCounter = 0;
-        this.winOutOf5 = 0;
+        this.winOutOf5Counter = 0;
     }
 
     public int getWinCounter() {
@@ -38,11 +39,11 @@ public class Counter {
         this.drawCounter = drawCounter;
     }
 
-    public int getWinOutOf5() {
-        return winOutOf5;
-    }
+    public int getRoundCounter() { return roundCounter; }
 
-    public void setWinOutOf5(int winOutOf5) {
-        this.winOutOf5 = winOutOf5;
-    }
+    public void setRoundCounter(int roundCounter) { this.roundCounter = roundCounter; }
+
+    public int getWinOutOf5Counter() { return winOutOf5Counter; }
+
+    public void setWinOutOf5Counter(int winOutOf5Counter) { this.winOutOf5Counter = winOutOf5Counter; }
 }

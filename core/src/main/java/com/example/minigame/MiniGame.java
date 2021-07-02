@@ -16,7 +16,12 @@ public class MiniGame {
         int counterLoss = counter.getLossCounter();
         int counterWin = counter.getWinCounter();
         int counterDraw = counter.getDrawCounter();
-        int winOutOf5 = counter.getWinOutOf5();
+        int counterRound = counter.getRoundCounter();
+        int counterWinOutOf5 = counter.getWinOutOf5Counter();
+
+        // count rounds
+        counterRound++;
+        counter.setRoundCounter(counterRound);
 
         //RPSLS game play
         if (
@@ -44,10 +49,15 @@ public class MiniGame {
             // Player wins
             win = play + "YOU WIN.";
             counterWin++;
-            winOutOf5++;
             counter.setWinCounter(counterWin);
-            counter.setWinOutOf5(winOutOf5);
         }
+
+        //counts the wins of a whole game with 5 rounds
+        if (counterRound == 5 && counterWin > 2){
+            counterWinOutOf5++;
+            counter.setWinOutOf5Counter(counterWinOutOf5);
+        }
+
         return win;
     }
 }

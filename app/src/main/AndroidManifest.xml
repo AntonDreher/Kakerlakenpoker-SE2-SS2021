@@ -45,6 +45,12 @@
         <activity
             android:name=".activities.MiniGameActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".activities.MiniGameLostActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activities.MiniGameWonActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 
