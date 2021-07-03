@@ -74,7 +74,7 @@ public class MiniGameWonActivity extends AppCompatActivity {
     // onClickListener method MainMenuButtonWON
     public void onMainMenuWONClick() {
         Log.d("R.P.S.L.S", "Main Menu button clicked");
-        intent = new Intent(this, MainMenuActivity.class);
+        intent = new Intent(this, EnterUserNameActivity.class);
         startActivity(intent);
     }
 }

@@ -69,7 +69,7 @@ public class MiniGameLostActivity extends AppCompatActivity {
     // onClickListener method MainMenuButtonGo
     public void onMainMenuGOClick() {
         Log.d("RR.P.S.L.S", "Main Menu button clicked");
-        intent = new Intent(this, MainMenuActivity.class);
+        intent = new Intent(this, EnterUserNameActivity.class);
         startActivity(intent);
     }
 }
