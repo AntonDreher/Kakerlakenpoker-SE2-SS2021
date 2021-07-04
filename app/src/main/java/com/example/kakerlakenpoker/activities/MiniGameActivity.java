@@ -15,6 +15,11 @@ import com.example.minigame.Counter;
 import com.example.minigame.Hand;
 import com.example.minigame.MiniGame;
 
+import static com.example.kakerlakenpoker.activities.MiniGameLostActivity.RETURN_WINOUTOF5_COUNTER_GO;
+import static com.example.kakerlakenpoker.activities.MiniGameLostActivity.RETURN_WON_COUNTER_GO;
+import static com.example.kakerlakenpoker.activities.MiniGameWonActivity.RETURN_WINOUTOF5_COUNTER_WON;
+import static com.example.kakerlakenpoker.activities.MiniGameWonActivity.RETURN_WON_COUNTER_WON;
+
 public class MiniGameActivity extends AppCompatActivity {
     //values for won and lost activity
     public static final String WON_COUNTER = "WON_COUNTER";
@@ -25,6 +30,10 @@ public class MiniGameActivity extends AppCompatActivity {
     int counterLoss;
     int counterDraw;
     int counterWinOutOf5;
+
+    //request variables for onActivityResult
+    public static final int INTEGER_REQUEST_GO = 1;
+    public static final int INTEGER_REQUEST_WON = 2;
 
     Hand hand;
     MiniGame game;
@@ -75,39 +84,78 @@ public class MiniGameActivity extends AppCompatActivity {
         spockButton = (ImageButton) findViewById(R.id.spock_imagebutton);
         spockButton.setOnClickListener((View view) -> onSpockButtonClick());
     }
+
+    // Call Back method to get counterWinOutOf5 message from MG won and lost activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("R.P.S.L.S.", "onActivityResult MiniGame Activity");
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == INTEGER_REQUEST_GO) {
+            Log.d("R.P.S.L.S.", "onActivityResult MiniGame Activity, INTEGER_REQUEST_GO: " + INTEGER_REQUEST_GO);
+            if (resultCode == RESULT_OK) {
+                Log.d("R.P.S.L.S.", "onActivityResult MiniGame Activity, set counter variables from MG lost activity");
+                counter.setWinCounter(data.getIntExtra(RETURN_WON_COUNTER_GO, 0));
+                counter.setLossCounter(data.getIntExtra(RETURN_WON_COUNTER_GO, 0));
+                counter.setDrawCounter(data.getIntExtra(RETURN_WON_COUNTER_GO, 0));
+                counter.setRoundCounter(data.getIntExtra(RETURN_WON_COUNTER_GO, 0));
+                counterWinOutOf5 = data.getIntExtra(RETURN_WINOUTOF5_COUNTER_GO, 0);
+
+                winCounter.setText("Your Wins: " + counter.getWinCounter());
+                lossCounter.setText("Computer Wins: " + counter.getLossCounter());
+                drawCounter.setText("Draws: " + counter.getDrawCounter());
+
+            }
+        }
+        if (requestCode == INTEGER_REQUEST_WON) {
+            Log.d("R.P.S.L.S.", "onActivityResult MiniGame Activity, INTEGER_REQUEST_WON: " + INTEGER_REQUEST_WON);
+            if (resultCode == RESULT_OK) {
+                Log.d("R.P.S.L.S.", "onActivityResult MiniGame Activity, set counter variables from MG won activity");
+                counter.setWinCounter(data.getIntExtra(RETURN_WON_COUNTER_WON, 0));
+                counter.setLossCounter(data.getIntExtra(RETURN_WON_COUNTER_WON, 0));
+                counter.setDrawCounter(data.getIntExtra(RETURN_WON_COUNTER_WON, 0));
+                counter.setRoundCounter(data.getIntExtra(RETURN_WON_COUNTER_WON, 0));
+                counterWinOutOf5 = data.getIntExtra(RETURN_WINOUTOF5_COUNTER_WON, 0);
+
+                winCounter.setText("Your Wins: " + counter.getWinCounter());
+                lossCounter.setText("Computer Wins: " + counter.getLossCounter());
+                drawCounter.setText("Draws: " + counter.getDrawCounter());
+            }
+        }
+    }
+
     // execute game for all hand options
     public void executeGame() {
+        Log.d("R.P.S.L.S.", "executeGame methode");
         // set text view values
         gameResult.setText(Html.fromHtml(game.game(counter)));
         winCounter.setText("Your Wins: " + counter.getWinCounter());
         lossCounter.setText("Computer Wins: " + counter.getLossCounter());
         drawCounter.setText("Draws: " + counter.getDrawCounter());
-        Log.d("R.P.S.L.S.", "set text method, " + "WinCounter" + counter.getRoundCounter());
-
+        Log.d("R.P.S.L.S.", "set text methods in main activity, " + "counterWinOutOf5: " + counter.getWinOutOf5Counter());
 
         // set variables for activity intent
         counterWon = counter.getWinCounter();
         counterLoss = counter.getLossCounter();
         counterDraw = counter.getDrawCounter();
         counterWinOutOf5 = counter.getWinOutOf5Counter();
-        Log.d("R.P.S.L.S.", "winCounter set, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counterWon);
+        Log.d("R.P.S.L.S.", "counters set, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counterWon + " ,counterWinOutOf5:  " + counterWinOutOf5);
 
         // switch to won or loss activity
         if (counter.getRoundCounter() == 5 && counter.getWinCounter() > 2) {
-            Log.d("R.P.S.L.S.", "intent win activity, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counter.getWinCounter());
+            Log.d("R.P.S.L.S.", "intent win activity, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counter.getWinCounter() + " ,counterWinOutOf5: " + counterWinOutOf5);
             intent = new Intent(this, MiniGameWonActivity.class);
             intent.putExtra(WON_COUNTER, counterWon);
             intent.putExtra(LOSS_COUNTER, counterLoss);
             intent.putExtra(DRAW_COUNTER, counterDraw);
             intent.putExtra(WINOUTOF5_COUNTER, counterWinOutOf5);
-            startActivity(intent);
+            startActivityForResult(intent, INTEGER_REQUEST_WON);
         } else if (counter.getRoundCounter() == 5 && counter.getWinCounter() < 3) {
-            Log.d("R.P.S.L.S.", "intent loss activity, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counter.getWinCounter());
+            Log.d("R.P.S.L.S.", "intent loss activity, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counter.getWinCounter() + " ,counterWinOutOf5: " + counterWinOutOf5);
             intent = new Intent(this, MiniGameLostActivity.class);
             intent.putExtra(WON_COUNTER, counterWon);
             intent.putExtra(LOSS_COUNTER, counterLoss);
             intent.putExtra(DRAW_COUNTER, counterDraw);
-            startActivity(intent);
+            startActivityForResult(intent, INTEGER_REQUEST_GO);
         }
     }
 

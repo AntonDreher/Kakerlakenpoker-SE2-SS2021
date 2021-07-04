@@ -12,6 +12,7 @@ public class Counter {
         this.winCounter = 0;
         this.lossCounter = 0;
         this.drawCounter = 0;
+        this.roundCounter = 0;
         this.winOutOf5Counter = 0;
     }
 

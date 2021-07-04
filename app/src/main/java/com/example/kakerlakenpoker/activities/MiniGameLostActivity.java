@@ -10,15 +10,28 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kakerlakenpoker.R;
+import com.example.minigame.Counter;
 
 public class MiniGameLostActivity extends AppCompatActivity {
+    //variable for main menu activity
+    public static final String RETURN_WON_COUNTER_GO = "RETURN_WON_COUNTER_GO";
+    public static final String RETURN_LOSS_COUNTER_GO = "RETURN_LOSS_COUNTER_GO";
+    public static final String RETURN_DRAW_COUNTER_GO = "RETURN_DRAW_COUNTER_GO";
+    public static final String RETURN_ROUND_COUNTER_GO = "RETURN_ROUND_COUNTER_GO";
+    public static final String RETURN_WINOUTOF5_COUNTER_GO = "RETURN_WINOUTOF5_COUNTER_GO";
+
     //variables from mini game activity
     int counterWon;
     int counterLoss;
     int counterDraw;
+    int counterRound;
+    int counterWinOutOf5;
 
     Intent intent;
     Intent getIntent;
+    Intent returnIntent;
+
+    Counter counter;
 
     TextView winCounterGO;
     TextView lossCounterGO;
@@ -38,6 +51,7 @@ public class MiniGameLostActivity extends AppCompatActivity {
         counterWon = getIntent.getIntExtra(MiniGameActivity.WON_COUNTER,0);
         counterLoss = getIntent.getIntExtra(MiniGameActivity.LOSS_COUNTER, 0);
         counterDraw = getIntent.getIntExtra(MiniGameActivity.DRAW_COUNTER, 0);
+        Log.d("R.P.S.L.S.", "MG Lost Activity set counters, " + " ,Win Counter: " + counterWon + " ,counterWinOutOf5: " + counterWinOutOf5);
 
         // TextViews
         winCounterGO = (TextView) findViewById(R.id.win_counter_go);
@@ -48,28 +62,47 @@ public class MiniGameLostActivity extends AppCompatActivity {
         winCounterGO.setText("Your Wins: " + counterWon);
         lossCounterGO.setText("Computer Wins: " + counterLoss);
         drawCounterGO.setText("Draws: " + counterDraw);
+        Log.d("R.P.S.L.S.", "MGLA TextViews set");
 
         // Button MiniGame
         minigameButtonGO = (Button) findViewById(R.id.minigame_go_button);
         minigameButtonGO.setOnClickListener((View view) -> onMinigameButtonGOClick());
 
         // Button Main Menu
-        mainmenuButtonGO = (Button) findViewById(R.id.mainmenu_go_button);
+        mainmenuButtonGO = (Button) findViewById(R.id.maingame_go_button);
         mainmenuButtonGO.setOnClickListener((View view) -> onMainMenuGOClick());
         // mainmenuButtonGO.setVisibility(View.INVISIBLE);
     }
 
+    public void resetGameCounters(){
+        // reset variables for activity intent
+        Log.d("R.P.S.L.S", "MGLA reset counters");
+        counterWon = 0;
+        counterLoss = 0;
+        counterDraw = 0;
+        counterRound = 0;
+        Log.d("R.P.S.L.S", "counterWon: " + counterWon + " ,counterRound: " + counterRound);
+    }
+
     // onClickListener method MinigameButtonGo
     public void onMinigameButtonGOClick() {
-        Log.d("R.P.S.L.S", "MiniGame button clicked");
-        intent = new Intent(this, MiniGameActivity.class);
-        startActivity(intent);
+        Log.d("R.P.S.L.S", "MGLA back to miniGame button clicked" + " ,counterWinOutOf5: " + counterWinOutOf5);
+        resetGameCounters();
+        returnIntent = new Intent(this, MiniGameActivity.class);
+        returnIntent.putExtra(RETURN_WINOUTOF5_COUNTER_GO, counterWinOutOf5);
+        returnIntent.putExtra(RETURN_WON_COUNTER_GO, counterWon);
+        returnIntent.putExtra(RETURN_LOSS_COUNTER_GO, counterLoss);
+        returnIntent.putExtra(RETURN_DRAW_COUNTER_GO, counterDraw);
+        returnIntent.putExtra(RETURN_ROUND_COUNTER_GO, counterRound);
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 
     // onClickListener method MainMenuButtonGo
     public void onMainMenuGOClick() {
-        Log.d("RR.P.S.L.S", "Main Menu button clicked");
+        Log.d("RR.P.S.L.S", "MGWA EnterUserNameActivity button clicked" + "counterWinOutOf5: " + counterWinOutOf5);
         intent = new Intent(this, EnterUserNameActivity.class);
+        intent.putExtra(RETURN_WINOUTOF5_COUNTER_GO, counterWinOutOf5);
         startActivity(intent);
     }
 }
