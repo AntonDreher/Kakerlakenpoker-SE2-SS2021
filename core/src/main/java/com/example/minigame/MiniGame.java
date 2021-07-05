@@ -55,7 +55,7 @@ public class MiniGame {
         }
 
         //set win out of 5 counter, if random wins out of game with 5 rounds
-        if (counterRound == 5 && counterWin > randomWinValue){
+        if (counterRound == 5 && counterWin >= randomWinValue){
             counterWinOutOf5++;
             counter.setWinOutOf5Counter(counterWinOutOf5);
         }

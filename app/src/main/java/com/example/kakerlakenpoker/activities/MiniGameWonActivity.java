@@ -53,6 +53,7 @@ public class MiniGameWonActivity extends AppCompatActivity {
         counterLoss = getIntent.getIntExtra(MiniGameActivity.LOSS_COUNTER, 0);
         counterDraw = getIntent.getIntExtra(MiniGameActivity.DRAW_COUNTER, 0);
         counterWinOutOf5 = getIntent.getIntExtra(MiniGameActivity.WINOUTOF5_COUNTER, 0);
+        Log.d("R.P.S.L.S.", "MG Lost Activity set counters, " + " ,Win Counter: " + counterWon);
 
         // TextViews
         winCounterWON = (TextView) findViewById(R.id.win_counter_win);
@@ -98,7 +99,6 @@ public class MiniGameWonActivity extends AppCompatActivity {
         returnIntent.putExtra(RETURN_LOSS_COUNTER_WON, counterLoss);
         returnIntent.putExtra(RETURN_DRAW_COUNTER_WON, counterDraw);
         returnIntent.putExtra(RETURN_ROUND_COUNTER_WON, counterRound);
-        returnIntent.putExtra(RETURN_WINOUTOF5_COUNTER_WON, counterWinOutOf5);
         setResult(RESULT_OK, returnIntent);
         finish();
     }

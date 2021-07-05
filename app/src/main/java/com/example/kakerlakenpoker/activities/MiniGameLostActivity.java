@@ -51,7 +51,8 @@ public class MiniGameLostActivity extends AppCompatActivity {
         counterWon = getIntent.getIntExtra(MiniGameActivity.WON_COUNTER,0);
         counterLoss = getIntent.getIntExtra(MiniGameActivity.LOSS_COUNTER, 0);
         counterDraw = getIntent.getIntExtra(MiniGameActivity.DRAW_COUNTER, 0);
-        Log.d("R.P.S.L.S.", "MG Lost Activity set counters, " + " ,Win Counter: " + counterWon + " ,counterWinOutOf5: " + counterWinOutOf5);
+        counterWinOutOf5 = getIntent.getIntExtra(MiniGameActivity.WINOUTOF5_COUNTER, 0);
+        Log.d("R.P.S.L.S.", "MG Lost Activity set counters, " + " ,Win Counter: " + counterWon);
 
         // TextViews
         winCounterGO = (TextView) findViewById(R.id.win_counter_go);
@@ -89,7 +90,6 @@ public class MiniGameLostActivity extends AppCompatActivity {
         Log.d("R.P.S.L.S", "MGLA back to miniGame button clicked" + " ,counterWinOutOf5: " + counterWinOutOf5);
         resetGameCounters();
         returnIntent = new Intent(this, MiniGameActivity.class);
-        returnIntent.putExtra(RETURN_WINOUTOF5_COUNTER_GO, counterWinOutOf5);
         returnIntent.putExtra(RETURN_WON_COUNTER_GO, counterWon);
         returnIntent.putExtra(RETURN_LOSS_COUNTER_GO, counterLoss);
         returnIntent.putExtra(RETURN_DRAW_COUNTER_GO, counterDraw);
@@ -100,7 +100,7 @@ public class MiniGameLostActivity extends AppCompatActivity {
 
     // onClickListener method MainMenuButtonGo
     public void onMainMenuGOClick() {
-        Log.d("RR.P.S.L.S", "MGWA EnterUserNameActivity button clicked" + "counterWinOutOf5: " + counterWinOutOf5);
+        Log.d("RR.P.S.L.S", "MGWA EnterUserNameActivity button clicked" + " ,counterWinOutOf5: " + counterWinOutOf5);
         intent = new Intent(this, MainMenuActivity.class);
         intent.putExtra(RETURN_WINOUTOF5_COUNTER_GO, counterWinOutOf5);
         startActivity(intent);

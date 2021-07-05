@@ -105,6 +105,7 @@ public class ServerListener extends Listener {
         } else if(object instanceof GetRandomNumber){
             //Random win number for MiniGame
             Random randomMinWinCount = new Random();
+            // low inclusive, high exclusive
             int low = 2;
             int high = 5;
             int result = randomMinWinCount.nextInt(high-low) + low;
