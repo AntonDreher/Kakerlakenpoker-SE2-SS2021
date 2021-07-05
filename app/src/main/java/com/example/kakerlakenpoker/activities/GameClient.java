@@ -6,6 +6,7 @@ import android.app.Activity;
 import com.esotericsoftware.minlog.Log;
 
 import com.example.game.Game;
+import com.example.server.dto.clienttomainserver.GetRandomNumber;
 import com.example.server.network.dto.PlayerReady;
 import com.example.server.RegisterClasses;
 import com.example.server.dto.clienttomainserver.ClientName;
@@ -28,12 +29,13 @@ public class GameClient {
     private LobbyAdapter lobbyAdapter;
     private String userName;
     private Game game;
+    private int valueForMinigame;
 
-    private GameClient(){
+    private GameClient() {
     }
 
-    public static GameClient getInstance(){
-        if (instance == null){
+    public static GameClient getInstance() {
+        if (instance == null) {
             instance = new GameClient();
         }
         return instance;
@@ -45,15 +47,16 @@ public class GameClient {
             RegisterHelper.registerClasses(client.getClient().getKryo());
             client.getClient().addListener(new ClientListener(this));
             client.connect(ipToConnect);
-           client.getClient().sendTCP(new ClientName(userName));
+            client.getClient().sendTCP(new ClientName(userName));
+            client.getClient().sendTCP(new GetRandomNumber());
 
-        }catch(IOException e){
+        } catch (IOException e) {
             Log.info(e.getMessage());
             Log.info("Could not connect to host " + ipToConnect);
         }
     }
 
-    public void connect(String ip){
+    public void connect(String ip) {
         try {
             client.connect(ip);
         } catch (IOException e) {
@@ -61,7 +64,7 @@ public class GameClient {
         }
     }
 
-    public NetworkClientKryo getClient(){
+    public NetworkClientKryo getClient() {
         return client;
     }
 
@@ -73,27 +76,27 @@ public class GameClient {
         this.listAdapter = listAdapter;
     }
 
-    public void setCurrentLobby(Lobby lobby){
+    public void setCurrentLobby(Lobby lobby) {
 
         currentLobby = lobby;
-        }
+    }
 
     public void setOpenLobbies(ArrayList<Lobby> openLobbies) {
         this.openLobbies = openLobbies;
-        if(lobbyAdapter!=null)
-        this.lobbyAdapter.notifyAdapter();
+        if (lobbyAdapter != null)
+            this.lobbyAdapter.notifyAdapter();
     }
 
     public Game getGame() {
         return game;
     }
 
-    public void setGame(Game game){
+    public void setGame(Game game) {
         this.game = game;
     }
 
 
-    public Lobby getCurrentLobby(){
+    public Lobby getCurrentLobby() {
         return currentLobby;
     }
 
@@ -101,11 +104,11 @@ public class GameClient {
         return listAdapter;
     }
 
-    public void exitLobby(){
+    public void exitLobby() {
         this.getClient().sendMessage(new ExitLobby(currentLobby.getName()));
     }
 
-    public void setUserName(String userName){
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
@@ -121,8 +124,16 @@ public class GameClient {
         this.lobbyAdapter = lobbyAdapter;
     }
 
-    public void connectToNewServer(String ip, ClientListener listener){
+    public void connectToNewServer(String ip, ClientListener listener) {
         client.getClient().removeListener(listener);
         this.init(ip);
+    }
+
+    public int getValueForMinigame() {
+        return valueForMinigame;
+    }
+
+    public void setValueForMinigame(int valueForMinigame) {
+        this.valueForMinigame = valueForMinigame;
     }
 }

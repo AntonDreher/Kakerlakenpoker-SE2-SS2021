@@ -9,6 +9,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import com.example.game.BuildGame;
 import com.example.game.Game;
+import com.example.server.dto.mainservertoclient.RandomNumberResponse;
 import com.example.server.network.NetworkUtils;
 import com.example.server.network.dto.PlayerReady;
 import com.example.server.network.game.GameData;
@@ -62,6 +63,8 @@ public class ClientListener extends Listener {
         }else if (object instanceof ClientsToJoinGameServer){
             gameClient.connectToNewServer(((ClientsToJoinGameServer) object).getIpToConnect(), this);
             gameClient.getClient().sendMessage(new PlayerReady());
+        } else if (object instanceof RandomNumberResponse){
+            GameClient.getInstance().setValueForMinigame(((RandomNumberResponse) object).getRandomNumber());
         }
     }
 

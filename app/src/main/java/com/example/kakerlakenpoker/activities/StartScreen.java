@@ -21,7 +21,6 @@ public class StartScreen extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d("R.P.S.L.S", "Open Minigame");
                 startActivity(intent);
             }
         },4000);

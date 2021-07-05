@@ -9,11 +9,13 @@ import com.example.server.dto.clienttomainserver.ClientJoinedRequest;
 import com.example.server.dto.clienttomainserver.ExitLobby;
 import com.example.server.dto.clienttomainserver.GameServerReadyToConnect;
 import com.example.server.dto.clienttomainserver.GetOpenLobbies;
+import com.example.server.dto.clienttomainserver.GetRandomNumber;
 import com.example.server.dto.clienttomainserver.OpenLobby;
 import com.example.server.dto.mainservertoclient.ClientJoinedResponse;
 import com.example.server.dto.mainservertoclient.ClientsToJoinGameServer;
 import com.example.server.dto.mainservertoclient.DestroyLobby;
 import com.example.server.dto.mainservertoclient.ExitLobbyResponse;
+import com.example.server.dto.mainservertoclient.RandomNumberResponse;
 import com.example.server.dto.mainservertoclient.SendOpenLobbies;
 import com.example.server.dto.mainservertoclient.StartUpGameServer;
 
@@ -41,6 +43,7 @@ public class RegisterClasses {
         kryo.register(StartUpGameServer.class);
         kryo.register(GameServerReadyToConnect.class);
         kryo.register(ClientsToJoinGameServer.class);
+
 
         kryo.register(Array.class);
         kryo.register(IntArray.class);

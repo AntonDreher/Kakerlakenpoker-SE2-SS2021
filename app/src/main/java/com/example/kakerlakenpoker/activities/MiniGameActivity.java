@@ -138,19 +138,19 @@ public class MiniGameActivity extends AppCompatActivity {
         counterLoss = counter.getLossCounter();
         counterDraw = counter.getDrawCounter();
         counterWinOutOf5 = counter.getWinOutOf5Counter();
-        Log.d("R.P.S.L.S.", "counters set, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counterWon + " ,counterWinOutOf5:  " + counterWinOutOf5);
+        Log.d("R.P.S.L.S.", "counters set, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counterWon + " ,counterWinOutOf5:  " + counterWinOutOf5 + "Random Win Value: " + GameClient.getInstance().getValueForMinigame());
 
         // switch to won or loss activity
-        if (counter.getRoundCounter() == 5 && counter.getWinCounter() > 2) {
-            Log.d("R.P.S.L.S.", "intent win activity, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counter.getWinCounter() + " ,counterWinOutOf5: " + counterWinOutOf5);
+        if (counter.getRoundCounter() == 5 && counter.getWinCounter() >= GameClient.getInstance().getValueForMinigame()) {
+            Log.d("R.P.S.L.S.", "intent win activity, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counter.getWinCounter() + " ,counterWinOutOf5: " + counterWinOutOf5 + "Random Win Value: " + GameClient.getInstance().getValueForMinigame());
             intent = new Intent(this, MiniGameWonActivity.class);
             intent.putExtra(WON_COUNTER, counterWon);
             intent.putExtra(LOSS_COUNTER, counterLoss);
             intent.putExtra(DRAW_COUNTER, counterDraw);
             intent.putExtra(WINOUTOF5_COUNTER, counterWinOutOf5);
             startActivityForResult(intent, INTEGER_REQUEST_WON);
-        } else if (counter.getRoundCounter() == 5 && counter.getWinCounter() < 3) {
-            Log.d("R.P.S.L.S.", "intent loss activity, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counter.getWinCounter() + " ,counterWinOutOf5: " + counterWinOutOf5);
+        } else if (counter.getRoundCounter() == 5 && counter.getWinCounter() < GameClient.getInstance().getValueForMinigame()) {
+            Log.d("R.P.S.L.S.", "intent loss activity, " + "Round Counter: " + counter.getRoundCounter() + " ,Win Counter: " + counter.getWinCounter() + " ,counterWinOutOf5: " + counterWinOutOf5 + "Random Win Value: " + GameClient.getInstance().getValueForMinigame());
             intent = new Intent(this, MiniGameLostActivity.class);
             intent.putExtra(WON_COUNTER, counterWon);
             intent.putExtra(LOSS_COUNTER, counterLoss);
@@ -162,39 +162,40 @@ public class MiniGameActivity extends AppCompatActivity {
     // onClickListener method Rock
     public void onRockButtonClick() {
         Log.d("R.P.S.L.S.", "Rock button clicked");
-        game = new MiniGame(hand = new Hand("Rock"));
+        Log.d( "R.P.S.L.S.", "random win value: " + GameClient.getInstance().getValueForMinigame());
+        game = new MiniGame(hand = new Hand("Rock"), GameClient.getInstance().getValueForMinigame());
         Log.d("R.P.S.L.S.", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
         executeGame();
     }
 
     // onClickListener method Paper
     public void onPaperButtonClick() {
-        Log.d("R.P.S.L.S.", "Paper button clicked");
-        game = new MiniGame(hand = new Hand("Paper"));
+        Log.d("R.P.S.L.S.", "Paper button clicked " + GameClient.getInstance().getValueForMinigame());
+        game = new MiniGame(hand = new Hand("Paper"), GameClient.getInstance().getValueForMinigame());
         Log.d("R.P.S.L.S.", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
         executeGame();
     }
 
     // onClickListener method Scissors
     public void onScissorsButtonClick() {
-        Log.d("R.P.S.L.S.", "Scissors button clicked");
-        game = new MiniGame(hand = new Hand("Scissors"));
+        Log.d("R.P.S.L.S.", "Scissors button clicked " + GameClient.getInstance().getValueForMinigame());
+        game = new MiniGame(hand = new Hand("Scissors"), GameClient.getInstance().getValueForMinigame());
         Log.d("R.P.S.L.S.", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
         executeGame();
     }
 
     // onClickListener method Lizard
     public void onLizardButtonClick() {
-        Log.d("R.P.S.L.S.", "Lizard button clicked");
-        game = new MiniGame(hand = new Hand("Lizard"));
+        Log.d("R.P.S.L.S.", "Lizard button clicked " + GameClient.getInstance().getValueForMinigame());
+        game = new MiniGame(hand = new Hand("Lizard"), GameClient.getInstance().getValueForMinigame());
         Log.d("R.P.S.L.S.", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
         executeGame();
     }
 
     // onClickListener method Spock
     public void onSpockButtonClick() {
-        Log.d("R.P.S.L.S.", "Spock button clicked");
-        game = new MiniGame(hand = new Hand("Spock"));
+        Log.d("R.P.S.L.S.", "Spock button clicked " + GameClient.getInstance().getValueForMinigame());
+        game = new MiniGame(hand = new Hand("Spock"), GameClient.getInstance().getValueForMinigame());
         Log.d("R.P.S.L.S.", "Hand: " + hand.getPlay() + ", Computer: " + hand.computerPlay());
         executeGame();
     }

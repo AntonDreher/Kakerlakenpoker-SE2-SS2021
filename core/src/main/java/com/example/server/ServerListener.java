@@ -11,6 +11,7 @@ import com.example.game.player.Player;
 import com.example.server.dto.clienttomainserver.ClientJoinedRequest;
 import com.example.server.dto.clienttomainserver.ClientName;
 import com.example.server.dto.clienttomainserver.GameServerReadyToConnect;
+import com.example.server.dto.clienttomainserver.GetRandomNumber;
 import com.example.server.dto.mainservertoclient.ClientJoinedResponse;
 import com.example.server.dto.mainservertoclient.ClientsToJoinGameServer;
 import com.example.server.dto.mainservertoclient.DestroyLobby;
@@ -20,6 +21,7 @@ import com.example.server.dto.BaseMessage;
 import com.example.server.dto.Lobby;
 import com.example.server.dto.clienttomainserver.OpenLobby;
 import com.example.server.dto.clienttomainserver.GetOpenLobbies;
+import com.example.server.dto.mainservertoclient.RandomNumberResponse;
 import com.example.server.dto.mainservertoclient.SendOpenLobbies;
 import com.example.server.network.dto.clienttogameserver.HandOver;
 import com.example.server.network.dto.clienttogameserver.MakeDecision;
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 public class ServerListener extends Listener {
@@ -99,6 +102,15 @@ public class ServerListener extends Listener {
             } else {
                 gameData.getGame().handOver(currentPlayer, (HandOver) object);
             }
+        } else if(object instanceof GetRandomNumber){
+            //Random win number for MiniGame
+            Random randomMinWinCount = new Random();
+            int low = 2;
+            int high = 5;
+            int result = randomMinWinCount.nextInt(high-low) + low;
+            RandomNumberResponse randomNumber = new RandomNumberResponse(result);
+            server.getServer().sendToTCP(connection.getID(), randomNumber);
+            Log.info("random number result: " + result);
         }
     }
 

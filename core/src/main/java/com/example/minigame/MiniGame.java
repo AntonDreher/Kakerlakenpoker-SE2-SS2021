@@ -1,10 +1,12 @@
 package com.example.minigame;
 
 public class MiniGame {
+    int randomWinValue;
     Hand hand;
 
-    public MiniGame(Hand hand) {
+    public MiniGame(Hand hand, int randomWinValue) {
         this.hand = hand;
+        this.randomWinValue = randomWinValue;
     }
 
     //Rock, Paper, Scissors, Lizard, Spock
@@ -52,8 +54,8 @@ public class MiniGame {
             counter.setWinCounter(counterWin);
         }
 
-        //counts the wins of a whole game with 5 rounds
-        if (counterRound == 5 && counterWin > 2){
+        //set win out of 5 counter, if random wins out of game with 5 rounds
+        if (counterRound == 5 && counterWin > randomWinValue){
             counterWinOutOf5++;
             counter.setWinOutOf5Counter(counterWinOutOf5);
         }
