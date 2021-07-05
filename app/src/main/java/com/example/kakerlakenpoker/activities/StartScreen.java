@@ -3,11 +3,11 @@ package com.example.kakerlakenpoker.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.esotericsoftware.minlog.Log;
 import com.example.kakerlakenpoker.R;
 
 public class StartScreen extends AppCompatActivity {
