@@ -16,7 +16,7 @@ public class StartScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startscreenview);
 
-        Intent intent = new Intent(this, MiniGameActivity.class);
+        Intent intent = new Intent(this, EnterUserNameActivity.class);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

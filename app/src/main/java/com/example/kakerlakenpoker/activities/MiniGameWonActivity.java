@@ -107,7 +107,7 @@ public class MiniGameWonActivity extends AppCompatActivity {
     public void onMainMenuWONClick() {
         Log.d("R.P.S.L.S", "MGWA EnterUserName button clicked");
         Log.d("R.P.S.L.S.", "counterWinOutOf: " + counterWinOutOf5);
-        intent = new Intent(this, EnterUserNameActivity.class);
+        intent = new Intent(this, MainMenuActivity.class);
         intent.putExtra(RETURN_WINOUTOF5_COUNTER_WON, counterWinOutOf5);
         startActivity(intent);
     }

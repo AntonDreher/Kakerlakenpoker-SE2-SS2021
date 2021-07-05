@@ -101,7 +101,7 @@ public class MiniGameLostActivity extends AppCompatActivity {
     // onClickListener method MainMenuButtonGo
     public void onMainMenuGOClick() {
         Log.d("RR.P.S.L.S", "MGWA EnterUserNameActivity button clicked" + "counterWinOutOf5: " + counterWinOutOf5);
-        intent = new Intent(this, EnterUserNameActivity.class);
+        intent = new Intent(this, MainMenuActivity.class);
         intent.putExtra(RETURN_WINOUTOF5_COUNTER_GO, counterWinOutOf5);
         startActivity(intent);
     }
