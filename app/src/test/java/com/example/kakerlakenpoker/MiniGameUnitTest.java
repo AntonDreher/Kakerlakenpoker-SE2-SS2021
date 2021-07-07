@@ -54,8 +54,6 @@ public class MiniGameUnitTest {
         assertEquals("Computer played: Spock<br/><br/>You played: Spock<br/><br/><b>IT'S A DRAW.", testMiniGame.game(testCounter));
     }
 
-
-
     @Test
     public void lossCounterTest(){
         testHand.getOptions().clear();
@@ -68,6 +66,7 @@ public class MiniGameUnitTest {
 
     @Test
     public void winOutOf5CounterTest(){
+        testHand.getOptions().clear();
         testHand.getOptions().add("Scissors");
         testHand.setPlay("Rock");
         testMiniGame.game(testCounter);
@@ -80,6 +79,7 @@ public class MiniGameUnitTest {
 
     @Test
     public void roundCounterTest(){
+        testHand.getOptions().clear();
         testHand.getOptions().add("Paper");
         testHand.setPlay("Rock");
         testMiniGame.game(testCounter);
