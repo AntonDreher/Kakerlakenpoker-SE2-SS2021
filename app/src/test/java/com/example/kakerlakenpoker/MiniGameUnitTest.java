@@ -31,14 +31,34 @@ public class MiniGameUnitTest {
     }
 
     @Test
-    public void gameLogicTest(){
+    public void gameLogicCompWinTest(){
+        testHand.getOptions().clear();
         testHand.getOptions().add("Paper");
         testHand.setPlay("Rock");
         assertEquals("Computer played: Paper<br/><br/>You played: Rock<br/><br/><b>COMPUTER WINS.", testMiniGame.game(testCounter));
     }
 
     @Test
+    public void gameLogicPlayerWinTest(){
+        testHand.getOptions().clear();
+        testHand.getOptions().add("Scissors");
+        testHand.setPlay("Rock");
+        assertEquals("Computer played: Scissors<br/><br/>You played: Rock<br/><br/><b>YOU WIN.", testMiniGame.game(testCounter));
+    }
+
+    @Test
+    public void gameLogicDrawTest(){
+        testHand.getOptions().clear();
+        testHand.getOptions().add("Spock");
+        testHand.setPlay("Spock");
+        assertEquals("Computer played: Spock<br/><br/>You played: Spock<br/><br/><b>IT'S A DRAW.", testMiniGame.game(testCounter));
+    }
+
+
+
+    @Test
     public void lossCounterTest(){
+        testHand.getOptions().clear();
         testHand.getOptions().add("Paper");
         testHand.setPlay("Rock");
         testMiniGame.game(testCounter);
